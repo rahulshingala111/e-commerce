@@ -1,0 +1,7 @@
+.product-list {
+    display: flex; /* Use flexbox to align items in a row */
+    flex-wrap: wrap; /* Allow the items to wrap to the next line if they overflow */
+    gap: 16px; /* Add some space between the cards */
+    justify-content: center; /* Center the items horizontally */
+    padding: 16px; /* Add padding around the product list */
+  }
