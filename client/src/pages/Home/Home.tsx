@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import Card from "../Component/Card/Card";
 import './Home.css'
 import Navbar from "../Component/Navigation/Navbar";
+import CONSTANTS from "../../constants/constants";
 
 const Home = () => {
     interface Product {
@@ -10,7 +11,7 @@ const Home = () => {
         name: string;
         price: number;
         description: string;
-        imageUrl: string;
+        img_path: string;
     }
 
     const [products, setProducts] = useState<Array<Product>>([]);
@@ -18,13 +19,11 @@ const Home = () => {
     useEffect(() => {
         const callme = async () => {
             try {
-                const apicall = await axios.get('http://localhost:3002/product/ten');
-                console.log(apicall.data);
-                setProducts(apicall.data)
+                const apicall: AxiosResponse = await axios.get(CONSTANTS.path.server_url + '/product/ten');
+                setProducts(apicall.data);
             } catch (error) {
                 console.log(error);
             }
-
         }
         callme();
     }, [])

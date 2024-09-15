@@ -4,7 +4,7 @@
   "description": "backend for e-commerce website",
   "main": "src/server.ts",
   "scripts": {
-    "dev": "nodemon src/server.ts",
+    "dev": "nodemon server.ts",
     "prisma:pull" : "prisma db push",
     "prisma:migrate" : "prisma migrate dev",
     "build": "tsc",
