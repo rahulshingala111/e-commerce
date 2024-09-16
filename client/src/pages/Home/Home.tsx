@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from 'axios';
 import Card from "../Component/Card/Card";
 import './Home.css'
-import Navbar from "../Component/Navigation/Navbar";
 import CONSTANTS from "../../constants/constants";
 
 const Home = () => {
@@ -30,7 +29,6 @@ const Home = () => {
 
     return (
         <>
-            <Navbar />
             <div className="product-list">
                 {
                     products.length > 0 && products.map((element: Product) => (

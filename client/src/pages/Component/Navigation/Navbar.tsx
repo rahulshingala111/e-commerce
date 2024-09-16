@@ -1,5 +1,6 @@
 import React from 'react';
 import './Navbar.css'; // Import the CSS file for styling
+import { Link } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   return (
@@ -13,7 +14,7 @@ const Navbar: React.FC = () => {
           <a href="#">
             Products
           </a>
-          <ul  className="dropdown-menu">
+          <ul className="dropdown-menu">
             <li><a href="/products/men">Men</a></li>
             <li><a href="/products/women">Women</a></li>
             <li><a href="/products/accessories">Accessories</a></li>
@@ -24,6 +25,7 @@ const Navbar: React.FC = () => {
       </ul>
       <div className="navbar-actions">
         <input type="text" placeholder="Search..." className="navbar-search" />
+        <Link to={'/login'}><button className="navbar-cart">Login/SignUp</button></Link>
         <button className="navbar-cart">Cart</button>
       </div>
     </nav>

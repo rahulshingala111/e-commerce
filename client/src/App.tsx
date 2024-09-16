@@ -7,6 +7,7 @@ import './App.css'
 import Home from './pages/Home/Home';
 import Layout from "./pages/Layout/Layout";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
+import LoginSignup from "./pages/LoginSignUp/LoginSignUp";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />} >
         <Route index element={<Home />} />
+        <Route path="/login" element={<LoginSignup />} />
         <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
