@@ -10,14 +10,10 @@ const Register = () => {
     const [pin, setPin] = useState<string>()
 
 
-
-
-
-
     const handleSignup = (e: React.FormEvent<EventTarget>) => {
         e.preventDefault();
         console.log(firstname, lastname, email, phone, city, pin);
-
+        //API Call
     };
 
     return (

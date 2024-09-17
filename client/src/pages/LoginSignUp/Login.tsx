@@ -8,7 +8,7 @@ const Login = () => {
     const handleLogin = (e: React.FormEvent<EventTarget>) => {
         e.preventDefault();
         if (email && password) {
-            console.log("log in");
+            console.log(email, password);
             // API CALL
         }
     };
