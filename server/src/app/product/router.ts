@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
 import ProductService from './service'
-// const router = express.Router();
+import CommonFunction from '../../config/helper';
 
 class ProductRoute {
     public router = express.Router();
@@ -51,8 +51,7 @@ class ProductRoute {
         }
     }
 
-
-    initRoutes() {
+    private initRoutes() {
         this.router.get('/image/get/:product_id', this.ImageProductGetRoute)
         this.router.get('/add', this.ProductAdd)
         this.router.get('/ten', this.ProductTen)

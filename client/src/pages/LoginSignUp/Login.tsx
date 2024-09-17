@@ -1,15 +1,25 @@
 // import { useState } from 'react';
 import { useState } from 'react';
 import './Login.css'
+import axios from 'axios';
+import CONSTANTS from '../../constants/constants';
 const Login = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPasswod] = useState<string>('')
 
-    const handleLogin = (e: React.FormEvent<EventTarget>) => {
+    const handleLogin = async (e: React.FormEvent<EventTarget>) => {
         e.preventDefault();
         if (email && password) {
             console.log(email, password);
-            // API CALL
+
+            const callapi = await axios.post(CONSTANTS.path.server_url + '/auth/login',{
+                data : {
+                    email,
+                    password
+                }
+            })
+            console.log(callapi);
+
         }
     };
 

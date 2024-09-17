@@ -13,16 +13,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
+model user {
+  id         Int     @id @default(autoincrement())
+  email      String  @unique
+  first_name String
+  last_name  String?
+  password   String
+  mobile_no  String?
+  city       String
+  pin        Int
 }
 
 model product {
-  id Int @id @default(autoincrement())
-  title String
+  id          Int     @id @default(autoincrement())
+  title       String
   description String
-  price Int
-  img_path String?
+  price       Int
+  img_path    String?
 }

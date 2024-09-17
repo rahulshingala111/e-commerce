@@ -1,6 +1,8 @@
 // import { useState } from 'react';
 import { useState } from 'react';
 import './Register.css'
+import axios from 'axios';
+import CONSTANTS from '../../constants/constants';
 const Register = () => {
     const [firstname, setFirstname] = useState<string>()
     const [lastname, setLastname] = useState<string>()
@@ -8,12 +10,34 @@ const Register = () => {
     const [phone, setPhone] = useState<string>()
     const [city, setCity] = useState<string>()
     const [pin, setPin] = useState<string>()
+    const [password, setPassword] = useState<string>()
+    const [password_again, setPassword_again] = useState<string>()
 
 
-    const handleSignup = (e: React.FormEvent<EventTarget>) => {
+
+    const handleSignup = async (e: React.FormEvent<EventTarget>) => {
         e.preventDefault();
         console.log(firstname, lastname, email, phone, city, pin);
-        //API Call
+
+        if (password === password_again) {
+            //API Call
+            const apicall = await axios.post(CONSTANTS.path.server_url + '/user/create', {
+                data: {
+                    firstname,
+                    lastname: lastname?.length !== 0 ? lastname : null,
+                    email,
+                    phone: phone?.length !== 0 ? phone : null,
+                    city,
+                    pin,
+                    password
+                }
+            })
+            console.log(apicall);
+        } else {
+            alert('password did not match')
+            setPassword('')
+            setPassword_again('')
+        }
     };
 
     return (
@@ -37,7 +61,6 @@ const Register = () => {
                         name="lastname"
                         onChange={(e) => setLastname(e.target.value)}
                         placeholder="e.x. shingala"
-                        required
                     />
                 </div>
                 <div className="form-group">
@@ -68,13 +91,34 @@ const Register = () => {
                         placeholder="Enter your city"
                         required
                     />
-                </div><div className="form-group">
+                </div>
+                <div className="form-group">
                     <label htmlFor='pin'>PIN</label>
                     <input
                         type="number"
                         name="pin"
                         onChange={(e) => setPin(e.target.value)}
                         placeholder="Enter your pin"
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor='password'>Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Enter your password"
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor='password_again'>Confirm Password</label>
+                    <input
+                        type="password"
+                        name="password_again"
+                        onChange={(e) => setPassword_again(e.target.value)}
+                        placeholder="Enter your password again"
                         required
                     />
                 </div>

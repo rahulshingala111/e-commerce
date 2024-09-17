@@ -3,12 +3,12 @@ import { Request, Response } from "express"
 import fs from 'node:fs';
 import multer from 'multer';
 import path from 'path'
-import CONSTANTS from "../../constants/constant";
+import CONSTANTS from "../../config/constant";
 const prisma = new PrismaClient();
 class ProductService {
 
 
-    async ImageProductGetRouteService(req: Request) {
+    public ImageProductGetRouteService = async (req: Request) => {
         try {
             const product_id = Number(req.params.product_id)
             console.log(product_id);
@@ -38,7 +38,7 @@ class ProductService {
         }
     }
 
-    async ProductAddService(req: Request, res: Response) {
+    public ProductAddService = async (req: Request, res: Response) => {
         try {
 
             let product: Prisma.productCreateInput;
@@ -102,7 +102,7 @@ class ProductService {
         }
     }
 
-    async ProductTenService(req: Request) {
+    public ProductTenService = async (req: Request) => {
         try {
             const fetchtenproduct = await prisma.product.findMany({
                 take: 10
