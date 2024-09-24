@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useState } from "react";
+import ApiCall from "../../constants/ApiCall";
 
 
 
@@ -21,7 +21,7 @@ const AddCategories = () => {
 
         const form = new FormData();
 
-        const apicall = await axios.post(`http://localhost:3002/product/categorie/add?categorie_name=${categorie_name}&categorie_description=${categorie_description}`, form, {
+        const apicall = await ApiCall.post(`/categorie?categorie_name=${categorie_name}&categorie_description=${categorie_description}`, form, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }

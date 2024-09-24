@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import ApiCall from "../../constants/ApiCall";
 interface Categories {
@@ -21,7 +20,7 @@ const AddProduct = () => {
 
     useEffect(() => {
         const callMe = async () => {
-            const getCategories = await ApiCall.get('/product/categorie/get')
+            const getCategories = await ApiCall.get('/categories')
             console.log(getCategories.data);
             setCategories(getCategories.data)
         }
@@ -47,7 +46,7 @@ const AddProduct = () => {
         const form = new FormData();
         form.append("file", product_image_url)
 
-        const apicall = await axios.post(`http://localhost:3002/product/add?product_name=${product_name}&product_description=${product_description}&product_price=${product_price}&product_categorie=${product_categorie}`, form, {
+        const apicall = await ApiCall.post(`/products?product_name=${product_name}&product_description=${product_description}&product_price=${product_price}&product_categorie=${product_categorie}`, form, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }

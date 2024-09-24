@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import Card from "../Component/Card/Card";
 import './Home.css'
-import CONSTANTS from "../../constants/constants";
 import ProductSlider from "../Component/Slider/ProductSlider";
+import ApiCall from "../../constants/ApiCall";
 
 const Home = () => {
     interface Product {
@@ -19,7 +19,7 @@ const Home = () => {
     useEffect(() => {
         const callme = async () => {
             try {
-                const apicall: AxiosResponse = await axios.get(CONSTANTS.path.server_url + '/product/ten');
+                const apicall: AxiosResponse = await ApiCall.get('/product/ten')
                 setProducts(apicall.data);
             } catch (error) {
                 console.log(error);

@@ -1,8 +1,7 @@
 // import { useState } from 'react';
 import { useState } from 'react';
 import './Register.css'
-import axios from 'axios';
-import CONSTANTS from '../../constants/constants';
+import ApiCall from '../../constants/ApiCall';
 const Register = () => {
     const [firstname, setFirstname] = useState<string>()
     const [lastname, setLastname] = useState<string>()
@@ -21,7 +20,7 @@ const Register = () => {
 
         if (password === password_again) {
             //API Call
-            const apicall = await axios.post(CONSTANTS.path.server_url + '/user/create', {
+            const apicall = await ApiCall.post('/user', {
                 data: {
                     firstname,
                     lastname: lastname?.length !== 0 ? lastname : null,

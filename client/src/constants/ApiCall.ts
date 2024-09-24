@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios"
 
 const ApiCall: AxiosInstance = axios.create({
-    baseURL: "http://localhost:3002",
+    baseURL: "http://localhost:3002/api/v1",
     timeout: 5000,
 })
 

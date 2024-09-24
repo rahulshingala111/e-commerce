@@ -23,7 +23,7 @@ class UserRoutes {
 
 
     private initRoutes() {
-        this.router.post('/create', this.UserCreateRoute)
+        this.router.post('/', this.UserCreateRoute)
     }
 }
 export default new UserRoutes().router;
