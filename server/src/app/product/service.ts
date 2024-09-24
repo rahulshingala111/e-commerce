@@ -1,9 +1,5 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { Request, Response } from "express"
-import fs from 'node:fs';
-import multer from 'multer';
-import path from 'path'
-import CONSTANTS from "../../config/constant";
 const prisma = new PrismaClient();
 class ProductService {
 
@@ -12,14 +8,14 @@ class ProductService {
         try {
             const fetchtenproduct = await prisma.product.findMany({
                 take: 10,
-                // include: {
-                //     categories: {
-                //         select: {
-                //             id: true,
-                //             name: true
-                //         }
-                //     },
-                // }
+                include: {
+                    categories: {
+                        select: {
+                            id: true,
+                            name: true
+                        }
+                    },
+                }
             })
             return {
                 status: true,

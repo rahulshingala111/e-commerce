@@ -47,7 +47,7 @@ model categories {
   id          Int       @id @default(autoincrement())
   name        String
   description String?
-  // sub_categories sub_categories[]
+  // sub_categories sub_categories[]F
   product     product[]
 }
 

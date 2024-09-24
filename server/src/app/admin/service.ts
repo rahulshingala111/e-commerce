@@ -9,12 +9,15 @@ class AdminService {
         try {
             const insertIntoCategories = await prisma.categories.create({
                 data: {
-                    name: req.query.categorie_name as string,
-                    description: req.query.categorie_description as string
+                    name: req.query.categories_name as string,
+                    description: req.query.categories_description as string
                 }
             })
 
-            return insertIntoCategories;
+            return {
+                status: true,
+                data: insertIntoCategories
+            };
         } catch (error) {
             console.log(error);
             return {

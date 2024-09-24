@@ -5,15 +5,12 @@ import ApiCall from "../../constants/ApiCall";
 
 const AddCategories = () => {
 
-
-
-
-    const [categorie_name, setCategorie_name] = useState<string>("");
-    const [categorie_description, setCategorie_description] = useState<string>("");
+    const [categories_name, setCategories_name] = useState<string>("");
+    const [categories_description, setCategories_description] = useState<string>("");
 
     const clearForm = () => {
-        setCategorie_name("")
-        setCategorie_description("")
+        setCategories_name("")
+        setCategories_description("")
     };
 
     const handleInsert = async (e: React.FormEvent<EventTarget>) => {
@@ -21,12 +18,12 @@ const AddCategories = () => {
 
         const form = new FormData();
 
-        const apicall = await ApiCall.post(`/categorie?categorie_name=${categorie_name}&categorie_description=${categorie_description}`, form, {
+        const apicall = await ApiCall.post(`/categories?categories_name=${categories_name}&categories_description=${categories_description}`, form, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
         });
-        if (apicall.data.status) {
+        if (apicall.status) {
             clearForm();
             alert("success");
         }
@@ -41,9 +38,9 @@ const AddCategories = () => {
                     <input
                         type="text"
                         id="categoriename"
-                        value={categorie_name}
+                        value={categories_name}
                         onChange={(e) => {
-                            setCategorie_name(e.target.value);
+                            setCategories_name(e.target.value);
                         }}
                         required
                     />
@@ -54,9 +51,9 @@ const AddCategories = () => {
                         id="categoriedescription"
                         cols={30}
                         rows={5}
-                        value={categorie_description}
+                        value={categories_description}
                         onChange={(e) => {
-                            setCategorie_description(e.target.value);
+                            setCategories_description(e.target.value);
                         }}
                         required
                     />
