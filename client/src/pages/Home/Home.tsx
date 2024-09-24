@@ -3,6 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 import Card from "../Component/Card/Card";
 import './Home.css'
 import CONSTANTS from "../../constants/constants";
+import ProductSlider from "../Component/Slider/ProductSlider";
 
 const Home = () => {
     interface Product {
@@ -29,11 +30,18 @@ const Home = () => {
 
     return (
         <>
+            <div>
+                <ProductSlider />
+            </div>
+            Suggested Products:
             <div className="product-list">
                 {
                     products.length > 0 && products.map((element: Product) => (
                         <Card key={element.id} product={element} />
                     ))
+                }
+                {
+                    products.length === 0 && <p>Inventory Empty</p>
                 }
             </div>
         </>

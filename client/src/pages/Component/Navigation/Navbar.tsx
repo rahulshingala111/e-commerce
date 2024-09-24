@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Navbar.css'; // Import the CSS file for styling
 import { Link } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
+
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+
+  useEffect(() => {
+    try {
+      const token = sessionStorage.getItem("token")
+      if (token) {
+        setIsLoggedIn(true)
+      }
+    } catch (error) {
+      console.log(error);
+
+    }
+  }, [])
+
   return (
     <nav className="navbar">
       <div className="navbar-logo">
@@ -25,7 +40,15 @@ const Navbar: React.FC = () => {
       </ul>
       <div className="navbar-actions">
         <input type="text" placeholder="Search..." className="navbar-search" />
-        <Link to={'/login'}><button className="navbar-cart">Login/SignUp</button></Link>
+        {
+          !isLoggedIn && (
+            <Link to={'/login'}><button className="navbar-cart">Login/SignUp</button></Link>
+          )
+        }{
+          isLoggedIn && (
+            <button className='navbar'>Profile</button>
+          )
+        }
         <button className="navbar-cart">Cart</button>
       </div>
     </nav>

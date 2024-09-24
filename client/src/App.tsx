@@ -8,6 +8,8 @@ import Home from './pages/Home/Home';
 import Layout from "./pages/Layout/Layout";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import LoginSignup from "./pages/LoginSignUp/LoginSignUp";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 function App() {
   return (

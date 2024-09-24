@@ -1,11 +1,33 @@
 import axios from "axios";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import ApiCall from "../../constants/ApiCall";
+interface Categories {
+    id: number,
+    name: string,
+    description: string
+}
 const AddProduct = () => {
     const [product_name, setProduct_name] = useState<string>("");
     const [product_description, setProduct_description] = useState<string>("");
     const [product_price, setProduct_price] = useState<string>("");
     const [product_image_url, setProduct_image_url] = useState<string>("");
+    const [categories, setCategories] = useState<Array<Categories>>([{
+        id: 0,
+        name: '',
+        description: ''
+    }])
+    const [product_categorie, setProduct_categorie] = useState<string>('')
+
+
+    useEffect(() => {
+        const callMe = async () => {
+            const getCategories = await ApiCall.get('/product/categorie/get')
+            console.log(getCategories.data);
+            setCategories(getCategories.data)
+        }
+        callMe();
+    }, []);
+
 
     const clearForm = () => {
         setProduct_name("")
@@ -25,7 +47,7 @@ const AddProduct = () => {
         const form = new FormData();
         form.append("file", product_image_url)
 
-        const apicall = await axios.post(`http://localhost:3002/product/add?product_name=${product_name}&product_description=${product_description}&product_price=${product_price}`, form, {
+        const apicall = await axios.post(`http://localhost:3002/product/add?product_name=${product_name}&product_description=${product_description}&product_price=${product_price}&product_categorie=${product_categorie}`, form, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
@@ -87,6 +109,15 @@ const AddProduct = () => {
                         onChange={handleFile}
                         required
                     />
+                </div>
+                <div>
+                    <label htmlFor="categories">categories</label>
+                    <select onChange={(e) => { setProduct_categorie(e.target.value) }}>
+                        <option value={0} selected disabled>select</option>
+                        {categories.map((element: Categories) => (
+                            <option key={element.id} value={element.id}>{element.name}</option>
+                        ))}
+                    </select>
                 </div>
                 <div>
                     <button type="submit">Insert</button>

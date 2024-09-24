@@ -1,9 +1,11 @@
-// import { useState } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css'
-import axios from 'axios';
-import CONSTANTS from '../../constants/constants';
+import ApiCall from '../../constants/ApiCall';
 const Login = () => {
+
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState<string>('')
     const [password, setPasswod] = useState<string>('')
 
@@ -12,14 +14,22 @@ const Login = () => {
         if (email && password) {
             console.log(email, password);
 
-            const callapi = await axios.post(CONSTANTS.path.server_url + '/auth/login',{
-                data : {
+            const response = await ApiCall.post('/auth/login', {
+                data: {
                     email,
                     password
                 }
             })
-            console.log(callapi);
 
+            if (response.data.status === true) {
+                console.log("ello");
+
+                sessionStorage.setItem('token', response.data.token)
+                //redirect to home page
+                setTimeout(() => {
+                    navigate('/')
+                }, 500);
+            }
         }
     };
 
