@@ -4,15 +4,9 @@ import Card from "../Component/Card/Card";
 import './Home.css'
 import ProductSlider from "../Component/Slider/ProductSlider";
 import ApiCall from "../../constants/ApiCall";
+import { Product } from "../../constants/Interfaces";
 
 const Home = () => {
-    interface Product {
-        id: number;
-        name: string;
-        price: number;
-        description: string;
-        img_path: string;
-    }
 
     const [products, setProducts] = useState<Array<Product>>([]);
 

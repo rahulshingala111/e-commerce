@@ -30,5 +30,23 @@ class ProductService {
             }
         }
     }
+
+    public GetCategoriesService = async (req: Request) => {
+        try {
+            console.log(req.params);
+            const category = await prisma.categories.findMany()
+            return {
+                status: true,
+                data: category
+            }
+        } catch (error) {
+            console.log(error);
+            return {
+                status: false,
+                data: null,
+                error: error
+            }
+        }
+    }
 }
 export default new ProductService();

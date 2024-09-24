@@ -1,24 +1,7 @@
 import React from 'react';
 import './Card.css'
 import CONSTANTS from '../../../constants/constants';
-
-interface Categories {
-    id: number,
-    name: string
-}
-interface Product {
-    id: number;
-    title: string;
-    price: number;
-    description: string;
-    img_path: string;
-    categories: Categories
-}
-
-
-interface ProductCardProps {
-    product: Product;
-}
+import { ProductCardProps } from '../../../constants/Interfaces';
 
 const Card: React.FC<ProductCardProps> = ({ product }) => {
     console.log(product);

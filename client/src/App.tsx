@@ -10,15 +10,17 @@ import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import LoginSignup from "./pages/LoginSignUp/LoginSignUp";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import ProductPage from "./pages/Product/Product";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />} >
-        <Route index element={<Home />} />
-        <Route path="/login" element={<LoginSignup />} />
-        <Route path="*" element={<ErrorPage />} />
+          <Route index element={<Home />} />
+          <Route path="/login" element={<LoginSignup />} />
+          <Route path="/product" element={<ProductPage />} />
+          <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
     </BrowserRouter >
