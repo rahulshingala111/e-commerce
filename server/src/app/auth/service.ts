@@ -1,6 +1,7 @@
 import { Request } from "express"
 import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
+import CommonFunction from './../../config/helper'
 class AuthRouteService {
     public UserLoginSerive = async (req: Request) => {
         try {
@@ -29,10 +30,17 @@ class AuthRouteService {
                 }
             } else {
                 delete (findUser as any).password
+
+                const token = CommonFunction.signJWT({
+                    id: findUser.id
+                })
+
+
                 return {
                     status: true,
                     message: "logged in !!",
                     data: findUser,
+                    token: token,
                     error: null
                 }
             }

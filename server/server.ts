@@ -21,6 +21,10 @@ app.use('/auth', AuthRouter)
 app.use('/product', ProductRouter)
 app.use('/user', UserRouter)
 
+
+// app.use('/admin')
+
+
 const PORT = Number(process.env.PORT) | 3002;
 app.listen(PORT, () => {
     console.log(`server initialzed at ${PORT}`);

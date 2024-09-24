@@ -45,7 +45,10 @@ class ProductService {
             product = {
                 title: req.query.product_name as string,
                 description: req.query.product_description as string,
-                price: Number(req.query.product_price)
+                price: Number(req.query.product_price),
+                categories: {
+                    connect: { id: Number(req.query.product_categorie) }
+                }
             }
 
             const insertedData = await prisma.product.create({ data: product })
@@ -105,9 +108,58 @@ class ProductService {
     public ProductTenService = async (req: Request) => {
         try {
             const fetchtenproduct = await prisma.product.findMany({
-                take: 10
+                take: 10,
+                // include: {
+                //     categories: {
+                //         select: {
+                //             id: true,
+                //             name: true
+                //         }
+                //     },
+                // }
             })
             return fetchtenproduct
+        } catch (error) {
+            console.log(error);
+            return {
+                status: false,
+                data: null,
+                error: error
+            }
+        }
+    }
+
+    public CategorieAddService = async (req: Request) => {
+        try {
+            const insertIntoCategories = await prisma.categories.create({
+                data: {
+                    name: req.query.categorie_name as string,
+                    description: req.query.categorie_description as string
+                }
+            })
+
+            return insertIntoCategories;
+        } catch (error) {
+            console.log(error);
+            return {
+                status: false,
+                data: null,
+                error: error
+            }
+        }
+    }
+
+    public CategorieGet = async (req: Request) => {
+        try {
+            console.log(req.query);
+
+            const getCategories = await prisma.categories.findMany()
+
+            return {
+                status: true,
+                message: "fetched successfull",
+                data: getCategories
+            };
         } catch (error) {
             console.log(error);
             return {
