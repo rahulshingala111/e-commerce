@@ -1,6 +1,7 @@
 import React from 'react';
 import './Sidebar.css';
 import { Categories, CategoryProps } from '../../../constants/Interfaces';
+import { Link } from 'react-router-dom';
 
 const Sidebar: React.FC<CategoryProps> = ({ category }) => {
   console.log(category);
@@ -11,7 +12,7 @@ const Sidebar: React.FC<CategoryProps> = ({ category }) => {
       <ul>
         {
           category.map((element: Categories) => (
-            <li key={element.id}><a href="#">{element.name}</a></li>
+            <Link to={`/product&categoryid=${element.id}`} ><li key={element.id}><a href="#">{element.name}</a></li></Link>
           ))
         }
       </ul>

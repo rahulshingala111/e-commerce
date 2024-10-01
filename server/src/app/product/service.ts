@@ -48,5 +48,30 @@ class ProductService {
             }
         }
     }
+
+    public GetItemService = async (req: Request) => {
+        try {
+            console.log(req.params.product_id);
+            if (req.params.product_id) {
+                const id: number = Number(req.params.product_id);
+                const fetchItem = await prisma.product.findUnique({
+                    where: { id: id }
+                })
+                console.log(fetchItem);
+
+                return {
+                    status: true,
+                    data: fetchItem
+                }
+            } else {
+                return {
+                    staus: false,
+                    data: null
+                }
+            }
+        } catch (error) {
+            return false
+        }
+    }
 }
 export default new ProductService();

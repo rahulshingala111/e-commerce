@@ -11,6 +11,7 @@ import LoginSignup from "./pages/LoginSignUp/LoginSignUp";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ProductPage from "./pages/Product/Product";
+import ProductView from "./pages/Product/ProductView/ProductView";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/login" element={<LoginSignup />} />
           <Route path="/product" element={<ProductPage />} />
+          <Route path="/item" element={<ProductView />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
