@@ -59,7 +59,6 @@ class AdminRouter {
 
         this.router.post('/categories', this.CategorieAdd)
         this.router.get('/categories', this.CategorieGet)
-        
 
         this.router.post('/products', this.ProductAdd)
     }

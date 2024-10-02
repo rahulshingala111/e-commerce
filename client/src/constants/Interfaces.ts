@@ -1,12 +1,12 @@
-export interface Product {
+export interface ProductInterface {
     id: number;
     title: string;
     price: number;
     description: string;
     img_path: string;
-    categories: Categories
+    categories: CategoriesInterface
 }
-export interface Categories {
+export interface CategoriesInterface {
     id: number,
     name: string
 }
@@ -14,8 +14,14 @@ export interface Categories {
 
 //
 export interface ProductCardProps {
-    product: Product;
+    product: ProductInterface;
 }
 export interface CategoryProps {
-    category: Array<Categories>;
+    category: Array<CategoriesInterface>;
+}
+
+export interface ParamsProps {
+    params: {
+        category_id: string
+    }
 }

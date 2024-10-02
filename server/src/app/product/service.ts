@@ -70,7 +70,88 @@ class ProductService {
                 }
             }
         } catch (error) {
-            return false
+            console.log(error);
+            return {
+                staus: false,
+                data: null,
+                error: error
+            }
+        }
+    }
+
+    public AddToCartService = async (req: Request) => {
+        try {
+
+            console.log(req.header);
+
+
+            return true;
+
+        } catch (error) {
+            console.log(error);
+            return {
+                staus: false,
+                data: null,
+                error: error
+            }
+        }
+    }
+
+    public GetProductService = async (req: Request) => {
+        try {
+
+            console.log(req.query);
+            const category_id: number = Number(req.query.category_id)
+            if (category_id === 0) {
+                const products = await prisma.product.findMany({
+                    include: {
+                        categories: {
+                            select: {
+                                id: true,
+                                name: true
+                            }
+                        },
+                    }
+                })
+                return {
+                    status: true,
+                    data: products
+                }
+            }
+            else if (category_id) {
+                const products = await prisma.product.findMany({
+                    where: {
+                        categories_id: category_id
+                    },
+                    include: {
+                        categories: {
+                            select: {
+                                id: true,
+                                name: true
+                            }
+                        },
+                    }
+                })
+
+                return {
+                    status: true,
+                    data: products
+                }
+
+            } else {
+                return {
+                    status: false,
+                    data: null,
+                    message: 'send valid query params'
+                }
+            }
+        } catch (error) {
+            console.log(error);
+            return {
+                staus: false,
+                data: null,
+                error: error
+            }
         }
     }
 }

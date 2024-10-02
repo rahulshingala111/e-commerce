@@ -50,11 +50,43 @@ class ProductRoute {
         }
     }
 
+    private AddToCart = async (req: Request, res: Response) => {
+        try {
+            const response = await ProductService.AddToCartService(req)
+            res.status(200).send(response)
+        } catch (error) {
+            res.status(500).json({
+                status: false,
+                message: 'Internal server Error',
+                error: error,
+                data: null
+            })
+        }
+    }
+
+    private GetProduct = async (req: Request, res: Response) => {
+        try {
+            const response = await ProductService.GetProductService(req)
+            res.status(200).send(response)
+        } catch (error) {
+            res.status(500).json({
+                status: false,
+                message: 'Internal server Error',
+                error: error,
+                data: null
+            })
+        }
+    }
+
     private initRoutes() {
         this.router.get('/ten', this.ProductTen)
+
+        this.router.get('/get', this.GetProduct)
+
         this.router.get('/categories', this.GetCategories)
         this.router.get('/item/:product_id', this.GetItem)
 
+        this.router.post('/addtocart', this.AddToCart)
 
 
     }

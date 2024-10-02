@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './Navbar.css'; // Import the CSS file for styling
 import { Link } from 'react-router-dom';
+import ApiCall from '../../../constants/ApiCall';
+import { AxiosResponse } from 'axios';
+import { CategoriesInterface } from '../../../constants/Interfaces';
 
 const Navbar: React.FC = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+  const [categories, setCategories] = useState<Array<CategoriesInterface>>([])
+
 
   useEffect(() => {
     try {
@@ -14,8 +19,21 @@ const Navbar: React.FC = () => {
       }
     } catch (error) {
       console.log(error);
-
     }
+
+    const callme = async () => {
+      try {
+        const category: AxiosResponse = await ApiCall.get('/product/categories')
+        if (category.status) {
+          setCategories(category.data)
+        }
+
+      } catch (error) {
+        console.log(error);
+
+      }
+    }
+    callme()
   }, [])
 
   return (
@@ -25,16 +43,19 @@ const Navbar: React.FC = () => {
       </div>
       <ul className="navbar-links">
         <li><a href="/">Home</a></li>
-        <li><a href="/product">Product</a></li>
 
         <li className="dropdown">
-          <a href="#">
-            Products
-          </a>
+          <Link to={'/product'}>
+            <div>
+              Products
+            </div>
+          </Link>
           <ul className="dropdown-menu">
-            <li><a href="/products/men">Men</a></li>
-            <li><a href="/products/women">Women</a></li>
-            <li><a href="/products/accessories">Accessories</a></li>
+            {
+              categories.map((elemnt: CategoriesInterface) => (
+                <Link key={elemnt.id} to={`/product?category_id=${elemnt.id}`}><li>{elemnt.name}</li></Link>
+              ))
+            }
           </ul>
         </li>
         <li><a href="/about">About</a></li>

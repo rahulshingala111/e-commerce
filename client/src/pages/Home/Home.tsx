@@ -4,11 +4,11 @@ import Card from "../Component/Card/Card";
 import './Home.css'
 import ProductSlider from "../Component/Slider/ProductSlider";
 import ApiCall from "../../constants/ApiCall";
-import { Product } from "../../constants/Interfaces";
+import { ProductInterface } from "../../constants/Interfaces";
 
 const Home = () => {
 
-    const [products, setProducts] = useState<Array<Product>>([]);
+    const [products, setProducts] = useState<Array<ProductInterface>>([]);
 
     useEffect(() => {
         const callme = async () => {
@@ -30,7 +30,7 @@ const Home = () => {
             Suggested Products:
             <div className="product-list">
                 {
-                    products.length > 0 && products.map((element: Product) => (
+                    products.length > 0 && products.map((element: ProductInterface) => (
                         <Card key={element.id} product={element} />
                     ))
                 }
