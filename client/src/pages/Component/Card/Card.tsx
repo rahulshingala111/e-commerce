@@ -13,7 +13,7 @@ const Card: React.FC<ProductCardProps> = ({ product }) => {
             <p className="product-description">description : {product.description}</p>
             <p className="product-description">category : {product.categories.name}</p>
             <div className="product-price">₹{product.price.toFixed(2)}</div>
-            <CartButton />
+            <CartButton product_id={product.id} />
             <Link to={`/item?product_id=${product.id}`}><button className="product-button">View</button></Link>
         </div>
     );
