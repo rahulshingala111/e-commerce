@@ -14,17 +14,17 @@ const Login = () => {
         if (email && password) {
             console.log(email, password);
 
-            const response = await ApiCall.post('/auth/login', {
+            const response: any = await ApiCall.post('/auth/login', {
                 data: {
                     email,
                     password
                 }
             })
 
-            if (response.data.status === true) {
+            if (response.status) {
                 console.log("ello");
 
-                sessionStorage.setItem('token', response.data.token)
+                sessionStorage.setItem('token', response.token)
                 //redirect to home page
                 setTimeout(() => {
                     navigate('/')

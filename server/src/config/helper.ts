@@ -1,4 +1,6 @@
-import jwt from 'jsonwebtoken'
+import jwt, { Jwt } from 'jsonwebtoken'
+import { TokenVerification } from './interface';
+import 'dotenv/config'
 class CommonFunction {
     test = () => {
         console.log("this is common function")
@@ -8,10 +10,10 @@ class CommonFunction {
     signJWT = (data: any): string | undefined | any => {
         try {
             const token = jwt.sign(data,
-                "asdljfghalsjidfbal234sijdfbas234dbfas234",
+                (process.env.JWT_SECRET_KEY as string),
                 {
                     expiresIn: '1h',
-                    algorithm: 'HS256',
+                    algorithm: 'HS256'
                 })
             console.log("token", token);
             return token;
@@ -20,14 +22,19 @@ class CommonFunction {
         }
     }
 
-    verifyJWT = (token: any): string | jwt.JwtPayload | undefined => {
-        try {
-            const verify: string | jwt.JwtPayload = jwt.verify(token, "asdljfghalsjidfbal234sijdfbas234dbfas234");
-            console.log("verify", verify);
-            return verify
-        } catch (error) {
-            console.log(error);
 
+
+    verifyJWT = (token: any): TokenVerification => {
+        try {
+            const verify: Jwt = jwt.verify(token, (process.env.JWT_SECRET_KEY as string), { complete: true });
+            console.log("verify", verify);
+            return { status: true }
+        } catch (error) {
+            console.log(error)
+            //TokenExpiredError
+            return {
+                status: false
+            }
         }
     }
 }

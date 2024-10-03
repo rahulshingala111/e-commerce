@@ -7,6 +7,7 @@ import ProductRouter from './src/app/product/router';
 import UserRouter from './src/app/user/router'
 import AuthRouter from './src/app/auth/router';
 import AdminRouter from './src/app/admin/router'
+import chackIfTokenExist from './src/auth/tokenValidation';
 app.use(cors())
 app.use(express.json())
 app.use('/product/image', express.static(CONSTANTS.path.product_store))
