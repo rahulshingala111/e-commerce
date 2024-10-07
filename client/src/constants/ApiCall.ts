@@ -14,7 +14,15 @@ ApiCall.interceptors.request.use((config): InternalAxiosRequestConfig<any> => {
 })
 
 ApiCall.interceptors.response.use((response): AxiosResponse<any> => {
-    return response.data
+    if (response?.data?.code === 911) {
+        sessionStorage.removeItem('token')
+        setTimeout(() => {
+            window.location.href = '/'
+        }, 300);
+        return response
+    } else {
+        return response.data
+    }
 },
     (error) => {
         return Promise.reject(error)
