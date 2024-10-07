@@ -25,3 +25,14 @@ export interface ParamsProps {
         category_id: string
     }
 }
+
+export interface AddressInterface {
+    id: number,
+    address_1: string,
+    address_2: string,
+    postal_code: string,
+    city: string,
+    state: string,
+    country: string,
+    landmark: string
+}

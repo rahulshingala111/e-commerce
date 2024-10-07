@@ -27,7 +27,6 @@ const Home = () => {
             <div>
                 <ProductSlider />
             </div>
-            Suggested Products:
             <div className="product-list">
                 {
                     products.length > 0 && products.map((element: ProductInterface) => (

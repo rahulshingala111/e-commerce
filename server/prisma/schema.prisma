@@ -14,9 +14,6 @@ model user {
   last_name  String?
   password   String
   mobile_no  String?
-  city       String
-  pin        Int
-
   addresses addresses[]
 }
 

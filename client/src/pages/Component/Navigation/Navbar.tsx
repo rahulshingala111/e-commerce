@@ -69,10 +69,10 @@ const Navbar: React.FC = () => {
           )
         }{
           isLoggedIn && (
-            <button className='navbar'>Profile</button>
+            <Link to={'/profile'}><button className='navbar'>Profile</button></Link>
           )
         }
-        <button className="navbar-cart">Cart</button>
+        <Link to={'/cart'}> <button className="navbar-cart">Cart</button></Link>
       </div>
     </nav>
   );

@@ -12,6 +12,9 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ProductPage from "./pages/Product/Product";
 import ItemView from "./pages/Product/ItemView/ItemView";
+import Cart from "./pages/Cart/Cart";
+import Order from "./pages/Order/Order";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
   return (
@@ -22,6 +25,9 @@ function App() {
           <Route path="/login" element={<LoginSignup />} />
           <Route path="/product" element={<ProductPage />} />
           <Route path="/item" element={<ItemView />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/order" element={<Order />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>

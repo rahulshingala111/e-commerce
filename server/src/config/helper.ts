@@ -1,6 +1,16 @@
 import jwt, { Jwt } from 'jsonwebtoken'
 import { TokenVerification } from './interface';
 import 'dotenv/config'
+
+
+interface verifyJWTInterface {
+    status: true,
+    data?: {
+        id: number
+    }
+}
+
+
 class CommonFunction {
     test = () => {
         console.log("this is common function")
@@ -28,12 +38,14 @@ class CommonFunction {
         try {
             const verify: Jwt = jwt.verify(token, (process.env.JWT_SECRET_KEY as string), { complete: true });
             console.log("verify", verify);
-            return { status: true }
+            //@ts-ignore
+            return { status: true, data: { user_id: verify.payload.id } }
         } catch (error) {
             console.log(error)
             //TokenExpiredError
             return {
-                status: false
+                status: false,
+                data: null
             }
         }
     }
