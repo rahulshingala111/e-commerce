@@ -67,7 +67,7 @@ const AddProduct = () => {
                 "Content-Type": "multipart/form-data"
             }
         });
-        if (apicall.data.status) {
+        if (apicall.status) {
             clearForm();
             alert("success");
         }

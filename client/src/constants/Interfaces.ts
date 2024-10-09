@@ -4,9 +4,14 @@ export interface ProductInterface {
     price: number;
     description: string;
     img_path: string;
-    categories: CategoriesInterface
+    categories: CategoriesInterface,
+    brand: BrandInterface
 }
 export interface CategoriesInterface {
+    id: number,
+    name: string
+}
+export interface BrandInterface {
     id: number,
     name: string
 }

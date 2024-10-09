@@ -15,6 +15,12 @@ class ProductService {
                             name: true
                         }
                     },
+                    brand: {
+                        select: {
+                            id: true,
+                            name: true
+                        }
+                    }
                 }
             })
             return {
@@ -111,6 +117,12 @@ class ProductService {
                                 name: true
                             }
                         },
+                        brand: {
+                            select: {
+                                id: true,
+                                name: true
+                            }
+                        }
                     }
                 })
                 return {
@@ -130,6 +142,12 @@ class ProductService {
                                 name: true
                             }
                         },
+                        brand: {
+                            select: {
+                                id: true,
+                                name: true
+                            }
+                        }
                     }
                 })
 
