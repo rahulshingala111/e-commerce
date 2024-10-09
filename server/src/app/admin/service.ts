@@ -60,6 +60,9 @@ class AdminService {
                 price: Number(req.query.product_price),
                 categories: {
                     connect: { id: Number(req.query.product_categorie) }
+                },
+                brand: {
+                    connect: { id: Number(req.query.product_brand) }
                 }
             }
 
@@ -107,6 +110,55 @@ class AdminService {
                     }
                 }
             })
+        } catch (error) {
+            console.log(error);
+            return {
+                status: false,
+                data: null,
+                error: error
+            }
+        }
+    }
+
+    public BrandsGetSerive = async (req: Request) => {
+        try {
+            const getBrands = await prisma.brand.findMany()
+
+            return {
+                status: true,
+                data: getBrands
+            }
+
+        } catch (error) {
+            console.log(error);
+            return {
+                status: false,
+                data: null,
+                error: error
+            }
+        }
+    }
+
+    public BrandsAddService = async (req: Request) => {
+        try {
+            if (req.body.brand) {
+                const brand = req.body.brand as string
+                const insertBrand = await prisma.brand.create({
+                    data: {
+                        name: brand
+                    }
+                })
+                return {
+                    status: true,
+                    data: insertBrand
+                }
+            } else {
+                return {
+                    stauts: false,
+                    data: null,
+                    message: 'enter query proper'
+                }
+            }
         } catch (error) {
             console.log(error);
             return {

@@ -8,13 +8,13 @@ datasource db {
 }
 
 model user {
-  id         Int     @id @default(autoincrement())
-  email      String  @unique
+  id         Int         @id @default(autoincrement())
+  email      String      @unique
   first_name String
   last_name  String?
   password   String
   mobile_no  String?
-  addresses addresses[]
+  addresses  addresses[]
 }
 
 model addresses {
@@ -38,25 +38,20 @@ model product {
   img_path      String?
   categories    categories @relation(fields: [categories_id], references: [id])
   categories_id Int
+  brand         brand      @relation(fields: [brand_id], references: [id])
+  brand_id      Int
 }
 
 model categories {
   id          Int       @id @default(autoincrement())
   name        String
   description String?
-  // sub_categories sub_categories[]F
+  // sub_categories sub_categories[]
   product     product[]
 }
 
-// model sub_categories {
-//   id            Int        @id @default(autoincrement())
-//   name          String
-//   description   String?
-//   categories    categories @relation(fields: [categories_id], references: [id])
-//   categories_id Int
-// }
-
 model brand {
-  id   Int    @id @default(autoincrement())
-  name String
+  id      Int       @id @default(autoincrement())
+  name    String    @unique
+  product product[]
 }

@@ -53,12 +53,45 @@ class AdminRouter {
         }
     }
 
+    private BrandsGet = async (req: Request, res: Response) => {
+        try {
+            const response = await AdminService.BrandsGetSerive(req)
+            res.status(200).send(response)
+        } catch (error) {
+            res.status(500).json({
+                status: false,
+                message: 'Internal server Error',
+                error: error,
+                data: null
+            })
+        }
+    }
+
+    private BrandsAdd = async (req: Request, res: Response) => {
+        try {
+            const response = await AdminService.BrandsAddService(req)
+            res.status(200).send(response)
+        } catch (error) {
+            res.status(500).json({
+                status: false,
+                message: 'Internal server Error',
+                error: error,
+                data: null
+            })
+        }
+    }
+
 
     private initRoutes() {
         this.router.post('/', this.adminRoute)
 
         this.router.post('/categories', this.CategorieAdd)
         this.router.get('/categories', this.CategorieGet)
+
+        this.router.get('/brands', this.BrandsGet)
+        this.router.post('/brands', this.BrandsAdd)
+
+
 
         this.router.post('/products', this.ProductAdd)
     }

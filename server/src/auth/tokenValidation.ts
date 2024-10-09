@@ -22,7 +22,11 @@ const chackIfTokenExist = (req: Request, res: Response, next: NextFunction) => {
             })
         }
     } else {
-        next();
+        res.status(200).json({
+            code: 911,
+            status: false,
+            message: "no token found"
+        })
     }
 }
 export default chackIfTokenExist;

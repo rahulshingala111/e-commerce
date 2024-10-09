@@ -39,9 +39,7 @@ class UserRoutesService {
                         last_name: payload.last_name,
                         password: payload.password,
                         email: payload.email,
-                        mobile_no: payload.mobile_no,
-                        city: payload.city,
-                        pin: payload.pin,
+                        mobile_no: payload.mobile_no
                     }
                 })
                 console.log(insertUser);
