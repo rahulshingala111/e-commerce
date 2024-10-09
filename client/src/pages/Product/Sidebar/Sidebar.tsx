@@ -8,9 +8,12 @@ const Sidebar: React.FC<CategoryProps> = ({ category }) => {
     <div className="sidebar">
       <h3>Filters</h3>
       <ul>
+        <Link to={`/product?category_id=${0}`}><button className='product-button-2'>All</button></Link>
         {
           category.map((element: CategoriesInterface) => (
-            <Link key={element.id} to={`/product?category_id=${element.id}`} ><li key={element.id}>{element.name}</li></Link>
+            <div key={element.id}>
+              <Link to={`/product?category_id=${element.id}`} ><button className='product-button-2'>{element.name}</button></Link>
+            </div>
           ))
         }
       </ul>

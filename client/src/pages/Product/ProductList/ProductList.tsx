@@ -3,7 +3,7 @@ import Card from "../../Component/Card/Card"
 import { AxiosResponse } from "axios"
 import ApiCall from "../../../constants/ApiCall"
 import { ParamsProps, ProductInterface } from "../../../constants/Interfaces"
-
+import './ProductList.css'
 const Produclist: React.FC<ParamsProps> = ({ params }) => {
 
     const [product, setProducts] = useState<Array<ProductInterface>>([])
@@ -29,11 +29,13 @@ const Produclist: React.FC<ParamsProps> = ({ params }) => {
 
 
     return (
-        product.length > 0 ?
-            product.map((element: ProductInterface) => (
-                <Card key={element.id} product={element} />
-            ))
-            : <p>No item found</p>
+        <div className="product-list-2">
+            {product.length > 0 ?
+                product.map((element: ProductInterface) => (
+                    <Card key={element.id} product={element} />
+                ))
+                : <p>No item found</p>}
+        </div>
     )
 }
 export default Produclist

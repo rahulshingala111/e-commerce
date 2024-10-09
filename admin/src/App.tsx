@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import AddProduct from './pages/AddProduct/AddProduct';
 import AddCategories from './pages/AddCategories/AddCategories';
+import AddBrand from './pages/AddBrands/AddBrand';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="/product/add" element={<AddProduct />} />
           <Route path="/product/categories/add" element={<AddCategories />} />
+          <Route path="/product/brand/add" element={<AddBrand />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>

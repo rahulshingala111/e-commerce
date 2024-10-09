@@ -11,6 +11,9 @@ const Dashboard = () => {
                 <div>
                     <Link to={'/product/categories/add'}><button>Add Categories</button></Link>
                 </div>
+                <div>
+                    <Link to={'/product/brand/add'}><button>Add Brand</button></Link>
+                </div>
             </div>
         </>
     )

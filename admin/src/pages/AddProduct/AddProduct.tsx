@@ -5,24 +5,39 @@ interface Categories {
     name: string,
     description: string
 }
+interface Brands {
+    id: number,
+    name: string
+}
 const AddProduct = () => {
     const [product_name, setProduct_name] = useState<string>("");
     const [product_description, setProduct_description] = useState<string>("");
     const [product_price, setProduct_price] = useState<string>("");
     const [product_image_url, setProduct_image_url] = useState<string>("");
-    const [categories, setCategories] = useState<Array<Categories>>([{
-        id: 0,
-        name: '',
-        description: ''
-    }])
     const [product_categorie, setProduct_categorie] = useState<string>('')
+    const [product_brand, setProduct_brand] = useState<string>('')
 
+
+    const [categories, setCategories] = useState<Array<Categories>>([])
+
+    const [brands, setBrands] = useState<Array<Brands>>([])
 
     useEffect(() => {
         const callMe = async () => {
-            const getCategories = await ApiCall.get('/categories')
-            console.log(getCategories.data);
-            setCategories(getCategories.data)
+            try {
+                const getCategories = await ApiCall.get('/categories')
+                console.log(getCategories.data);
+                setCategories(getCategories.data);
+
+
+                const getBrands = await ApiCall.get('/brands')
+                console.log(getBrands.data);
+                setBrands(getBrands.data)
+            } catch (error) {
+                console.log(error);
+
+            }
+
         }
         callMe();
     }, []);
@@ -33,6 +48,7 @@ const AddProduct = () => {
         setProduct_description("")
         setProduct_price("")
         setProduct_image_url("")
+        setProduct_brand("")
     };
 
     const handleFile = (e: React.FormEvent<EventTarget>) => {
@@ -46,7 +62,7 @@ const AddProduct = () => {
         const form = new FormData();
         form.append("file", product_image_url)
 
-        const apicall = await ApiCall.post(`/products?product_name=${product_name}&product_description=${product_description}&product_price=${product_price}&product_categorie=${product_categorie}`, form, {
+        const apicall = await ApiCall.post(`/products?product_name=${product_name}&product_description=${product_description}&product_price=${product_price}&product_categorie=${product_categorie}&product_brand=${product_brand}`, form, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
@@ -109,15 +125,30 @@ const AddProduct = () => {
                         required
                     />
                 </div>
-                <div>
-                    <label htmlFor="categories">categories</label>
-                    <select onChange={(e) => { setProduct_categorie(e.target.value) }}>
-                        <option value={0} selected disabled>select</option>
-                        {categories.map((element: Categories) => (
-                            <option key={element.id} value={element.id}>{element.name}</option>
-                        ))}
-                    </select>
-                </div>
+                {
+                    categories.length > 0 && (
+                        <div>
+                            <label htmlFor="categories">categories</label>
+                            <select onChange={(e) => { setProduct_categorie(e.target.value) }}>
+                                <option value={0} selected disabled>select</option>
+                                {categories.map((element: Categories) => (
+                                    <option key={element.id} value={element.id}>{element.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )
+                }
+                {brands.length > 0 && (
+                    <div>
+                        <label htmlFor="brands">brands</label>
+                        <select onChange={(e) => { setProduct_brand(e.target.value) }}>
+                            <option value={0} selected disabled>select</option>
+                            {brands.map((element: Brands) => (
+                                <option key={element.id} value={element.id}>{element.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                )}
                 <div>
                     <button type="submit">Insert</button>
                 </div>

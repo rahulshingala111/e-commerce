@@ -2,4 +2,3 @@ node_modules
 .env
 uploads
 server/package-lock.json
-accept-a-payment
