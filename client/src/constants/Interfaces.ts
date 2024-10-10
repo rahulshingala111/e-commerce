@@ -23,11 +23,18 @@ export interface ProductCardProps {
 }
 export interface CategoryProps {
     category: Array<CategoriesInterface>;
+    brand : Array<BrandInterface>
+}
+
+export interface BrandInterface {
+    id: number,
+    name: string
 }
 
 export interface ParamsProps {
     params: {
-        category_id: string
+        category_id: string | null,
+        brand_id: string | null
     }
 }
 

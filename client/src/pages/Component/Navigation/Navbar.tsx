@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <a href="/">MyStore</a>
+        <a href="/">Sahara Store</a>
       </div>
       <ul className="navbar-links">
         <li><a href="/">Home</a></li>

@@ -13,13 +13,21 @@ const Produclist: React.FC<ParamsProps> = ({ params }) => {
     useEffect(() => {
         const callme = async () => {
             try {
+
+                let queryParams = new String('')
+
                 if (params.category_id) {
-                    const apicall: AxiosResponse = await ApiCall.get(`/product/get?category_id=${params.category_id}`)
-                    setProducts(apicall.data);
+                    queryParams = `category_id=${params.category_id}`
                 } else {
-                    const apicall: AxiosResponse = await ApiCall.get(`/product/get?category_id=0`)
-                    setProducts(apicall.data);
+                    queryParams = `category_id=0`
                 }
+                if (params.brand_id) {
+                    queryParams = queryParams + '&' + `brand_id=${params.brand_id}`
+                }
+
+                const apicall: AxiosResponse = await ApiCall.get(`/product/get?${queryParams}`)
+                setProducts(apicall.data);
+
             } catch (error) {
                 console.log(error);
             }
