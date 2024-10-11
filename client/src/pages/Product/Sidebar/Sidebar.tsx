@@ -1,9 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Sidebar.css';
 import { BrandInterface, CategoriesInterface, CategoryProps } from '../../../constants/Interfaces';
 import { Link } from 'react-router-dom';
 
 const Sidebar: React.FC<CategoryProps> = ({ category, brand }) => {
+
+  const [selectedCategories, setSelectedCategories] = useState<Array<string>>([])
+  const [selectedBrands, setSelectedBrands] = useState<Array<any>>([])
+
+  const handleCategories = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.checked)
+    console.log(e.target.value)
+    const checked = e.target.checked;
+    const value = e.target.value
+    if (checked) {
+      setSelectedCategories([...selectedCategories, value])
+    }
+    if (checked === false) {
+      const index = selectedCategories.indexOf(value)
+      console.log(index);
+
+      setSelectedCategories(selectedCategories.splice(index, 1))
+    }
+  }
+
+  const handleBrands = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.checked)
+    console.log(e.target.value)
+    const checked = e.target.checked;
+    const value = e.target.value
+    if (checked) {
+      setSelectedBrands([...selectedBrands, value])
+    }
+  }
+  console.log("categoruies", selectedCategories);
+  console.log("brands", selectedBrands);
+
+
+
   return (
     <div className="sidebar">
       <h3>Filters</h3>
@@ -17,17 +51,19 @@ const Sidebar: React.FC<CategoryProps> = ({ category, brand }) => {
             </div>
           ))
         } */}
-        {
-          category.map((element: CategoriesInterface, index: number) => (
-            <div key={index} className="checkbox-container">
-              <label className="custom-checkbox">
-                <input type='checkbox' name={element.name} onChange={() => console.log('checked', element.id, element.name)} />
-                <span className="checkmark"></span>
-                {element.name}
-              </label>
-            </div>
-          ))
-        }
+        <form>
+          {
+            category.map((element: CategoriesInterface, index: number) => (
+              <div key={index} className="checkbox-container">
+                <label className="custom-checkbox">
+                  <input type='checkbox' value={element.id} name={element.name} onChange={handleCategories} />
+                  <span className="checkmark"></span>
+                  {element.name}
+                </label>
+              </div>
+            ))
+          }
+        </form>
         <h2>By Brands</h2>
         {/* {
           brand.length > 0 && (
@@ -43,7 +79,7 @@ const Sidebar: React.FC<CategoryProps> = ({ category, brand }) => {
             brand.map((element: BrandInterface, index: number) => (
               <div key={index} className="checkbox-container">
                 <label className="custom-checkbox">
-                  <input type='checkbox' value={element.id} name={element.name} onChange={(e) => console.log('checked', element.id, element.name, e.target.value)} />
+                  <input type='checkbox' value={element.id} name={element.name} onChange={handleBrands} />
                   <span className="checkmark"></span>
                   {element.name}
                 </label>

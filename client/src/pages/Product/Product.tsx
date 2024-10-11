@@ -4,7 +4,7 @@ import Sidebar from './Sidebar/Sidebar';
 import ProductList from './ProductList/ProductList';
 import './Product.css';
 import ApiCall from '../../constants/ApiCall';
-import { BransInterface, CategoriesInterface } from '../../constants/Interfaces';
+import { BrandInterface, CategoriesInterface } from '../../constants/Interfaces';
 import { useLocation } from 'react-router-dom';
 
 const ProductPage: React.FC = () => {
@@ -13,7 +13,7 @@ const ProductPage: React.FC = () => {
 
     const [loading, setLoading] = useState<boolean>(true)
     const [category, setCategory] = useState<Array<CategoriesInterface>>([])
-    const [brand, setBrand] = useState<Array<BransInterface>>([])
+    const [brand, setBrand] = useState<Array<BrandInterface>>([])
 
 
     const [params, setParams] = useState<any>({})
