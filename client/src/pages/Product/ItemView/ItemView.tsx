@@ -16,7 +16,7 @@ const ItemView: React.FC = () => {
         console.log('hello');
         const productId = queryParams.get('product_id');
         const callme = async () => {
-            const data: AxiosResponse = await ApiCall.get(`/product/item/${productId}`)
+            const data: AxiosResponse = await ApiCall.get(CONSTANTS.API_ENDPOINTS.ITEM.FETCH(productId))
             setProduct(data.data)
         }
         callme()

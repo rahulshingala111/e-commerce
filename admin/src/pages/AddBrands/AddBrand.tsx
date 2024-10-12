@@ -1,5 +1,6 @@
 import { useState } from "react"
 import ApiCall from "../../constants/ApiCall"
+import { API_ENDPOINTS } from "../../constants/ApiEndpoints"
 
 const AddBrand = () => {
     const [brand, setBrand] = useState<string>()
@@ -8,8 +9,8 @@ const AddBrand = () => {
     const handleSubmit = async (e: React.FormEvent<EventTarget>) => {
         e.preventDefault();
         try {
-            const insert = await ApiCall.post('/brands',{
-                brand : brand
+            const insert = await ApiCall.post(API_ENDPOINTS.BRANDS_POST, {
+                brand: brand
             })
             console.log(insert);
             if (insert.status) {

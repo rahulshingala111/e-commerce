@@ -5,6 +5,7 @@ import './Home.css'
 import ProductSlider from "../Component/Slider/ProductSlider";
 import ApiCall from "../../constants/ApiCall";
 import { ProductInterface } from "../../constants/Interfaces";
+import CONSTANTS from "../../constants/constants";
 
 const Home = () => {
 
@@ -13,7 +14,7 @@ const Home = () => {
     useEffect(() => {
         const callme = async () => {
             try {
-                const apicall: AxiosResponse = await ApiCall.get('/product/ten')
+                const apicall: AxiosResponse = await ApiCall.get(CONSTANTS.API_ENDPOINTS.PRODUCT.FETCH_TEN)
                 setProducts(apicall.data);
             } catch (error) {
                 console.log(error);

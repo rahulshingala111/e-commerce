@@ -6,6 +6,7 @@ import './Product.css';
 import ApiCall from '../../constants/ApiCall';
 import { BrandInterface, CategoriesInterface } from '../../constants/Interfaces';
 import { useLocation } from 'react-router-dom';
+import CONSTANTS from '../../constants/constants';
 
 const useQuery = (): URLSearchParams => {
     return new URLSearchParams(useLocation().search)
@@ -28,13 +29,11 @@ const ProductPage: React.FC = () => {
 
         const callme = async () => {
             try {
-                const category = await ApiCall.get('/product/categories')
+                const category = await ApiCall.get(CONSTANTS.API_ENDPOINTS.CATEGORY.FETCH)
                 setCategory(category.data)
 
-                const brand = await ApiCall.get('/product/brands')
+                const brand = await ApiCall.get(CONSTANTS.API_ENDPOINTS.BRANDS.FETCH)
                 setBrand(brand.data)
-
-
 
                 setLoading(false)
             } catch (error) {

@@ -2,6 +2,7 @@ import React from 'react';
 import './Sidebar.css';
 import { BrandInterface, CategoriesInterface, CategoryProps } from '../../../constants/Interfaces';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import CONSTANTS from '../../../constants/constants';
 
 const useQuery = (): URLSearchParams => {
   return new URLSearchParams(useLocation().search)
@@ -33,7 +34,8 @@ const Sidebar: React.FC<CategoryProps> = ({ category, brand }) => {
         const index = currentSelectedBrands.indexOf(value)
         currentSelectedBrands.splice(index, 1)
       }
-      navigate(`/product?category_id=${_params.category_id}&brand_id=[${currentSelectedBrands.toString()}]`)
+      navigate(CONSTANTS.ROUTES.PRODUCT_PAGE.PRODUCTS_FILTER_GET(_params.category_id, currentSelectedBrands.toString()))
+
     } else {
       //
     }
@@ -53,12 +55,14 @@ const Sidebar: React.FC<CategoryProps> = ({ category, brand }) => {
     <div className="sidebar">
       <h3>Filters</h3>
       <ul>
-        <Link to={`/product?category_id=${0}&brand_id=${0}`}><button className='product-button-2'>Reset Filter</button></Link>
+        <Link to={CONSTANTS.ROUTES.PRODUCT_PAGE.PRODUCTS_ONLY_CATEGORY(0)}><button className='product-button-2'>Reset Filter</button></Link>
         <h2>By Category</h2>
         {
           category.map((element: CategoriesInterface) => (
             <div key={element.id}>
-              <Link to={`/product?category_id=${element.id}&brand_id=${0}`}><button className='product-button-2'>{element.name}</button></Link>
+              <Link to={CONSTANTS.ROUTES.PRODUCT_PAGE.PRODUCTS_ONLY_CATEGORY(element.id) + `&brand_id=[]`}>
+                <button className='product-button-2'>{element.name}</button>
+              </Link>
             </div>
           ))
         }

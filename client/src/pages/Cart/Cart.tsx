@@ -25,7 +25,7 @@ const Cart = () => {
                 console.log(itemsArray);
                 const tempArray: Array<CartItemInterface> = []
                 Promise.all(itemsArray.map(async (element: number) => {
-                    const fetchitems = await ApiCall.get(`/product/item/${element}`)
+                    const fetchitems = await ApiCall.get(CONSTANTS.API_ENDPOINTS.CART.FETCH(element))
                     if (fetchitems.status) {
                         tempArray.push(fetchitems.data)
                     }

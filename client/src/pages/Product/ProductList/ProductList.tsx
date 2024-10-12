@@ -4,6 +4,7 @@ import { AxiosResponse } from "axios"
 import ApiCall from "../../../constants/ApiCall"
 import { ParamsProps, ProductInterface } from "../../../constants/Interfaces"
 import './ProductList.css'
+import CONSTANTS from "../../../constants/constants"
 const Produclist: React.FC<ParamsProps> = ({ params }) => {
 
     const [product, setProducts] = useState<Array<ProductInterface>>([])
@@ -28,7 +29,7 @@ const Produclist: React.FC<ParamsProps> = ({ params }) => {
                 }
                 queryParams = queryParams + '&' + `brand_id=[${brandsArray.toString()}]`
 
-                const apicall: AxiosResponse = await ApiCall.get(`/product/get?${queryParams}`)
+                const apicall: AxiosResponse = await ApiCall.get(CONSTANTS.API_ENDPOINTS.PRODUCT.FETCH(queryParams as string))
                 setProducts(apicall.data);
 
             } catch (error) {

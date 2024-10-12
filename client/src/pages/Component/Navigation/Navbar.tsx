@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import ApiCall from '../../../constants/ApiCall';
 import { AxiosResponse } from 'axios';
 import { CategoriesInterface } from '../../../constants/Interfaces';
+import CONSTANTS from '../../../constants/constants';
 
 const Navbar: React.FC = () => {
 
@@ -23,7 +24,7 @@ const Navbar: React.FC = () => {
 
     const callme = async () => {
       try {
-        const category: AxiosResponse = await ApiCall.get('/product/categories')
+        const category: AxiosResponse = await ApiCall.get(CONSTANTS.API_ENDPOINTS.CATEGORY.FETCH)
         if (category.status) {
           setCategories(category.data)
         }
@@ -45,7 +46,7 @@ const Navbar: React.FC = () => {
         <li><a href="/">Home</a></li>
 
         <li className="dropdown">
-          <Link to={'/product'}>
+          <Link to={CONSTANTS.ROUTES.PRODUCT_PAGE.PRODUCT_BASE}>
             <div>
               Products
             </div>
@@ -53,7 +54,7 @@ const Navbar: React.FC = () => {
           <ul className="dropdown-menu">
             {
               categories.map((elemnt: CategoriesInterface) => (
-                <Link key={elemnt.id} to={`/product?category_id=${elemnt.id}`}><li>{elemnt.name}</li></Link>
+                <Link key={elemnt.id} to={CONSTANTS.ROUTES.PRODUCT_PAGE.PRODUCTS_ONLY_CATEGORY(elemnt.id)}><li>{elemnt.name}</li></Link>
               ))
             }
           </ul>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './Profile.css'
 import ApiCall from '../../constants/ApiCall'
 import { AddressInterface } from '../../constants/Interfaces'
+import CONSTANTS from '../../constants/constants'
 
 const Profile: React.FC = () => {
 
@@ -19,7 +20,7 @@ const Profile: React.FC = () => {
 
     useEffect(() => {
         const callme = async () => {
-            const fetchAddress = await ApiCall.get('/user/address')
+            const fetchAddress = await ApiCall.get(CONSTANTS.API_ENDPOINTS.USER.CREATE_ADDRESS)
             console.log(fetchAddress);
             if (fetchAddress.status) {
                 setAddress(fetchAddress.data)
@@ -33,7 +34,7 @@ const Profile: React.FC = () => {
         e.preventDefault();
         console.log("form submit", address_1, address_2, landmark, postal_code, city, state, country);
 
-        const addAddress = await ApiCall.post('/user/address/add', {
+        const addAddress = await ApiCall.post(CONSTANTS.API_ENDPOINTS.USER.CREATE_ADDRESS, {
             address_1, address_2, landmark, postal_code, city, state, country
         })
 
@@ -55,7 +56,7 @@ const Profile: React.FC = () => {
                     )}
                 </div>
             </div>
-            <div>   
+            <div>
                 <button onClick={() => setAddAddressToggle(!addAddressToggle)}>Add Address</button>
                 {addAddressToggle && (
                     <div>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css'
 import ApiCall from '../../constants/ApiCall';
+import CONSTANTS from '../../constants/constants';
 const Login = () => {
 
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ const Login = () => {
         if (email && password) {
             console.log(email, password);
 
-            const response: any = await ApiCall.post('/auth/login', {
+            const response: any = await ApiCall.post(CONSTANTS.API_ENDPOINTS.AUTH.LOGIN, {
                 data: {
                     email,
                     password

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './Order.css'
 import ApiCall from '../../constants/ApiCall';
 import { AddressInterface } from '../../constants/Interfaces'
+import CONSTANTS from '../../constants/constants';
 // import Payment from './Payment/Payment';
 // import Reivew from './Review/Review';
 
@@ -17,7 +18,7 @@ const Order: React.FC = () => {
 
     useEffect(() => {
         const callme = async () => {
-            const fetchAddress = await ApiCall.get('/user/address');
+            const fetchAddress = await ApiCall.get(CONSTANTS.API_ENDPOINTS.USER.FETCH_ADDRESS);
             if (fetchAddress.status) {
                 setAddresses(fetchAddress.data)
             }
