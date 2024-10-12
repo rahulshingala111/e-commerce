@@ -7,34 +7,22 @@ import ApiCall from '../../constants/ApiCall';
 import { BrandInterface, CategoriesInterface } from '../../constants/Interfaces';
 import { useLocation } from 'react-router-dom';
 
+const useQuery = (): URLSearchParams => {
+    return new URLSearchParams(useLocation().search)
+}
+
 const ProductPage: React.FC = () => {
 
-    const location = useLocation();
+    const query = useQuery();
 
     const [loading, setLoading] = useState<boolean>(true)
     const [category, setCategory] = useState<Array<CategoriesInterface>>([])
     const [brand, setBrand] = useState<Array<BrandInterface>>([])
 
-
-    const [params, setParams] = useState<any>({})
-
-    const queryParams = new URLSearchParams(location.search);
-
-    const _category_id = queryParams.get('category_id');
-    const _brand_id = queryParams.get('brand_id');
-
-    useEffect(() => {
-        if (_category_id) {
-            setParams({ ...params, category_id: _category_id! })
-        }
-    }, [_category_id])
-
-    useEffect(() => {
-        if (_brand_id) {
-            setParams({ ...params, brand_id: _brand_id })
-        }
-    }, [_brand_id])
-
+    const _params = {
+        category_id: query.get('category_id') ?? null,
+        brand_id: query.get('brand_id') ?? null
+    }
 
     useEffect(() => {
 
@@ -65,7 +53,7 @@ const ProductPage: React.FC = () => {
                         <Sidebar category={category} brand={brand} />
                         <div className="product-section">
                             <h2>Products</h2>
-                            <ProductList params={params} />
+                            <ProductList params={_params} />
                         </div>
                     </>
                 )

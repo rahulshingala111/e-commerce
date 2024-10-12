@@ -23,7 +23,10 @@ export interface ProductCardProps {
 }
 export interface CategoryProps {
     category: Array<CategoriesInterface>;
-    brand : Array<BrandInterface>
+    brand: Array<BrandInterface>
+}
+export interface ProductProps {
+    products: Array<ProductInterface>
 }
 
 export interface BrandInterface {

@@ -7,7 +7,7 @@ import './ProductList.css'
 const Produclist: React.FC<ParamsProps> = ({ params }) => {
 
     const [product, setProducts] = useState<Array<ProductInterface>>([])
-    console.log(params);
+    console.log("product lisrt page", params);
 
 
     useEffect(() => {
@@ -21,9 +21,12 @@ const Produclist: React.FC<ParamsProps> = ({ params }) => {
                 } else {
                     queryParams = `category_id=0`
                 }
+                let brandsArray: Array<number> = []
                 if (params.brand_id) {
-                    queryParams = queryParams + '&' + `brand_id=${params.brand_id}`
+                    brandsArray = JSON.parse(params.brand_id)
+                    console.log("lenghts", brandsArray.length);
                 }
+                queryParams = queryParams + '&' + `brand_id=[${brandsArray.toString()}]`
 
                 const apicall: AxiosResponse = await ApiCall.get(`/product/get?${queryParams}`)
                 setProducts(apicall.data);

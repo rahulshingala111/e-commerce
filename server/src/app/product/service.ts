@@ -108,7 +108,8 @@ class ProductService {
 
             console.log(req.query);
             const category_id: number = Number(req.query.category_id)
-            const brand_id: number = Number(req.query.brand_id)
+            const brand_id: Array<number> = JSON.parse(req.query.brand_id as string)
+            console.log("brand_id", brand_id);
 
             let where = {}
 
@@ -117,10 +118,10 @@ class ProductService {
                     categories_id: category_id
                 }
             }
-            if (brand_id) {
+            if (brand_id.length > 0) {
                 where = {
                     ...where,
-                    brand_id: brand_id
+                    brand_id: { in: brand_id }
                 }
             }
 
@@ -188,8 +189,8 @@ class ProductService {
         try {
             const getbrands = await prisma.brand.findMany()
             return {
-                status : true,
-                data : getbrands
+                status: true,
+                data: getbrands
             }
         } catch (error) {
             console.log(error);
