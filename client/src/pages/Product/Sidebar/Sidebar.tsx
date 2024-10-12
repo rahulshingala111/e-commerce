@@ -15,14 +15,16 @@ const Sidebar: React.FC<CategoryProps> = ({ category, brand }) => {
 
   const _params = {
     category_id: query.get('category_id') ?? null,
-    brand_id: query.get('brand_id') ?? null
+    brand_id: query.get('brand_id') ?? '[]'
   }
 
   const handleBrands = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     const value: number = Number(e.target.value);
+    console.log(_params.brand_id);
 
-    if (value && _params.brand_id) {
+
+    if (value) {
       let currentSelectedBrands: Array<number> = []
       currentSelectedBrands = JSON.parse(_params.brand_id)
 
@@ -36,8 +38,6 @@ const Sidebar: React.FC<CategoryProps> = ({ category, brand }) => {
       }
       navigate(CONSTANTS.ROUTES.PRODUCT_PAGE.PRODUCTS_FILTER_GET(_params.category_id, currentSelectedBrands.toString()))
 
-    } else {
-      //
     }
   }
 
