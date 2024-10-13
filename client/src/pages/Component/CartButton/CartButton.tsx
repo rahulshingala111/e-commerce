@@ -34,7 +34,7 @@ const CartButton: React.FC<CartButttonProps> = ({ product_id }) => {
     }
 
     return (
-        <button className="product-button" onClick={handleCartAction}>Add to Cart</button>
+        <button className="product-button-card" onClick={handleCartAction}>Add to Cart</button>
     )
 }
 export default CartButton
