@@ -3,12 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css'
 import ApiCall from '../../constants/ApiCall';
 import CONSTANTS from '../../constants/constants';
+import { useAuth } from '../../constants/AuthContext';
 const Login = () => {
 
     const navigate = useNavigate();
 
     const [email, setEmail] = useState<string>('')
     const [password, setPasswod] = useState<string>('')
+
+    const { login } = useAuth();
 
     const handleLogin = async (e: React.FormEvent<EventTarget>) => {
         e.preventDefault();
@@ -21,15 +24,15 @@ const Login = () => {
                     password
                 }
             })
-
             if (response.status) {
                 console.log("ello");
 
-                sessionStorage.setItem('token', response.token)
+                sessionStorage.setItem(CONSTANTS.SESSION_STORAGE.TOKEN, response.token)
+                login();
                 //redirect to home page
                 setTimeout(() => {
                     navigate('/')
-                }, 500);
+                }, 1000);
             }
         }
     };

@@ -2,6 +2,12 @@ const CONSTANTS = Object.freeze({
     path: Object.freeze({
         server_url: 'http://localhost:3002'
     }),
+    LOCAL_STORAGE: {
+        CART_ITEMS: "cart_items"
+    },
+    SESSION_STORAGE: {
+        TOKEN: "token"
+    },
     API_ENDPOINTS: {
         CART: {
             FETCH: (data: number): string => `/product/item/${data}`,
@@ -11,7 +17,6 @@ const CONSTANTS = Object.freeze({
             FETCH: (data: string): string => `/product/get?${data}`,
         },
         USER: {
-            CREATE: `/user`,
             FETCH_ADDRESS: `/user/address`,
             CREATE_ADDRESS: `/user/address/add`,
         },
@@ -27,6 +32,7 @@ const CONSTANTS = Object.freeze({
         },
         AUTH: {
             LOGIN: `/auth/login`,
+            REGISTER : `/auth/register`
         },
 
     },

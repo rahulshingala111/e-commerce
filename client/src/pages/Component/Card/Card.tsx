@@ -7,7 +7,7 @@ import CartButton from '../CartButton/CartButton';
 const Card: React.FC<ProductCardProps> = ({ product }) => {
     return (
         <>
-            <div className="product-card">
+            <div className="product-card2">
                 <div className="product-image">
                     <img src={CONSTANTS.path.server_url + '/' + product.img_path} alt={product.title} className='product-image' />
                 </div>

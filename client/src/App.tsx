@@ -15,23 +15,27 @@ import ItemView from "./pages/Product/ItemView/ItemView";
 import Cart from "./pages/Cart/Cart";
 import Order from "./pages/Order/Order";
 import Profile from "./pages/Profile/Profile";
+import { AuthProvider } from "./constants/AuthContext";
+
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />} >
-          <Route index element={<Home />} />
-          <Route path="/login" element={<LoginSignup />} />
-          <Route path="/product" element={<ProductPage />} />
-          <Route path="/item" element={<ItemView />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/order" element={<Order />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="*" element={<ErrorPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter >
+    <AuthProvider >
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />} >
+            <Route index element={<Home />} />
+            <Route path="/login" element={<LoginSignup />} />
+            <Route path="/product" element={<ProductPage />} />
+            <Route path="/item" element={<ItemView />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/order" element={<Order />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="*" element={<ErrorPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter >
+    </AuthProvider>
   )
 }
 

@@ -21,7 +21,7 @@ const Register = () => {
 
         if (password === password_again) {
             //API Call
-            const apicall = await ApiCall.post(CONSTANTS.API_ENDPOINTS.USER.CREATE, {
+            const apicall = await ApiCall.post(CONSTANTS.API_ENDPOINTS.AUTH.REGISTER, {
                 data: {
                     firstname,
                     lastname: lastname?.length !== 0 ? lastname : null,

@@ -5,7 +5,7 @@ import ApiCall from "../../../constants/ApiCall"
 import { ParamsProps, ProductInterface } from "../../../constants/Interfaces"
 import './ProductList.css'
 import CONSTANTS from "../../../constants/constants"
-const Produclist: React.FC<ParamsProps> = ({ params }) => {
+const Produclist: React.FC<ParamsProps> = ({ params }) => { 
 
     const [product, setProducts] = useState<Array<ProductInterface>>([])
     console.log("product lisrt page", params);

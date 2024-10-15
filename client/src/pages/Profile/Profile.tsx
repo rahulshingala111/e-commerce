@@ -20,7 +20,7 @@ const Profile: React.FC = () => {
 
     useEffect(() => {
         const callme = async () => {
-            const fetchAddress = await ApiCall.get(CONSTANTS.API_ENDPOINTS.USER.CREATE_ADDRESS)
+            const fetchAddress = await ApiCall.get(CONSTANTS.API_ENDPOINTS.USER.FETCH_ADDRESS)
             console.log(fetchAddress);
             if (fetchAddress.status) {
                 setAddress(fetchAddress.data)

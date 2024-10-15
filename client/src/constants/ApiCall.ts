@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios"
+import CONSTANTS from "./constants"
 
 const ApiCall: AxiosInstance = axios.create({
     baseURL: "http://localhost:3002/api/v1",
@@ -6,7 +7,7 @@ const ApiCall: AxiosInstance = axios.create({
 })
 
 ApiCall.interceptors.request.use((config): InternalAxiosRequestConfig<any> => {
-    const token = sessionStorage.getItem("token")
+    const token = sessionStorage.getItem(CONSTANTS.SESSION_STORAGE.TOKEN)
     if (token) {
         config.headers.Authorization = `${token}`
     }
@@ -15,7 +16,7 @@ ApiCall.interceptors.request.use((config): InternalAxiosRequestConfig<any> => {
 
 ApiCall.interceptors.response.use((response): AxiosResponse<any> => {
     if (response?.data?.code === 911) {
-        sessionStorage.removeItem('token')
+        sessionStorage.removeItem(CONSTANTS.SESSION_STORAGE.TOKEN)
         setTimeout(() => {
             window.location.href = '/'
         }, 300);

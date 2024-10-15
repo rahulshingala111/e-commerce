@@ -5,23 +5,16 @@ import ApiCall from '../../../constants/ApiCall';
 import { AxiosResponse } from 'axios';
 import { CategoriesInterface } from '../../../constants/Interfaces';
 import CONSTANTS from '../../../constants/constants';
+import { useAuth } from '../../../constants/AuthContext';
 
 const Navbar: React.FC = () => {
 
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
   const [categories, setCategories] = useState<Array<CategoriesInterface>>([])
 
-
+  const { isLoggedin } = useAuth();
+  console.log(isLoggedin);
+  
   useEffect(() => {
-    try {
-      const token = sessionStorage.getItem("token")
-      if (token) {
-        setIsLoggedIn(true)
-      }
-    } catch (error) {
-      console.log(error);
-    }
-
     const callme = async () => {
       try {
         const category: AxiosResponse = await ApiCall.get(CONSTANTS.API_ENDPOINTS.CATEGORY.FETCH)
@@ -65,11 +58,11 @@ const Navbar: React.FC = () => {
       <div className="navbar-actions">
         <input type="text" placeholder="Search..." className="navbar-search" />
         {
-          !isLoggedIn && (
+          !isLoggedin && (
             <Link to={'/login'}><button className="navbar-cart">Login/SignUp</button></Link>
           )
         }{
-          isLoggedIn && (
+          isLoggedin && (
             <Link to={'/profile'}><button className='navbar'>Profile</button></Link>
           )
         }
