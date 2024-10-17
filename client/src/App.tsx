@@ -11,7 +11,7 @@ import LoginSignup from "./pages/LoginSignUp/LoginSignUp";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ProductPage from "./pages/Product/Product";
-import ItemView from "./pages/Product/ItemView/ItemView";
+import ItemView from "./pages/ItemView/ItemView";
 import Cart from "./pages/Cart/Cart";
 import Order from "./pages/Order/Order";
 import Profile from "./pages/Profile/Profile";

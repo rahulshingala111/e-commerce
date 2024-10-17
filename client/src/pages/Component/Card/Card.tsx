@@ -20,7 +20,6 @@ const Card: React.FC<ProductCardProps> = ({ product }) => {
                     <div className="product-delivery">
                         <p>Free Delivery: <strong>Tomorrow</strong></p>
                     </div>
-                    {/* <button className="add-to-cart-btn">Add to Cart</button> */}
                     <CartButton product_id={product.id} />
                 </div>
             </div>

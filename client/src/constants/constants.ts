@@ -15,6 +15,8 @@ const CONSTANTS = Object.freeze({
         PRODUCT: {
             FETCH_TEN: `/product/ten`,
             FETCH: (data: string): string => `/product/get?${data}`,
+            CREATE_COMMENT: `/product/comment`,
+            FETCH_COMMENT: (data: string | null) => `/product/comment?product_id=${data}`
         },
         USER: {
             FETCH_ADDRESS: `/user/address`,
@@ -32,7 +34,7 @@ const CONSTANTS = Object.freeze({
         },
         AUTH: {
             LOGIN: `/auth/login`,
-            REGISTER : `/auth/register`
+            REGISTER: `/auth/register`
         },
 
     },

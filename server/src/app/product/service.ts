@@ -201,5 +201,74 @@ class ProductService {
             }
         }
     }
+    public WriteCommentService = async (req: Request) => {
+        try {
+            if (req.body.comment && req.body.product_id && req.body.rating) {
+                const comment: string = req.body.comment
+                const product_id: number = Number(req.body.product_id)
+                const rating: number = Number(req.body.rating)
+
+                const insertComment = await prisma.review.create({
+                    data: {
+                        review_string: comment,
+                        product_id: product_id,
+                        rating: rating
+                    }
+                })
+                console.log(insertComment);
+                return {
+                    status: true,
+                    data: insertComment,
+                    message: 'comment added'
+                }
+
+
+            } else {
+                return {
+                    staus: false,
+                    data: null,
+                    message: "send params correctly "
+                }
+            }
+        } catch (error) {
+            console.log(error);
+            return {
+                staus: false,
+                data: null,
+                error: error
+            }
+        }
+    }
+    public ReadCommentService = async (req: Request) => {
+        try {
+            if (req.query.product_id) {
+                const product_id: number = Number(req.query.product_id)
+
+                const getProduct = await prisma.review.findMany({
+                    where: {
+                        product_id: product_id
+                    }
+                })
+                return {
+                    status: true,
+                    data: getProduct,
+                    messages: "fetched success"
+                }
+            } else {
+                return {
+                    staus: false,
+                    data: null,
+                    message: 'send params correclty'
+                }
+            }
+        } catch (error) {
+            console.log(error);
+            return {
+                staus: false,
+                data: null,
+                error: error
+            }
+        }
+    }
 }
 export default new ProductService();

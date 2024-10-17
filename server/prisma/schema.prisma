@@ -40,6 +40,7 @@ model product {
   categories_id Int
   brand         brand      @relation(fields: [brand_id], references: [id])
   brand_id      Int
+  review        review[]
 }
 
 model categories {
@@ -54,4 +55,12 @@ model brand {
   id      Int       @id @default(autoincrement())
   name    String    @unique
   product product[]
+}
+
+model review {
+  id            Int     @id @default(autoincrement())
+  product       product @relation(fields: [product_id], references: [id])
+  product_id    Int
+  review_string String
+  rating        Int
 }

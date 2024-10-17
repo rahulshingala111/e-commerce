@@ -92,6 +92,34 @@ class ProductRoute {
         }
     }
 
+    private WriteComment = async (req: Request, res: Response) => {
+        try {
+            const response = await ProductService.WriteCommentService(req)
+            res.status(200).send(response)
+        } catch (error) {
+            res.status(500).json({
+                status: false,
+                message: 'Internal server Error',
+                error: error,
+                data: null
+            })
+        }
+    }
+
+    private ReadComment = async (req: Request, res: Response) => {
+        try {
+            const response = await ProductService.ReadCommentService(req)
+            res.status(200).send(response)
+        } catch (error) {
+            res.status(500).json({
+                status: false,
+                message: 'Internal server Error',
+                error: error,
+                data: null
+            })
+        }
+    }
+
     private initRoutes() {
         this.router.get('/ten', this.ProductTen)
 
@@ -105,6 +133,12 @@ class ProductRoute {
         this.router.get('/item/:product_id', this.GetItem)
 
         this.router.post('/addtocart', this.AddToCart)
+
+
+        this.router.post('/comment', this.WriteComment)
+        this.router.get('/comment', this.ReadComment)
+
+
 
 
     }
