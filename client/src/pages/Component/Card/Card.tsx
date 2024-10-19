@@ -1,15 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Card.css'
 import CONSTANTS from '../../../constants/constants';
 import { ProductCardProps } from '../../../constants/Interfaces';
 import CartButton from '../CartButton/CartButton';
+import ApiCall from '../../../constants/ApiCall';
 
 const Card: React.FC<ProductCardProps> = ({ product }) => {
+
+    const [imageData, setImageData] = useState<string>()
+
+    useEffect(() => {
+
+        async function callme() {
+            const blobImage : BlobPart = await ApiCall.get(CONSTANTS.path.server_url + '/' + product.img_path, {
+                responseType: 'blob'
+            })
+
+            const newBlob = new Blob([blobImage], { type: 'image/jpeg' })
+            const imageObjectURL = URL.createObjectURL(newBlob)
+            setImageData(imageObjectURL)
+        }
+        callme()
+    }, [])
+
+
+
     return (
         <>
             <div className="product-card2">
                 <div className="product-image">
-                    <img src={CONSTANTS.path.server_url + '/' + product.img_path} alt={product.title} className='product-image' />
+                    <img src={imageData} alt={product.title} className='product-image' />
                 </div>
                 <div className="product-info">
                     <h2 className="product-title">{product.title}</h2>

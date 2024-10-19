@@ -8,10 +8,27 @@ import UserRouter from './src/app/user/router'
 import AuthRouter from './src/app/auth/router';
 import AdminRouter from './src/app/admin/router'
 import chackIfTokenExist from './src/auth/tokenValidation';
-app.use(cors())
+import path from 'path';
+app.use(cors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 200
+}))
+
+
 app.use(express.json())
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+});
 app.use('/product/image', express.static(CONSTANTS.path.product_store))
 app.use('/banner/image', express.static(CONSTANTS.path.banner_store))
+
+console.log('Serving static files from:', path.join(__dirname, 'product_store'));
+console.log('Serving static files from:', path.join(__dirname, 'product_store'));
+
 
 
 app.use((req: Request, res: Response, next: NextFunction) => {

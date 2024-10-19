@@ -3,7 +3,7 @@ import CONSTANTS from "./constants"
 
 const ApiCall: AxiosInstance = axios.create({
     baseURL: CONSTANTS.path.server_url + "/api/v1",
-    timeout: 5000,
+    // timeout: 10000,
 })
 
 ApiCall.interceptors.request.use((config): InternalAxiosRequestConfig<any> => {
