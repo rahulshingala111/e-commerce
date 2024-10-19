@@ -2,11 +2,12 @@ import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 
 import CONSTANTS from "./constants"
 
 const ApiCall: AxiosInstance = axios.create({
-    baseURL: "http://localhost:3002/api/v1",
+    baseURL: CONSTANTS.path.server_url + "/api/v1",
     timeout: 5000,
 })
 
 ApiCall.interceptors.request.use((config): InternalAxiosRequestConfig<any> => {
+    config.headers['ngrok-skip-browser-warning'] = 'true';
     const token = sessionStorage.getItem(CONSTANTS.SESSION_STORAGE.TOKEN)
     if (token) {
         config.headers.Authorization = `${token}`

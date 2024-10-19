@@ -1,6 +1,6 @@
 const CONSTANTS = Object.freeze({
     path: Object.freeze({
-        server_url: 'http://localhost:3002'
+        server_url: 'https://holy-wombat-definite.ngrok-free.app'
     }),
     LOCAL_STORAGE: {
         CART_ITEMS: "cart_items"
