@@ -12,9 +12,9 @@ const ProductSlider = () => {
     };
 
     const images = [
-        'http://localhost:3002/banner/image/2.jpg',
-        'http://localhost:3002/banner/image/1.jpg',
-        'http://localhost:3002/banner/image/3.jpg',
+        'https://holy-wombat-definite.ngrok-free.app/banner/image/2.jpg',
+        'https://holy-wombat-definite.ngrok-free.app/banner/image/1.jpg',
+        'https://holy-wombat-definite.ngrok-free.app/banner/image/3.jpg',
     ]
 
     return (
