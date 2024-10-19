@@ -4,11 +4,39 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  /* color: rgba(255, 255, 255, 0.87); */
-  /* background-color: #242424; */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --background: #fcf8ec;
+  /* --background: #fcf8ec; */
+
+  --navbar: #d0e8f2;
+  /* --navbar: #d0e8f2; */
+
+  --button-color: #456268;
+  /* --button-color: #456268; */
+
+  --card-color: #d0e8f2;
+  /* --card-color: #79a3b1; */
+
+  --sidebar: #fcf8ec;
+  /* --sidebar : #79a3b1; */
+
+  --text-black: #000;
+  --text-white: #fff;
+
+  --border-radius : 10px;
+
+  --font-size-big : 16px;
+
+  background: var(--background);
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }

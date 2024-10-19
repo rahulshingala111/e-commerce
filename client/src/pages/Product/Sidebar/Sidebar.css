@@ -1,7 +1,7 @@
 /* styles/Sidebar.css */
 .sidebar {
   width: 160px;
-  background-color: #cac5c5;
+  background-color: var(--sidebar);
   padding: 20px;
 }
 

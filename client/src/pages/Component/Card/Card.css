@@ -5,9 +5,9 @@
   align-items: flex-start;
   width: 300px;
   border: 1px solid #e2e2e2;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+  background-color: var(--card-color);
   padding: 15px;
   margin-bottom: 20px;
   transition: box-shadow 0.3s ease;
@@ -45,13 +45,13 @@
 .product-price {
   font-size: 20px;
   font-weight: bold;
-  color: #B12704; /* Amazon-like price color */
+  /* color: #B12704; */
   margin-bottom: 8px;
 }
 
 /* Rating styling */
 .product-rating {
-  color: #ff9900;
+  /* color: #ff9900; */
   font-size: 14px;
   margin-bottom: 10px;
 }
@@ -71,20 +71,17 @@
 .add-to-cart-btn, .cart-button {
   width: 100%;
   padding: 10px 15px;
-  background-color: #ffd814;
+  background-color: var(--button-color);
   color: #0f1111;
   font-size: 16px;
   font-weight: bold;
-  border: 1px solid #fcd200;
-  border-radius: 5px;
+  border: 1px solid var(--button-color);
+  border-radius: var(--border-radius);
   cursor: pointer;
   text-align: center;
   transition: background-color 0.3s ease;
 }
 
 .add-to-cart-btn:hover, .cart-button:hover {
-  background-color: #f7ca00;
+  background-color: var(--button-color);
 }
-
-/* Hover effect for button */
-.add-to-cart

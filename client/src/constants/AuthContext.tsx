@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import CONSTANTS from "./constants";
 
 interface AuthContextInterface {
     isLoggedin: boolean;
@@ -15,6 +16,17 @@ const AuthContext = createContext<AuthContextInterface | undefined>(undefined)
 
 export const AuthProvider: React.FC<AuthProviderContexInterface> = ({ children }) => {
     const [isLoggedin, setIsLoggedIn] = useState<boolean>(false)
+
+    useEffect(() => {
+        console.log("auth context");
+        
+        const getToken = sessionStorage.getItem(CONSTANTS.SESSION_STORAGE.TOKEN)
+        if (getToken) {
+            setIsLoggedIn(true)
+        } else {
+            setIsLoggedIn(false)
+        }
+    }, [])
 
     const login = () => setIsLoggedIn(true)
     const logout = () => setIsLoggedIn(false)
