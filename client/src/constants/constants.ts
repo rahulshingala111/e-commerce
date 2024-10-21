@@ -1,6 +1,20 @@
+
+interface SERVER_CONST_INTERFACE {
+    DEV: string,
+    UAT: string,
+    LIVE: string
+}
+export const SERVER_CONST: SERVER_CONST_INTERFACE = {
+    DEV: "DEV",
+    UAT: "UAT",
+    LIVE: "LIVE"
+}
+
+export const SERVER_MODE: string = SERVER_CONST.DEV
+
 const CONSTANTS = Object.freeze({
     path: Object.freeze({
-        server_url: 'https://holy-wombat-definite.ngrok-free.app'
+        server_url: SERVER_MODE === "UAT" ? 'https://holy-wombat-definite.ngrok-free.app' : 'http://localhost:3002'
     }),
     LOCAL_STORAGE: {
         CART_ITEMS: "cart_items"

@@ -64,3 +64,10 @@ model review {
   review_string String
   rating        Int
 }
+
+model banners {
+  id         Int     @id @default(autoincrement())
+  categories String
+  img_path   String
+  is_active  Boolean
+}
