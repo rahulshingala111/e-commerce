@@ -107,73 +107,62 @@ class ProductService {
         try {
 
             console.log(req.query);
-            const category_id: number = Number(req.query.category_id)
-            const brand_id: Array<number> = JSON.parse(req.query.brand_id as string)
-            console.log("brand_id", brand_id);
+            if (req.query) {
 
-            let where = {}
 
-            if (category_id) {
-                where = {
-                    categories_id: category_id
-                }
-            }
-            if (brand_id.length > 0) {
-                where = {
-                    ...where,
-                    brand_id: { in: brand_id }
-                }
-            }
+                const category_id: number = Number(req.query.category_id)
+                const brand_id: Array<number> = JSON.parse(req?.query?.brand_id as string)
+                console.log("category_id", category_id);
+                console.log("brand_id", brand_id);
 
-            console.log(where);
 
-            const products = await prisma.product.findMany({
-                where: {
-                    ...where
-                },
-                include: {
-                    categories: {
-                        select: {
-                            id: true,
-                            name: true
-                        }
-                    },
-                    brand: {
-                        select: {
-                            id: true,
-                            name: true
-                        }
+                let where = {}
+
+                if (category_id) {
+                    where = {
+                        categories_id: category_id
                     }
                 }
-            })
+                if (brand_id.length > 0) {
+                    where = {
+                        ...where,
+                        brand_id: { in: brand_id }
+                    }
+                }
 
-            return {
-                status: true,
-                data: products
+                console.log(where);
+
+                const products = await prisma.product.findMany({
+                    where: {
+                        ...where
+                    },
+                    include: {
+                        categories: {
+                            select: {
+                                id: true,
+                                name: true
+                            }
+                        },
+                        brand: {
+                            select: {
+                                id: true,
+                                name: true
+                            }
+                        }
+                    }
+                })
+
+                return {
+                    status: true,
+                    data: products
+                }
+
+            } else {
+                return {
+                    status: false,
+                    data: null
+                }
             }
-
-            // if(category_id){
-
-            // }
-
-            // const products = await prisma.product.findMany({
-            //     include: {
-            //         categories: {
-            //             select: {
-            //                 id: true,
-            //                 name: true
-            //             }
-            //         },
-            //         brand: {
-            //             select: {
-            //                 id: true,
-            //                 name: true
-            //             }
-            //         }
-            //     }
-            // })
-
-
 
         } catch (error) {
             console.log(error);

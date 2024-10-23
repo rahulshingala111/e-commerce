@@ -35,10 +35,7 @@ export interface BrandInterface {
 }
 
 export interface ParamsProps {
-    params: {
-        category_id: string | null,
-        brand_id: string | null
-    }
+    params: object
 }
 
 export interface AddressInterface {

@@ -41,16 +41,6 @@ const Sidebar: React.FC<CategoryProps> = ({ category, brand }) => {
     }
   }
 
-  const handleApply = () => {
-    const array = [1, 2, 3]
-    console.log(array);
-    console.log(array.toString());
-
-    const strinbgArray = "[1,2,3]"
-    console.log(JSON.parse(strinbgArray));
-
-  }
-
   return (
     <div className="sidebar">
       <h3>Filters</h3>
@@ -83,7 +73,6 @@ const Sidebar: React.FC<CategoryProps> = ({ category, brand }) => {
           )
         }
       </ul>
-      <button className='button-apply' onClick={handleApply}>Apply</button>
     </div>
   );
 };

@@ -1,10 +1,4 @@
-
-interface SERVER_CONST_INTERFACE {
-    DEV: string,
-    UAT: string,
-    LIVE: string
-}
-export const SERVER_CONST: SERVER_CONST_INTERFACE = {
+export const SERVER_CONST = {
     DEV: "DEV",
     UAT: "UAT",
     LIVE: "LIVE"
@@ -28,7 +22,7 @@ const CONSTANTS = Object.freeze({
         },
         PRODUCT: {
             FETCH_TEN: `/product/ten`,
-            FETCH: (data: string): string => `/product/get?${data}`,
+            FETCH: (data: string): string => `/product/get${data}`,
             CREATE_COMMENT: `/product/comment`,
             FETCH_COMMENT: (data: string | null) => `/product/comment?product_id=${data}`
         },

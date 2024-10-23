@@ -5,7 +5,8 @@ import ApiCall from "../../../constants/ApiCall"
 import { ParamsProps, ProductInterface } from "../../../constants/Interfaces"
 import './ProductList.css'
 import CONSTANTS from "../../../constants/constants"
-const Produclist: React.FC<ParamsProps> = ({ params }) => { 
+import { generateQuery } from "../../../constants/Helper"
+const Produclist: React.FC<ParamsProps> = ({ params }) => {
 
     const [product, setProducts] = useState<Array<ProductInterface>>([])
     console.log("product lisrt page", params);
@@ -14,23 +15,13 @@ const Produclist: React.FC<ParamsProps> = ({ params }) => {
     useEffect(() => {
         const callme = async () => {
             try {
-
-                let queryParams = new String('')
-
-                if (params.category_id) {
-                    queryParams = `category_id=${params.category_id}`
+                const urlString = generateQuery(params)
+                const apicall: AxiosResponse = await ApiCall.get(CONSTANTS.API_ENDPOINTS.PRODUCT.FETCH(urlString))
+                if (apicall.status) {
+                    setProducts(apicall.data);
                 } else {
-                    queryParams = `category_id=0`
+                    setProducts([])
                 }
-                let brandsArray: Array<number> = []
-                if (params.brand_id) {
-                    brandsArray = JSON.parse(params.brand_id)
-                    console.log("lenghts", brandsArray.length);
-                }
-                queryParams = queryParams + '&' + `brand_id=[${brandsArray.toString()}]`
-
-                const apicall: AxiosResponse = await ApiCall.get(CONSTANTS.API_ENDPOINTS.PRODUCT.FETCH(queryParams as string))
-                setProducts(apicall.data);
 
             } catch (error) {
                 console.log(error);
