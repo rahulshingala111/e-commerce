@@ -5,25 +5,17 @@ import ProductList from './ProductList/ProductList';
 import './Product.css';
 import ApiCall from '../../constants/ApiCall';
 import { BrandInterface, CategoriesInterface } from '../../constants/Interfaces';
-import { useLocation } from 'react-router-dom';
 import CONSTANTS from '../../constants/constants';
+import { useQuery } from '../../constants/Helper';
 
-const useQuery = (): URLSearchParams => {
-    return new URLSearchParams(useLocation().search)
-}
 
 const ProductPage: React.FC = () => {
-
-    const query = useQuery();
 
     const [loading, setLoading] = useState<boolean>(true)
     const [category, setCategory] = useState<Array<CategoriesInterface>>([])
     const [brand, setBrand] = useState<Array<BrandInterface>>([])
-
-    const _params = {
-        category_id: query.get('category_id') ?? null,
-        brand_id: query.get('brand_id') ?? null
-    }
+    
+    const _params = useQuery()
 
     useEffect(() => {
 

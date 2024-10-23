@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import './Navbar.css'; // Import the CSS file for styling
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ApiCall from '../../../constants/ApiCall';
 import { AxiosResponse } from 'axios';
 import { CategoriesInterface } from '../../../constants/Interfaces';
 import CONSTANTS from '../../../constants/constants';
 import { useAuth } from '../../../constants/AuthContext';
+import { generateQuery, useQuery } from '../../../constants/Helper';
 
 const Navbar: React.FC = () => {
 
   const [categories, setCategories] = useState<Array<CategoriesInterface>>([])
+  const [search, setSearch] = useState<string>()
 
+  const navigate = useNavigate();
+  const _params = useQuery();
   const { isLoggedin } = useAuth();
-  console.log(isLoggedin);
-  
+
   useEffect(() => {
     const callme = async () => {
       try {
@@ -21,14 +24,22 @@ const Navbar: React.FC = () => {
         if (category.status) {
           setCategories(category.data)
         }
-
       } catch (error) {
         console.log(error);
-
       }
     }
     callme()
   }, [])
+
+  const handleSearch = () => {
+    if (search) {
+      console.log(search);
+      const params = _params
+      Object.assign(params, { search: search })
+      const redirect = generateQuery(params)
+      navigate(CONSTANTS.ROUTES.PRODUCT_PAGE.PRODUCT_BASE + redirect)
+    }
+  }
 
   return (
     <nav className="navbar">
@@ -39,11 +50,9 @@ const Navbar: React.FC = () => {
         <li><a href="/">Home</a></li>
 
         <li className="dropdown">
-          <Link to={CONSTANTS.ROUTES.PRODUCT_PAGE.PRODUCT_BASE}>
-            <div>
-              Products
-            </div>
-          </Link>
+          <div>
+            Products
+          </div>
           <ul className="dropdown-menu">
             {
               categories.map((elemnt: CategoriesInterface) => (
@@ -56,7 +65,8 @@ const Navbar: React.FC = () => {
         <li><a href="/contact">Contact</a></li>
       </ul>
       <div className="navbar-actions">
-        <input type="text" placeholder="Search..." className="navbar-search" />
+        <input type="text" placeholder="Search..." className="navbar-search" onChange={(e) => setSearch(e.target.value)} />
+        <button type="button" onClick={handleSearch}>seach</button>
         {
           !isLoggedin && (
             <Link to={'/login'}><button className="navbar-cart">Login/SignUp</button></Link>

@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios"
-import CONSTANTS from "./constants"
+import CONSTANTS, { SERVER_MODE } from "./constants"
 
 const ApiCall: AxiosInstance = axios.create({
     baseURL: CONSTANTS.path.server_url + "/api/v1",
@@ -7,7 +7,9 @@ const ApiCall: AxiosInstance = axios.create({
 })
 
 ApiCall.interceptors.request.use((config): InternalAxiosRequestConfig<any> => {
-    config.headers['ngrok-skip-browser-warning'] = 'true';
+    if (SERVER_MODE === 'UAT') {
+        config.headers['ngrok-skip-browser-warning'] = 'true';
+    }
     const token = sessionStorage.getItem(CONSTANTS.SESSION_STORAGE.TOKEN)
     if (token) {
         config.headers.Authorization = `${token}`

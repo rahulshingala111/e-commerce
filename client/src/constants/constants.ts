@@ -1,6 +1,14 @@
+export const SERVER_CONST = {
+    DEV: "DEV",
+    UAT: "UAT",
+    LIVE: "LIVE"
+}
+
+export const SERVER_MODE: string = SERVER_CONST.DEV
+
 const CONSTANTS = Object.freeze({
     path: Object.freeze({
-        server_url: 'https://holy-wombat-definite.ngrok-free.app'
+        server_url: SERVER_MODE === "UAT" ? 'https://holy-wombat-definite.ngrok-free.app' : 'http://localhost:3002'
     }),
     LOCAL_STORAGE: {
         CART_ITEMS: "cart_items"
@@ -14,7 +22,7 @@ const CONSTANTS = Object.freeze({
         },
         PRODUCT: {
             FETCH_TEN: `/product/ten`,
-            FETCH: (data: string): string => `/product/get?${data}`,
+            FETCH: (data: string): string => `/product/get${data}`,
             CREATE_COMMENT: `/product/comment`,
             FETCH_COMMENT: (data: string | null) => `/product/comment?product_id=${data}`
         },

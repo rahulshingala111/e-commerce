@@ -9,3 +9,8 @@ export interface TokenVerification {
     //     exp: number
     // }
 }
+export interface ResponseInterface {
+    status: boolean;
+    data: Array<any> | null,
+    message: string
+}
