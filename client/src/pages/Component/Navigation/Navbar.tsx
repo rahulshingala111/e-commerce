@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Navbar.css'; // Import the CSS file for styling
+import './Navbar.css';
 import { Link, useNavigate } from 'react-router-dom';
 import ApiCall from '../../../constants/ApiCall';
 import { AxiosResponse } from 'axios';

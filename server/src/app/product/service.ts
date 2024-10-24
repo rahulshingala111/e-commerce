@@ -105,37 +105,35 @@ class ProductService {
 
     public GetProductService = async (req: Request) => {
         try {
+            if (Object.keys(req.query).length !== 0) {
+                const object = req.query;
 
-            console.log(req.query);
-            if (req.query) {
+                let query: Prisma.productFindManyArgs = { where: {}, take: 10, skip: 0 }
 
-
-                const category_id: number = Number(req.query.category_id)
-                const brand_id: Array<number> = JSON.parse(req?.query?.brand_id as string)
-                console.log("category_id", category_id);
-                console.log("brand_id", brand_id);
-
-
-                let where = {}
-
-                if (category_id) {
-                    where = {
-                        categories_id: category_id
+                console.log("object", req.query);
+                if (object.hasOwnProperty('category_id') && object.category_id !== '0') {
+                    query.where = {
+                        ...query.where,
+                        categories_id: Number(object.category_id)
                     }
                 }
-                if (brand_id.length > 0) {
-                    where = {
-                        ...where,
-                        brand_id: { in: brand_id }
+                if (object.hasOwnProperty('brand_id')) {
+                    const brand_id: Array<number> = JSON.parse(object.brand_id as string)
+                    if (brand_id.length > 0) {
+                        query.where = {
+                            ...query.where,
+                            brand_id: { in: brand_id },
+                        };
                     }
                 }
-
-                console.log(where);
+                if (object.hasOwnProperty('pg')) {
+                    const pg: number = Number(object.pg)
+                    query.skip = pg <= 0 ? 0 : ((pg - 1) * 10)
+                }
+                console.log("query", query);
 
                 const products = await prisma.product.findMany({
-                    where: {
-                        ...where
-                    },
+                    ...query,
                     include: {
                         categories: {
                             select: {
@@ -151,16 +149,25 @@ class ProductService {
                         }
                     }
                 })
-
-                return {
-                    status: true,
-                    data: products
+                if (products.length > 0) {
+                    return {
+                        status: true,
+                        message: 'data fetched successfully',
+                        data: products
+                    }
+                } else {
+                    return {
+                        status: false,
+                        message: 'No data found!',
+                        data: null
+                    }
                 }
 
             } else {
                 return {
                     status: false,
-                    data: null
+                    data: null,
+                    message: 'send params correctly'
                 }
             }
 
@@ -169,6 +176,7 @@ class ProductService {
             return {
                 staus: false,
                 data: null,
+                message: 'server error!! something went wrong',
                 error: error
             }
         }
