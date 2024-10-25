@@ -43,7 +43,6 @@ const ProductPage: React.FC = () => {
                     <>
                         <Sidebar category={category} brand={brand} />
                         <div className="product-section">
-                            <h2>Products</h2>
                             <ProductList params={_params} />
                         </div>
                     </>

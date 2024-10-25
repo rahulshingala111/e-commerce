@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import Card from "../../Component/Card/Card"
 import { AxiosResponse } from "axios"
 import ApiCall from "../../../constants/ApiCall"
 import { ParamsProps, ProductInterface } from "../../../constants/Interfaces"
@@ -60,7 +59,7 @@ const Produclist: React.FC<ParamsProps> = ({ params }) => {
                                     <div className="rating-container">
                                         {/* <StarRating rating={product.rating} /> */}
                                         <span className="review-count">
-                                            {product.review.length > 0 ? <>{product.review.rating}</> : <>No reviews</>}
+                                            {product.review.length > 0 ? <></> : <>No reviews</>}
                                         </span>
                                     </div>
 
@@ -91,7 +90,7 @@ const Produclist: React.FC<ParamsProps> = ({ params }) => {
                                             <span>Delivery in 3 business days</span>
                                         </div>
                                         <div className="info-item">
-                                            {"table" === 'table' ? (
+                                            {/* {"table" === 'table' ? (
                                                 <>
                                                     <svg className="info-icon success" viewBox="0 0 24 24">
                                                         <path fill="none" stroke="currentColor" strokeLinecap="round"
@@ -111,7 +110,7 @@ const Produclist: React.FC<ParamsProps> = ({ params }) => {
                                                     </svg>
                                                     <span className="stock-text out-of-stock">Out of Stock</span>
                                                 </>
-                                            )}
+                                            )} */}
                                         </div>
                                     </div>
                                 </div>

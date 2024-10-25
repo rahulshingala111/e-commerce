@@ -2,7 +2,8 @@
 .sidebar {
   width: 160px;
   background-color: var(--sidebar);
-  padding: 20px;
+  margin: 20px;
+  border-right: 1px solid black;
 }
 
 .sidebar h3 {
