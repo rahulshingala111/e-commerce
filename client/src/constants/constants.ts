@@ -51,6 +51,9 @@ const CONSTANTS = Object.freeze({
             PRODUCT_BASE: `/product`,
             PRODUCTS_ONLY_CATEGORY: (data: number): string => `/product?category_id=${data}`,
             PRODUCTS_FILTER_GET: (category_id: string | null, brand_id: string | null): string => `/product?category_id=${category_id}&brand_id=[${brand_id}]`
+        },
+        ITEM_PAGE: {
+            ITEM_BASE: `/item`,
         }
     }
 })

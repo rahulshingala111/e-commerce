@@ -5,7 +5,13 @@ export interface ProductInterface {
     description: string;
     img_path: string;
     categories: CategoriesInterface,
-    brand: BrandInterface
+    brand: BrandInterface,
+    review: Array<ReviewInterface>
+}
+export interface ReviewInterface {
+    id: number,
+    rating: number,
+    review_string: string
 }
 export interface CategoriesInterface {
     id: number,

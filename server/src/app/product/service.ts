@@ -146,6 +146,13 @@ class ProductService {
                                 id: true,
                                 name: true
                             }
+                        },
+                        review: {
+                            select: {
+                                id: true,
+                                rating: true,
+                                review_string: true
+                            }
                         }
                     }
                 })

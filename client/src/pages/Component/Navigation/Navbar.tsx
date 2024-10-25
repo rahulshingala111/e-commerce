@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import './Navbar.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ApiCall from '../../../constants/ApiCall';
 import { AxiosResponse } from 'axios';
 import { CategoriesInterface } from '../../../constants/Interfaces';
@@ -31,7 +31,8 @@ const Navbar: React.FC = () => {
     callme()
   }, [])
 
-  const handleSearch = () => {
+  const handleSearch = (e: FormEvent) => {
+    e.preventDefault()
     if (search) {
       console.log(search);
       const params = _params
@@ -43,40 +44,103 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-logo">
-        <a href="/">Sahara Store</a>
-      </div>
-      <ul className="navbar-links">
-        <li><a href="/">Home</a></li>
+      <div className="nav-container">
+        <div className="store-name">sahara store</div>
 
-        <li className="dropdown">
-          <div>
-            Products
+        <div className="nav-left">
+
+          <div className="browse-container">
+            <button className="browse-btn">
+              ☰ Browse
+            </button>
+            <div className="categories-dropdown">
+              <div className="category-section">
+                <div className="category-title">Electronics</div>
+                <div className="category-links">
+                  {
+                    categories.map((element: CategoriesInterface, index: number) => (
+                      <a key={index} id={element.id.toString()} href="#" className="category-link">
+                        📱 {element.name}
+                      </a>
+                    ))
+                  }
+                  <a href="#" className="category-link">
+                    💻 Laptops
+                  </a>
+                  <a href="#" className="category-link">
+                    🎧 Audio
+                  </a>
+                </div>
+              </div>
+
+              <div className="category-section">
+                <div className="category-title">Fashion</div>
+                <div className="category-links">
+                  <a href="#" className="category-link">
+                    👕 Men's Clothing
+                  </a>
+                  <a href="#" className="category-link">
+                    👗 Women's Clothing
+                  </a>
+                  <a href="#" className="category-link">
+                    👟 Footwear
+                  </a>
+                </div>
+              </div>
+
+              <div className="category-section">
+                <div className="category-title">Home & Living</div>
+                <div className="category-links">
+                  <a href="#" className="category-link">
+                    🛋️ Furniture
+                  </a>
+                  <a href="#" className="category-link">
+                    🏠 Decor
+                  </a>
+                  <a href="#" className="category-link">
+                    🔧 Tools
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
-          <ul className="dropdown-menu">
-            {
-              categories.map((elemnt: CategoriesInterface) => (
-                <Link key={elemnt.id} to={CONSTANTS.ROUTES.PRODUCT_PAGE.PRODUCTS_ONLY_CATEGORY(elemnt.id)}><li>{elemnt.name}</li></Link>
-              ))
-            }
-          </ul>
-        </li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/contact">Contact</a></li>
-      </ul>
-      <div className="navbar-actions">
-        <input type="text" placeholder="Search..." className="navbar-search" onChange={(e) => setSearch(e.target.value)} />
-        <button type="button" onClick={handleSearch}>seach</button>
-        {
-          !isLoggedin && (
-            <Link to={'/login'}><button className="navbar-cart">Login/SignUp</button></Link>
-          )
-        }{
-          isLoggedin && (
-            <Link to={'/profile'}><button className='navbar'>Profile</button></Link>
-          )
-        }
-        <Link to={'/cart'}> <button className="navbar-cart">Cart</button></Link>
+        </div>
+
+
+        <div className="search-container">
+          <span className="search-icon">🔍</span>
+          <form onSubmit={handleSearch}>
+            <input type="text" className="search-bar" onChange={(e) => setSearch(e.target.value)} placeholder="Search products..." />
+          </form>
+        </div>
+
+        <div className="nav-icons">
+          <button className="icon-button">
+            🛒
+            <span className="cart-count">1</span>
+          </button>
+
+          <button className="user-button">
+            <span className="user-icon">👤</span>
+            <span className="user-text">
+              {
+                isLoggedin ? <>user</> : <>login</>
+              }
+            </span>
+          </button>
+
+          <div className="dropdown">
+            <button className="icon-button">
+              ☰
+            </button>
+            <div className="dropdown-content">
+              <a href="#">home</a>
+              <a href="#">products</a>
+              <a href="#">about</a>
+              <a href="#">contact</a>
+            </div>
+          </div>
+        </div>
       </div>
     </nav>
   );
