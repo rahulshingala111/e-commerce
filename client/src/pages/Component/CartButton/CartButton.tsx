@@ -1,7 +1,8 @@
 import CONSTANTS from '../../../constants/constants'
 import './CartButton.css'
 interface CartButttonProps {
-    product_id: number
+    product_id: number,
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 const CartButton: React.FC<CartButttonProps> = ({ product_id }) => {
 

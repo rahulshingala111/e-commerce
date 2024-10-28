@@ -176,6 +176,19 @@
   margin-top: 16px;
 }
 
+.view-button {
+  background-color: #2563eb;
+  color: white;
+  padding: 8px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  margin-top: 16px;
+  margin-left: 10px;
+}
+
 .add-to-cart-button:hover {
   background-color: #1d4ed8;
 }

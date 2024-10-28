@@ -6,6 +6,7 @@ import './ProductList.css'
 import CONSTANTS from "../../../constants/constants"
 import { generateQuery } from "../../../constants/Helper"
 import { useNavigate } from "react-router-dom"
+import CartButton from "../../Component/CartButton/CartButton"
 
 const Produclist: React.FC<ParamsProps> = ({ params }) => {
 
@@ -34,8 +35,13 @@ const Produclist: React.FC<ParamsProps> = ({ params }) => {
     }, [params])
 
 
-    const onClickProduct = (product_id: number) => {
-        navigate(CONSTANTS.ROUTES.ITEM_PAGE.ITEM_BASE + '?' + `product_id=${product_id}`)
+    const onClickProduct = (product_id: number | null) => {
+        if (product_id) {
+            navigate(CONSTANTS.ROUTES.ITEM_PAGE.ITEM_BASE + '?' + `product_id=${product_id}`)
+
+        } else {
+            //
+        }
     }
 
 
@@ -46,7 +52,6 @@ const Produclist: React.FC<ParamsProps> = ({ params }) => {
                     <div
                         key={product.id}
                         className="product-card"
-                        onClick={() => onClickProduct(product.id)}
                     >
                         <div className="product-layout">
                             <div className="product-image">
@@ -114,17 +119,10 @@ const Produclist: React.FC<ParamsProps> = ({ params }) => {
                                         </div>
                                     </div>
                                 </div>
-
-                                {/* Add to Cart Button */}
-                                <button
-                                    className="add-to-cart-button"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        // Add to cart logic here
-                                    }}
-                                >
-                                    Add to Cart
-                                </button>
+                                <div>
+                                    <CartButton onClick={() => onClickProduct(null)} product_id={product.id} />
+                                    <button className="view-button" onClick={() => onClickProduct(product.id)} >View</button>
+                                </div>
                             </div>
                         </div>
                     </div>

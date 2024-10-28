@@ -42,6 +42,10 @@ const Navbar: React.FC = () => {
     }
   }
 
+  const handleCartNavigation = () => {
+    navigate(CONSTANTS.ROUTES.CART.CART_PAGE)
+  }
+
   return (
     <nav className="navbar">
       <div className="nav-container">
@@ -115,7 +119,7 @@ const Navbar: React.FC = () => {
         </div>
 
         <div className="nav-icons">
-          <button className="icon-button">
+          <button className="icon-button" onClick={handleCartNavigation}>
             🛒
             <span className="cart-count">1</span>
           </button>

@@ -54,6 +54,9 @@ const CONSTANTS = Object.freeze({
         },
         ITEM_PAGE: {
             ITEM_BASE: `/item`,
+        },
+        CART: {
+            CART_PAGE: '/cart'
         }
     }
 })
