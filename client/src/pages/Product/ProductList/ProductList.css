@@ -165,7 +165,7 @@
 
 /* Button styles */
 .add-to-cart-button {
-  background-color: #2563eb;
+  background-color: var(--button-color);
   color: white;
   padding: 8px 24px;
   border-radius: 8px;
@@ -177,7 +177,7 @@
 }
 
 .view-button {
-  background-color: #2563eb;
+  background-color: var(--button-color);
   color: white;
   padding: 8px 24px;
   border-radius: 8px;

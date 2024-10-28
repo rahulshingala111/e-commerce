@@ -16,8 +16,6 @@
 
   --navbar: #d0e8f2;
 
-  --button-color: #456268;
-
   --card-color: #d0e8f2;
 
   --sidebar: #fff;
@@ -31,6 +29,8 @@
 
   --generel-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  --button-color: #2563eb;
 
   background: var(--background);
 }

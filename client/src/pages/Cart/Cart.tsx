@@ -8,6 +8,7 @@ interface CartItemInterface {
     id: number,
     title: string,
     description: string,
+    qty: number,
     price: number,
     img_path: string,
     categories_id: number
@@ -63,31 +64,57 @@ const Cart: React.FC = () => {
             await callme()
         } else {
             console.log("no items found on local storage");
-            
         }
+    }
 
+    const handleChangeInventory = async (action: number, product_id: number): Promise<void> => {
+        // 0 is +
+        // 1 is -
+        console.log(action, product_id);
 
+        if (action && product_id) {
+            try {
+                const insertCart = await ApiCall.post('/cart/add', {
+                    action: action,
+                    product_id: product_id
+                })
+                console.log(insertCart);
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
     }
 
     return (
         <div className="cart-page">
             <h1>Your Cart</h1>
             <div className="cart-items">
-                {cartItems.length > 0 ? cartItems.map((item: CartItemInterface) => (
-                    <div key={item.id} className="cart-item-card">
-                        <div className="cart-item-image">
-                            <img src={CONSTANTS.path.server_url + '/' + item.img_path} alt={item.title} />
+                {cartItems.length > 0 ?
+                    cartItems.map((item: CartItemInterface) => (
+                        <div key={item.id} className="cart-item-card">
+                            <div className="cart-item-image">
+                                <img src={CONSTANTS.path.server_url + '/' + item.img_path} alt={item.title} />
+                            </div>
+                            <div className="cart-item-details">
+                                <h2>{item.title}</h2>
+                                <p>Price: ${item.price}</p>
+                                <div className='qty-div'>
+                                    <button className='qty-buttons' onClick={() => {
+                                        handleChangeInventory(0, item.id)
+                                    }}>+</button>
+                                    <span className='qty-show'>{item.qty ?? 1}</span>
+                                    <button className='qty-buttons' onClick={() => {
+                                        handleChangeInventory(1, item.id)
+                                    }}>-</button>
+                                </div>
+                                <button className="remove-btn" value={item.id} onClick={handleRemoveCartItem}>
+                                    Remove
+                                </button>
+                            </div>
                         </div>
-                        <div className="cart-item-details">
-                            <h2>{item.title}</h2>
-                            <p>Price: ${item.price}</p>
-                            {/* <p>Quantity: {item.quantity}</p> */}
-                            <button className="remove-btn" value={item.id} onClick={handleRemoveCartItem}>
-                                Remove
-                            </button>
-                        </div>
-                    </div>
-                )) : <h1>No item added</h1>}
+                    )) :
+                    <h1>No item added</h1>}
             </div>
 
             <div className="buy-now-section">

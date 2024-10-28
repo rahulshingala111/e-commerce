@@ -15,6 +15,7 @@ model user {
   password   String
   mobile_no  String?
   addresses  addresses[]
+  cart       cart[]
 }
 
 model addresses {
@@ -28,6 +29,8 @@ model addresses {
   state       String
   country     String
   postal_code String
+
+  @@index([user_id])
 }
 
 model product {
@@ -63,6 +66,8 @@ model review {
   product_id    Int
   review_string String
   rating        Int
+
+  @@index([product_id])
 }
 
 model banners {
@@ -70,4 +75,30 @@ model banners {
   categories String
   img_path   String
   is_active  Boolean
+}
+
+model cart {
+  id         Int         @id @default(autoincrement())
+  user       user        @relation(fields: [user_id], references: [id])
+  user_id    Int
+  created_at DateTime    @default(now())
+  updated_at DateTime    @updatedAt
+  cart_item  cart_item[]
+
+  @@index([user_id])
+}
+
+model cart_item {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  cart       cart     @relation(fields: [cart_id], references: [id])
+  product_id Int
+  qty        Int      @default(1)
+  price      Float
+  cart_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  status     String   @db.VarChar(10)
+
+  @@index([cart_id, product_id])
 }
