@@ -18,7 +18,7 @@ const Cart: React.FC = () => {
                 console.log(getCartItem.data);
                 setCartItems(getCartItem.data)
             } else {
-                const itemsfromstorage = localStorage.getItem(CONSTANTS.LOCAL_STORAGE.CART_ITEMS)
+                // const itemsfromstorage = localStorage.getItem(CONSTANTS.LOCAL_STORAGE.CART_ITEMS)
                 // if (itemsfromstorage) {
                 //     const itemArray: Array<any> = JSON.parse(itemsfromstorage)
                 //     if (itemArray.length > 0) {
@@ -52,8 +52,10 @@ const Cart: React.FC = () => {
     }
 
     const handleRemoveCartItem = async (e: any) => {
-        const value: number = Number(e.target.value)
-        const getCartItem = localStorage.getItem(CONSTANTS.LOCAL_STORAGE.CART_ITEMS)
+        console.log(e);
+        
+        // const value: number = Number(e.target.value)
+        // const getCartItem = localStorage.getItem(CONSTANTS.LOCAL_STORAGE.CART_ITEMS)
         // if (getCartItem && value) {
         //     const CartItemArray: Array<number> = JSON.parse(getCartItem)
         //     const index = CartItemArray.indexOf(value)
