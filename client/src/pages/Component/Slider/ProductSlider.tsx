@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import ApiCall from '../../../constants/ApiCall';
 import CONSTANTS from '../../../constants/constants';
+import './ProductSlider.css'
 
 interface ImageMetadataInterface {
     img_path: string
@@ -57,7 +58,7 @@ const ProductSlider = () => {
             <Slider {...SliderSettings}>
                 {bannerImages.map((image, index) => (
                     <div key={index}>
-                        <img src={image} alt={`Product image ${index + 1}`} style={{ width: '100%', height: '55vh' }} />
+                        <img src={image} alt={`Product image ${index + 1}`} style={{ width: '100%', height: 'auto' }} />
                     </div>
                 ))}
             </Slider>

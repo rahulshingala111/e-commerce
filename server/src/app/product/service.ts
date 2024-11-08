@@ -397,5 +397,29 @@ class ProductService {
             }
         }
     }
+    public NewArrivalProductSerivce = async (req: Request) => {
+        try {
+
+            const findProduct = await prisma.product.findMany({
+                select: {
+                    id: true,
+                    img_path: true
+                },
+                take: 3
+            })
+            return {
+                status: true,
+                message: "data fetched successfuly",
+                data: findProduct
+            }
+        } catch (error) {
+            console.log(error);
+            return {
+                staus: false,
+                data: null,
+                error: error
+            }
+        }
+    }
 }
 export default new ProductService();

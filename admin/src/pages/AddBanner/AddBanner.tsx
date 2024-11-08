@@ -25,7 +25,7 @@ const AddBanner: React.FC = () => {
             const apiCall = await ApiCall.post(`/banner?category=${category}&status=${status}`, form)
             console.log(apiCall);
 
-
+  
         } else {
             alert('fill form proper')
         }
