@@ -37,6 +37,20 @@ class ProductRoute {
         }
     }
 
+    private GetSubCategories = async (req: Request, res: Response) => {
+        try {
+            const response = await ProductService.GetSubCategoriesService(req)
+            res.status(200).send(response)
+        } catch (error) {
+            res.status(500).json({
+                status: false,
+                message: 'Internal server Error',
+                error: error,
+                data: null
+            })
+        }
+    }
+
     private GetItem = async (req: Request, res: Response) => {
         try {
             const response = await ProductService.GetItemService(req)
@@ -157,6 +171,8 @@ class ProductRoute {
 
 
         this.router.get('/categories', this.GetCategories)
+        this.router.get('/subcategories', this.GetSubCategories)
+
 
         this.router.get('/brands', this.GetBrands)
 

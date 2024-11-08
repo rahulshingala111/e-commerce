@@ -38,6 +38,9 @@ const CONSTANTS = Object.freeze({
         CATEGORY: {
             FETCH: `/product/categories`,
         },
+        SUB_CATEGORY: {
+            FETCH: (id: string | number) => `/product/subcategories?category_id=${id}`
+        },
         BRANDS: {
             FETCH: `/product/brands`,
         },

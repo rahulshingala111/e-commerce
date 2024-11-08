@@ -1,15 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Sidebar.css';
-import { BrandInterface, CategoriesInterface, CategoryProps } from '../../../constants/Interfaces';
+import { BrandInterface } from '../../../constants/Interfaces';
 import { Link, useNavigate } from 'react-router-dom';
 import CONSTANTS from '../../../constants/constants';
 import { generateQuery, useQuery } from '../../../constants/Helper';
+import ApiCall from '../../../constants/ApiCall';
 
+interface SubCategoriesInterface {
+  id: number,
+  name: string
+}
 
-const Sidebar: React.FC<CategoryProps> = ({ category, brand }) => {
+const Sidebar: React.FC = () => {
 
   const _params = useQuery();
   const navigate = useNavigate();
+
+  const [sub_category, setSub_category] = useState<Array<SubCategoriesInterface>>([])
+  const [brand, setBrand] = useState<Array<BrandInterface>>([])
+
+  useEffect(() => {
+
+    const callme = async () => {
+      try {
+        const sub_category = await ApiCall.get(CONSTANTS.API_ENDPOINTS.SUB_CATEGORY.FETCH(_params.category_id))
+        setSub_category(sub_category.data)
+
+        const brand = await ApiCall.get(CONSTANTS.API_ENDPOINTS.BRANDS.FETCH)
+        setBrand(brand.data)
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    callme()
+  }, [])
 
   const handleBrands = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
@@ -37,7 +62,7 @@ const Sidebar: React.FC<CategoryProps> = ({ category, brand }) => {
 
   const handleCategory = (id: number) => {
     const params = _params;
-    Object.assign(params, { category_id: id })
+    Object.assign(params, { sub_category_id: id })
     const redirect = generateQuery(params)
     navigate(CONSTANTS.ROUTES.PRODUCT_PAGE.PRODUCT_BASE + redirect)
   }
@@ -47,9 +72,9 @@ const Sidebar: React.FC<CategoryProps> = ({ category, brand }) => {
       <h3>Filters</h3>
       <ul>
         <Link to={CONSTANTS.ROUTES.PRODUCT_PAGE.PRODUCTS_ONLY_CATEGORY(0)}><button className='product-button-2'>Reset Filter</button></Link>
-        <h2>By Category</h2>
+        <h2>other categories</h2>
         {
-          category.map((element: CategoriesInterface) => (
+          sub_category.map((element: SubCategoriesInterface) => (
             <div key={element.id}>
               <button className='product-button-2' onClick={() => handleCategory(element.id)}>{element.name}</button>
             </div>

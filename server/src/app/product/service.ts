@@ -244,6 +244,12 @@ class ProductService {
                         categories_id: Number(object.category_id)
                     }
                 }
+                if (object.hasOwnProperty('sub_category_id') && object.category_id !== '0') {
+                    query.where = {
+                        ...query.where,
+                        sub_categories_id: Number(object.sub_category_id)
+                    }
+                }
                 if (object.hasOwnProperty('brand_id')) {
                     const brand_id: Array<number> = JSON.parse(object.brand_id as string)
                     if (brand_id.length > 0) {
@@ -409,13 +415,42 @@ class ProductService {
                     id: true,
                     img_path: true
                 },
-                take: 3
+                take: 9
             })
             return {
                 status: true,
                 message: "data fetched successfuly",
                 data: findProduct
             }
+        } catch (error) {
+            console.log(error);
+            return {
+                staus: false,
+                data: null,
+                error: error
+            }
+        }
+    }
+
+    public GetSubCategoriesService = async (req: Request) => {
+        try {
+            if (req.query.category_id) {
+                const category_id = Number(req.query.category_id)
+                const fetchSubCategory = await prisma.sub_categories.findMany({
+                    where: {
+                        categories_id: category_id
+                    },
+                    select: {
+                        id: true,
+                        name: true
+                    }
+                })
+                return {
+                    status: true,
+                    data: fetchSubCategory
+                }
+            }
+
         } catch (error) {
             console.log(error);
             return {

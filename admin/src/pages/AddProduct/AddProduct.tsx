@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ApiCall from "../../constants/ApiCall";
+import { useNavigate } from "react-router-dom";
 interface Categories {
     id: number,
     name: string,
@@ -16,6 +17,9 @@ interface SubCategories {
     categories_id: number
 }
 const AddProduct = () => {
+
+    const navigate = useNavigate()
+
     const [product_name, setProduct_name] = useState<string>("");
     const [product_description, setProduct_description] = useState<string>("");
     const [product_price, setProduct_price] = useState<string>("");
@@ -98,8 +102,8 @@ const AddProduct = () => {
                 "Content-Type": "multipart/form-data"
             }
         });
+        navigate('/product/add')
         if (apicall.status) {
-            clearForm();
             alert("success");
         }
     };

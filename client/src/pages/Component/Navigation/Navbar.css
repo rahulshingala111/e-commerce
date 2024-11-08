@@ -223,6 +223,15 @@ nav {
   letter-spacing: 0.5px;
 }
 
+.category-title a {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+.category-title a:hover {
+  color: #4a90e2;
+}
+
 .category-links {
   display: grid;
   gap: 0.5rem;

@@ -72,12 +72,12 @@ const Navbar: React.FC = () => {
               ☰ Browse
             </button>
             <div className="categories-dropdown">
-              {categories.map((category: CategoriesInterface) => (
-                <div className="category-section">
-                  <div className="category-title">{category.name}</div>
+              {categories.map((category: CategoriesInterface, index: number) => (
+                <div className="category-section" key={index}>
+                  <div className="category-title"><a href={`/product?category_id=${category.id}`}>{category.name}</a></div>
                   <div className="category-links">
-                    {category.sub_categories.map((sub_category: SubCategoriesInterface) => (
-                      <a className='category-link'>{sub_category.name}</a>
+                    {category.sub_categories.map((sub_category: SubCategoriesInterface,index:number) => (
+                      <a key={index} className='category-link' href={`/product?category_id=${category.id}&sub_category_id=${sub_category.id}`}>{sub_category.name}</a>
                     ))}
                   </div>
                 </div>
