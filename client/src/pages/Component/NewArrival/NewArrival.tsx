@@ -50,27 +50,6 @@ const NewArrival: React.FC = () => {
                                 className="each-new-arrival-image"
                             />
                         ))}
-                        {productImage.map((element) => (
-                            <img
-                                key={element.id}
-                                src={CONSTANTS.path.server_url + '/' + element.img_path}
-                                className="each-new-arrival-image"
-                            />
-                        ))}
-                        {productImage.map((element) => (
-                            <img
-                                key={element.id}
-                                src={CONSTANTS.path.server_url + '/' + element.img_path}
-                                className="each-new-arrival-image"
-                            />
-                        ))}
-                        {productImage.map((element) => (
-                            <img
-                                key={element.id}
-                                src={CONSTANTS.path.server_url + '/' + element.img_path}
-                                className="each-new-arrival-image"
-                            />
-                        ))}
                     </div>
                 ) : (
                     <p>No New Arrivals</p>

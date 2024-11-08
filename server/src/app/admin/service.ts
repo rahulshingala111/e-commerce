@@ -63,6 +63,9 @@ class AdminService {
                 },
                 brand: {
                     connect: { id: Number(req.query.product_brand) }
+                },
+                sub_categories: {
+                    connect: { id: Number(req.query.sub_categories_id) }
                 }
             }
 
@@ -229,5 +232,73 @@ class AdminService {
         })
 
     }
+    public AddSubCategoriesService = async (req: Request) => {
+        try {
+            console.log(req.body);
+            if (req.body) {
+                const params = {
+                    name: req.body.name as string,
+                    description: req.body.description as string,
+                    categories_id: Number(req.body.categories_id)
+                }
+
+                const insert = await prisma.sub_categories.create({
+                    data: {
+                        name: params.name,
+                        description: params.name,
+                        categories: {
+                            connect: {
+                                id: params.categories_id
+                            }
+                        }
+                    }
+                })
+
+                return {
+                    stauts: true,
+                    data: insert,
+                    message: 'insert success'
+                }
+
+            } else {
+                //
+            }
+
+        } catch (error) {
+            console.log(error);
+            return {
+                status: false,
+                data: null,
+                error: error
+            }
+        }
+    }
+
+    public GetSubCategoreisService = async (req: Request) => {
+        try {
+
+            const categories_id = Number(req.query.categories_id)
+
+            const sub_categories = await prisma.sub_categories.findMany({
+                where: {
+                    categories_id: categories_id
+                }
+            })
+
+            return {
+                stauts: true,
+                data: sub_categories
+            }
+
+        } catch (error) {
+            console.log(error);
+            return {
+                status: false,
+                data: null,
+                error: error
+            }
+        }
+    }
 }
+
 export default new AdminService()

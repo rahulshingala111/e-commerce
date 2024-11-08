@@ -15,7 +15,7 @@ const Home = () => {
             // new arrival
             <NewArrival />
 
-            // explore categories
+            {/* // explore categories
             <NewArrival />
 
             // UP TO  60 perscent off 
@@ -24,7 +24,7 @@ const Home = () => {
 
             // featured categories
 
-            <NewArrival />
+            <NewArrival /> */}
 
 
         </>

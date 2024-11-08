@@ -41,7 +41,11 @@ class ProductService {
     public GetCategoriesService = async (req: Request) => {
         try {
             console.log(req.params);
-            const category = await prisma.categories.findMany()
+            const category = await prisma.categories.findMany({
+                include: {
+                    sub_categories: true
+                }
+            })
             return {
                 status: true,
                 data: category

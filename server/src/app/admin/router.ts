@@ -83,7 +83,7 @@ class AdminRouter {
 
     private BannersAdd = async (req: Request, res: Response) => {
         try {
-            const response = await AdminService.BannersAddService(req,res)
+            const response = await AdminService.BannersAddService(req, res)
             res.status(200).send(response)
         } catch (error) {
             res.status(500).json({
@@ -96,6 +96,34 @@ class AdminRouter {
 
     }
 
+    private AddSubCategories = async (req: Request, res: Response) => {
+        try {
+            const response = await AdminService.AddSubCategoriesService(req)
+            res.status(200).send(response)
+        } catch (error) {
+            res.status(500).json({
+                status: false,
+                message: 'Internal server Error',
+                error: error,
+                data: null
+            })
+        }
+    }
+
+    private GetSubCategoreis = async (req: Request, res: Response) => {
+        try {
+            const response = await AdminService.GetSubCategoreisService(req)
+            res.status(200).send(response)
+        } catch (error) {
+            res.status(500).json({
+                status: false,
+                message: 'Internal server Error',
+                error: error,
+                data: null
+            })
+        }
+    }
+
 
     private initRoutes() {
         this.router.post('/', this.adminRoute)
@@ -105,6 +133,10 @@ class AdminRouter {
 
         this.router.get('/brands', this.BrandsGet)
         this.router.post('/brands', this.BrandsAdd)
+
+        this.router.get('/subcategories', this.GetSubCategoreis)
+        this.router.post('/subcategories', this.AddSubCategories)
+
 
 
         this.router.post('/banner', this.BannersAdd)

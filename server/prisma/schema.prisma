@@ -34,25 +34,36 @@ model addresses {
 }
 
 model product {
-  id            Int         @id @default(autoincrement())
-  title         String
-  description   String
-  price         Int
-  img_path      String?
-  categories    categories  @relation(fields: [categories_id], references: [id])
-  categories_id Int
-  brand         brand       @relation(fields: [brand_id], references: [id])
-  brand_id      Int
-  review        review[]
-  cart_item     cart_item[]
+  id                Int            @id @default(autoincrement())
+  title             String
+  description       String
+  price             Int
+  img_path          String?
+  categories        categories     @relation(fields: [categories_id], references: [id])
+  categories_id     Int
+  sub_categories    sub_categories @relation(fields: [sub_categories_id], references: [id])
+  sub_categories_id Int
+  brand             brand          @relation(fields: [brand_id], references: [id])
+  brand_id          Int
+  review            review[]
+  cart_item         cart_item[]
 }
 
 model categories {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String?
-  // sub_categories sub_categories[]
-  product     product[]
+  id             Int              @id @default(autoincrement())
+  name           String
+  description    String?
+  product        product[]
+  sub_categories sub_categories[]
+}
+
+model sub_categories {
+  id            Int        @id @default(autoincrement())
+  name          String
+  description   String
+  categories    categories @relation(fields: [categories_id], references: [id])
+  categories_id Int
+  product       product[]
 }
 
 model brand {
@@ -94,7 +105,7 @@ model cart_item {
   id         Int      @id @default(autoincrement())
   user_id    Int
   cart       cart     @relation(fields: [cart_id], references: [id])
-  product   product  @relation(fields: [product_id], references: [id])
+  product    product  @relation(fields: [product_id], references: [id])
   product_id Int
   qty        Int      @default(1)
   price      Float

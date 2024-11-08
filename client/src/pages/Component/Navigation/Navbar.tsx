@@ -3,10 +3,22 @@ import './Navbar.css';
 import { useNavigate } from 'react-router-dom';
 import ApiCall from '../../../constants/ApiCall';
 import { AxiosResponse } from 'axios';
-import { CategoriesInterface } from '../../../constants/Interfaces';
 import CONSTANTS from '../../../constants/constants';
 import { useAuth } from '../../../constants/AuthContext';
 import { generateQuery, useQuery } from '../../../constants/Helper';
+
+interface CategoriesInterface {
+  id: number,
+  name: string,
+  description: string,
+  sub_categories: Array<SubCategoriesInterface>
+}
+interface SubCategoriesInterface {
+  id: number,
+  categories_id: number,
+  name: string,
+  description: string,
+}
 
 const Navbar: React.FC = () => {
 
@@ -60,54 +72,16 @@ const Navbar: React.FC = () => {
               ☰ Browse
             </button>
             <div className="categories-dropdown">
-              <div className="category-section">
-                <div className="category-title">Electronics</div>
-                <div className="category-links">
-                  {
-                    categories.map((element: CategoriesInterface, index: number) => (
-                      <a key={index} id={element.id.toString()} href={`/product?category_id=${element.id}`} className="category-link">
-                        📱 {element.name}
-                      </a>
-                    ))
-                  }
-                  <a href="#" className="category-link">
-                    💻 Laptops
-                  </a>
-                  <a href="#" className="category-link">
-                    🎧 Audio
-                  </a>
+              {categories.map((category: CategoriesInterface) => (
+                <div className="category-section">
+                  <div className="category-title">{category.name}</div>
+                  <div className="category-links">
+                    {category.sub_categories.map((sub_category: SubCategoriesInterface) => (
+                      <a className='category-link'>{sub_category.name}</a>
+                    ))}
+                  </div>
                 </div>
-              </div>
-
-              <div className="category-section">
-                <div className="category-title">Fashion</div>
-                <div className="category-links">
-                  <a href="#" className="category-link">
-                    👕 Men's Clothing
-                  </a>
-                  <a href="#" className="category-link">
-                    👗 Women's Clothing
-                  </a>
-                  <a href="#" className="category-link">
-                    👟 Footwear
-                  </a>
-                </div>
-              </div>
-
-              <div className="category-section">
-                <div className="category-title">Home & Living</div>
-                <div className="category-links">
-                  <a href="#" className="category-link">
-                    🛋️ Furniture
-                  </a>
-                  <a href="#" className="category-link">
-                    🏠 Decor
-                  </a>
-                  <a href="#" className="category-link">
-                    🔧 Tools
-                  </a>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -154,7 +128,7 @@ const Navbar: React.FC = () => {
           </div>
         </div>
       </div>
-    </nav>
+    </nav >
   );
 };
 
