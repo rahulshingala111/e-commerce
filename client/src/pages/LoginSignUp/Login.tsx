@@ -26,8 +26,8 @@ const Login = () => {
             })
             if (response.status) {
                 console.log("ello");
-
                 sessionStorage.setItem(CONSTANTS.SESSION_STORAGE.TOKEN, response.token)
+                sessionStorage.setItem(CONSTANTS.SESSION_STORAGE.USER, response.data)
                 login();
                 //redirect to home page
                 setTimeout(() => {

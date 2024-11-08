@@ -7,11 +7,30 @@ import ProductRouter from './src/app/product/router';
 import UserRouter from './src/app/user/router'
 import AuthRouter from './src/app/auth/router';
 import AdminRouter from './src/app/admin/router'
+import MediaRouter from './src/app/media/router'
+
 import chackIfTokenExist from './src/auth/tokenValidation';
-app.use(cors())
+import path from 'path';
+app.use(cors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 200
+}))
+
+
 app.use(express.json())
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+});
 app.use('/product/image', express.static(CONSTANTS.path.product_store))
 app.use('/banner/image', express.static(CONSTANTS.path.banner_store))
+
+console.log('Serving static files from:', path.join(__dirname, 'product_store'));
+console.log('Serving static files from:', path.join(__dirname, 'banner_store'));
+
 
 
 app.use((req: Request, res: Response, next: NextFunction) => {
@@ -32,6 +51,7 @@ app.get('/api/v1/sample', (req, res) => {
 app.use('/api/v1/auth', AuthRouter)
 app.use('/api/v1/product', ProductRouter)
 app.use('/api/v1/user', chackIfTokenExist, UserRouter)
+app.use('/api/v1/media', MediaRouter)
 
 
 app.use('/api/v1/admin', AdminRouter)

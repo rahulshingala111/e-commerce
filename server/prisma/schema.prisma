@@ -15,6 +15,7 @@ model user {
   password   String
   mobile_no  String?
   addresses  addresses[]
+  cart       cart[]
 }
 
 model addresses {
@@ -28,27 +29,41 @@ model addresses {
   state       String
   country     String
   postal_code String
+
+  @@index([user_id])
 }
 
 model product {
-  id            Int        @id @default(autoincrement())
-  title         String
-  description   String
-  price         Int
-  img_path      String?
-  categories    categories @relation(fields: [categories_id], references: [id])
-  categories_id Int
-  brand         brand      @relation(fields: [brand_id], references: [id])
-  brand_id      Int
-  review        review[]
+  id                Int            @id @default(autoincrement())
+  title             String
+  description       String
+  price             Int
+  img_path          String?
+  categories        categories     @relation(fields: [categories_id], references: [id])
+  categories_id     Int
+  sub_categories    sub_categories @relation(fields: [sub_categories_id], references: [id])
+  sub_categories_id Int
+  brand             brand          @relation(fields: [brand_id], references: [id])
+  brand_id          Int
+  review            review[]
+  cart_item         cart_item[]
 }
 
 model categories {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String?
-  // sub_categories sub_categories[]
-  product     product[]
+  id             Int              @id @default(autoincrement())
+  name           String
+  description    String?
+  product        product[]
+  sub_categories sub_categories[]
+}
+
+model sub_categories {
+  id            Int        @id @default(autoincrement())
+  name          String
+  description   String
+  categories    categories @relation(fields: [categories_id], references: [id])
+  categories_id Int
+  product       product[]
 }
 
 model brand {
@@ -63,4 +78,40 @@ model review {
   product_id    Int
   review_string String
   rating        Int
+
+  @@index([product_id])
+}
+
+model banners {
+  id         Int     @id @default(autoincrement())
+  categories String
+  img_path   String
+  is_active  Boolean
+}
+
+model cart {
+  id         Int         @id @default(autoincrement())
+  user       user        @relation(fields: [user_id], references: [id])
+  user_id    Int
+  created_at DateTime    @default(now())
+  updated_at DateTime    @updatedAt
+  status     String      @db.VarChar(10)
+  cart_item  cart_item[]
+
+  @@index([user_id])
+}
+
+model cart_item {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  cart       cart     @relation(fields: [cart_id], references: [id])
+  product    product  @relation(fields: [product_id], references: [id])
+  product_id Int
+  qty        Int      @default(1)
+  price      Float
+  cart_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([cart_id, product_id])
 }

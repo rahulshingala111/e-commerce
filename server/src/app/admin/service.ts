@@ -63,6 +63,9 @@ class AdminService {
                 },
                 brand: {
                     connect: { id: Number(req.query.product_brand) }
+                },
+                sub_categories: {
+                    connect: { id: Number(req.query.sub_categories_id) }
                 }
             }
 
@@ -168,5 +171,134 @@ class AdminService {
             }
         }
     }
+    public BannersAddService = async (req: Request, res: Response) => {
+
+        console.log(req.query);
+        if (!req.query) {
+            return {
+                status: false
+            }
+        }
+        const params = {
+            category: req.query.category as string,
+            status: req.query.status === 'true' ? true : false
+        }
+        const insertBanner = await prisma.banners.create({
+            data: {
+                categories: params.category,
+                is_active: params.status,
+                img_path: ''
+            }
+        })
+        const bannerName = insertBanner.id
+
+
+        const storage: multer.StorageEngine = multer.diskStorage({
+            destination: (req, file, callback) => {
+                console.log('file', file);
+                callback(null, CONSTANTS.path.banner_store)
+            },
+            filename: (req, file, callback) => {
+                console.log(`${bannerName}${path.extname(file.originalname)}`);
+                callback(null, `${bannerName}${path.extname(file.originalname)}`)
+            }
+        })
+
+        const upload = multer({ storage: storage }).array('file', 10)
+
+        upload(req, res, async (err) => {
+            if (err) {
+                console.log(err);
+                throw new err;
+            }
+            //@ts-ignore
+            let file = req.files[0]
+            if (file) {
+                const updateFilePath = await prisma.banners.update({
+                    where: {
+                        id: bannerName
+                    },
+                    data: {
+                        img_path: CONSTANTS.path.banner_image + "/" + file.filename
+                    }
+                })
+                console.log(updateFilePath);
+                return {
+                    status: true,
+                    data: null,
+                    error: null
+                }
+            }
+        })
+
+    }
+    public AddSubCategoriesService = async (req: Request) => {
+        try {
+            console.log(req.body);
+            if (req.body) {
+                const params = {
+                    name: req.body.name as string,
+                    description: req.body.description as string,
+                    categories_id: Number(req.body.categories_id)
+                }
+
+                const insert = await prisma.sub_categories.create({
+                    data: {
+                        name: params.name,
+                        description: params.name,
+                        categories: {
+                            connect: {
+                                id: params.categories_id
+                            }
+                        }
+                    }
+                })
+
+                return {
+                    stauts: true,
+                    data: insert,
+                    message: 'insert success'
+                }
+
+            } else {
+                //
+            }
+
+        } catch (error) {
+            console.log(error);
+            return {
+                status: false,
+                data: null,
+                error: error
+            }
+        }
+    }
+
+    public GetSubCategoreisService = async (req: Request) => {
+        try {
+
+            const categories_id = Number(req.query.categories_id)
+
+            const sub_categories = await prisma.sub_categories.findMany({
+                where: {
+                    categories_id: categories_id
+                }
+            })
+
+            return {
+                stauts: true,
+                data: sub_categories
+            }
+
+        } catch (error) {
+            console.log(error);
+            return {
+                status: false,
+                data: null,
+                error: error
+            }
+        }
+    }
 }
+
 export default new AdminService()

@@ -10,8 +10,7 @@ const chackIfTokenExist = (req: Request, res: Response, next: NextFunction) => {
         const verifyingToken = helper.verifyJWT(token);
         if (verifyingToken.status) {
             console.log("token valid")
-            //@ts-ignore
-            req.user_id = verifyingToken.data?.user_id
+            req.body.user_id = verifyingToken.data?.user_id
             next();
         } else {
             console.log("token expired")

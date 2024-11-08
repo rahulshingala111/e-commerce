@@ -1,8 +1,14 @@
 .product-button-card {
-  background-color: var(--button-color);
-  padding: 10px;
-  color: var(--text-white);
+  background-color: #2563eb;
+  color: white;
+  padding: 8px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  border: none;
   cursor: pointer;
-  border-radius: var(--border-radius);
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease-in-out;
+  margin-top: 16px;
+}
+.product-button-card:hover {
+  background-color: #1d4ed8;
 }

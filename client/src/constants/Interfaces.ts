@@ -5,7 +5,13 @@ export interface ProductInterface {
     description: string;
     img_path: string;
     categories: CategoriesInterface,
-    brand: BrandInterface
+    brand: BrandInterface,
+    review: Array<ReviewInterface>
+}
+export interface ReviewInterface {
+    id: number,
+    rating: number,
+    review_string: string
 }
 export interface CategoriesInterface {
     id: number,
@@ -35,10 +41,7 @@ export interface BrandInterface {
 }
 
 export interface ParamsProps {
-    params: {
-        category_id: string | null,
-        brand_id: string | null
-    }
+    params: object
 }
 
 export interface AddressInterface {
@@ -50,4 +53,25 @@ export interface AddressInterface {
     state: string,
     country: string,
     landmark: string
+}
+
+
+export interface CartInterface {
+    id: number,
+    user_id: number,
+    created_at: string,
+    updated_at: string,
+    status: string,
+    cart_item: Array<CartItemInterface>
+}
+export interface CartItemInterface {
+    id: number,
+    user_id: number,
+    product_id: number,
+    qty: number,
+    price: number,
+    cart_id: number,
+    created_at: string,
+    updated_at: string,
+    product: ProductInterface
 }
