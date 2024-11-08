@@ -29,7 +29,7 @@ app.use('/product/image', express.static(CONSTANTS.path.product_store))
 app.use('/banner/image', express.static(CONSTANTS.path.banner_store))
 
 console.log('Serving static files from:', path.join(__dirname, 'product_store'));
-console.log('Serving static files from:', path.join(__dirname, 'product_store'));
+console.log('Serving static files from:', path.join(__dirname, 'banner_store'));
 
 
 
@@ -51,7 +51,6 @@ app.get('/api/v1/sample', (req, res) => {
 app.use('/api/v1/auth', AuthRouter)
 app.use('/api/v1/product', ProductRouter)
 app.use('/api/v1/user', chackIfTokenExist, UserRouter)
-
 app.use('/api/v1/media', MediaRouter)
 
 

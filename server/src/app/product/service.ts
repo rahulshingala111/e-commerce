@@ -1,5 +1,6 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { Request } from "express"
+import CONSTANT from "../../config/constant";
 const prisma = new PrismaClient();
 class ProductService {
 
@@ -87,11 +88,80 @@ class ProductService {
 
     public AddToCartService = async (req: Request) => {
         try {
-
-            console.log(req.header);
-
-
-            return true;
+            const params = {
+                user_id: Number(req.body.user_id),
+                product_id: Number(req.body.product_id),
+                qty: Number(req.body.qty)
+            }
+            const product = await prisma.product.findUniqueOrThrow({
+                where: {
+                    id: params.product_id
+                }
+            })
+            const cart = await prisma.cart.findFirst({
+                where: {
+                    user_id: params.user_id,
+                    status: CONSTANT.CART_STATUS.ACTIVE
+                }
+            })
+            if (!cart) {
+                const newCart = await prisma.cart.create({
+                    data: {
+                        user_id: params.user_id,
+                        status: CONSTANT.CART_STATUS.ACTIVE
+                    }
+                })
+                // new cart item
+                const newCartItem = await prisma.cart_item.create({
+                    data: {
+                        user_id: params.user_id,
+                        product_id: params.product_id,
+                        qty: params.qty,
+                        price: product.price,
+                        cart_id: newCart.id
+                    }
+                })
+                return {
+                    status: true,
+                    message: 'item added',
+                    data: newCartItem
+                }
+            } else {
+                const findifItemAlreadyExist = await prisma.cart_item.findFirst({
+                    where: {
+                        cart_id: cart.id,
+                        product_id: params.product_id
+                    },
+                    take: 1
+                })
+                let returnData;
+                if (findifItemAlreadyExist) {
+                    const update_cart = await prisma.cart_item.update({
+                        data: {
+                            qty: findifItemAlreadyExist.qty + 1
+                        },
+                        where: {
+                            id: findifItemAlreadyExist.id
+                        }
+                    })
+                    returnData = update_cart
+                } else {
+                    returnData = await prisma.cart_item.create({
+                        data: {
+                            user_id: params.user_id,
+                            product_id: params.product_id,
+                            qty: params.qty,
+                            price: product.price,
+                            cart_id: cart.id
+                        }
+                    })
+                }
+                return {
+                    status: true,
+                    message: 'item added',
+                    data: returnData
+                }
+            }
 
         } catch (error) {
             console.log(error);
@@ -103,6 +173,59 @@ class ProductService {
         }
     }
 
+    public GetCartService = async (req: Request) => {
+        try {
+
+            if (!req.body.user_id) {
+                throw new Error("session expired");
+            }
+
+            const user_id = Number(req.body.user_id);
+            const findCartItems = await prisma.cart.findFirst({
+                where: {
+                    user_id: user_id
+                },
+                include: {
+                    cart_item: {
+                        include: {
+                            product: {}
+                        }
+                    }
+                }
+            })
+            console.log(findCartItems);
+            if (findCartItems) {
+                if (findCartItems.cart_item.length > 0) {
+                    return {
+                        status: true,
+                        message: 'fetched successfully',
+                        data: findCartItems
+                    }
+                } else {
+                    return {
+                        status: false,
+                        data: null,
+                        message: 'No cart item'
+                    }
+                }
+            } else {
+                return {
+                    status: false,
+                    data: null,
+                    message: 'wroing!'
+                }
+            }
+
+
+        } catch (error) {
+            console.log(error);
+            return {
+                staus: false,
+                data: null,
+                error: error
+            }
+        }
+    }
     public GetProductService = async (req: Request) => {
         try {
             if (Object.keys(req.query).length !== 0) {

@@ -14,7 +14,8 @@ const CONSTANTS = Object.freeze({
         CART_ITEMS: "cart_items"
     },
     SESSION_STORAGE: {
-        TOKEN: "token"
+        TOKEN: "token",
+        USER: "user"
     },
     API_ENDPOINTS: {
         CART: {

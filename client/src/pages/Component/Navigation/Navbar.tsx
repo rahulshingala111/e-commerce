@@ -49,7 +49,9 @@ const Navbar: React.FC = () => {
   return (
     <nav className="navbar">
       <div className="nav-container">
-        <div className="store-name">sahara store</div>
+        <div className="store-name" onClick={() => {
+          navigate('/')
+        }}>sahara store</div>
 
         <div className="nav-left">
 
@@ -63,7 +65,7 @@ const Navbar: React.FC = () => {
                 <div className="category-links">
                   {
                     categories.map((element: CategoriesInterface, index: number) => (
-                      <a key={index} id={element.id.toString()} href="#" className="category-link">
+                      <a key={index} id={element.id.toString()} href={`/product?category_id=${element.id}`} className="category-link">
                         📱 {element.name}
                       </a>
                     ))
@@ -124,7 +126,13 @@ const Navbar: React.FC = () => {
             <span className="cart-count">1</span>
           </button>
 
-          <button className="user-button">
+          <button className="user-button" onClick={() => {
+            if (isLoggedin) {
+              navigate('/profile')
+            } else {
+              navigate('/login')
+            }
+          }}>
             <span className="user-icon">👤</span>
             <span className="user-text">
               {

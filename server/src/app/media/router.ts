@@ -24,7 +24,7 @@ class MediaRouter {
     }
 
     routerInit() {
-        this.router.get('/', this.GetBanners)
+        this.router.get('/banner/front', this.GetBanners)
     }
 
 

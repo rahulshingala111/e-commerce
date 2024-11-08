@@ -14,6 +14,10 @@ const Dashboard = () => {
                 <div>
                     <Link to={'/product/brand/add'}><button>Add Brand</button></Link>
                 </div>
+                <div>
+                    <Link to={'/product/banner/add'}><button>Add Banner</button></Link>
+                </div>
+                
             </div>
         </>
     )

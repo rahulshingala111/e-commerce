@@ -168,5 +168,66 @@ class AdminService {
             }
         }
     }
+    public BannersAddService = async (req: Request, res: Response) => {
+
+        console.log(req.query);
+        if (!req.query) {
+            return {
+                status: false
+            }
+        }
+        const params = {
+            category: req.query.category as string,
+            status: req.query.status === 'true' ? true : false
+        }
+        const insertBanner = await prisma.banners.create({
+            data: {
+                categories: params.category,
+                is_active: params.status,
+                img_path: ''
+            }
+        })
+        const bannerName = insertBanner.id
+
+
+        const storage: multer.StorageEngine = multer.diskStorage({
+            destination: (req, file, callback) => {
+                console.log('file', file);
+                callback(null, CONSTANTS.path.banner_store)
+            },
+            filename: (req, file, callback) => {
+                console.log(`${bannerName}${path.extname(file.originalname)}`);
+                callback(null, `${bannerName}${path.extname(file.originalname)}`)
+            }
+        })
+
+        const upload = multer({ storage: storage }).array('file', 10)
+
+        upload(req, res, async (err) => {
+            if (err) {
+                console.log(err);
+                throw new err;
+            }
+            //@ts-ignore
+            let file = req.files[0]
+            if (file) {
+                const updateFilePath = await prisma.banners.update({
+                    where: {
+                        id: bannerName
+                    },
+                    data: {
+                        img_path: CONSTANTS.path.banner_image + "/" + file.filename
+                    }
+                })
+                console.log(updateFilePath);
+                return {
+                    status: true,
+                    data: null,
+                    error: null
+                }
+            }
+        })
+
+    }
 }
 export default new AdminService()

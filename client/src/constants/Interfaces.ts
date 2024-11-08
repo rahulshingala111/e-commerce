@@ -54,3 +54,24 @@ export interface AddressInterface {
     country: string,
     landmark: string
 }
+
+
+export interface CartInterface {
+    id: number,
+    user_id: number,
+    created_at: string,
+    updated_at: string,
+    status: string,
+    cart_item: Array<CartItemInterface>
+}
+export interface CartItemInterface {
+    id: number,
+    user_id: number,
+    product_id: number,
+    qty: number,
+    price: number,
+    cart_id: number,
+    created_at: string,
+    updated_at: string,
+    product: ProductInterface
+}

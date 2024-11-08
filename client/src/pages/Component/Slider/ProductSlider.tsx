@@ -23,7 +23,7 @@ const ProductSlider = () => {
     useEffect(() => {
         const callme = async () => {
             try {
-                const bannerImages = await ApiCall.get('/media')
+                const bannerImages = await ApiCall.get('/media/banner/front')
                 if (bannerImages.data.length > 0) {
                     const ArrayOfObjectURLs = await fetchAllBanners(bannerImages.data)
                     console.log("ArrayOfObjectURLs", ArrayOfObjectURLs);
@@ -50,12 +50,6 @@ const ProductSlider = () => {
         })
         return Promise.all(ObjectUrls)
     }
-
-
-    // const images = [
-    //     'http://localhost:3002/banner/image/2.jpg',
-    //     'http://localhost:3002/banner/image/2.jpg',
-    // ]
 
     return (
 
