@@ -1,0 +1,16 @@
+.metadata-table {
+  font-family: Arial, sans-serif;
+}
+
+.metadata-table td {
+  padding: 9px;
+  border: 1px solid black;
+}
+
+.metadata-table td:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.metadata-table tr:hover {
+  background-color: #e1e1e1;
+}

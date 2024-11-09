@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ApiCall from "../../constants/ApiCall";
 import { useNavigate } from "react-router-dom";
+import './AddProduct.css'
 interface Categories {
     id: number,
     name: string,
@@ -28,6 +29,9 @@ const AddProduct = () => {
     const [product_sub_categorie, setProduct_sub_categorie] = useState<string>('')
     const [product_brand, setProduct_brand] = useState<string>('')
 
+    const [keyState, setKeyState] = useState<string>('')
+    const [valueState, setValueState] = useState<string>('')
+    const [metadata, setMetadata] = useState<Record<string, string>>({})
 
     const [categories, setCategories] = useState<Array<Categories>>([])
 
@@ -97,7 +101,7 @@ const AddProduct = () => {
         const form = new FormData();
         form.append("file", product_image_url)
 
-        const apicall = await ApiCall.post(`/products?product_name=${product_name}&product_description=${product_description}&product_price=${product_price}&product_categorie=${product_categorie}&product_brand=${product_brand}&sub_categories_id=${product_sub_categorie}`, form, {
+        const apicall = await ApiCall.post(`/products?product_name=${product_name}&product_description=${product_description}&product_price=${product_price}&product_categorie=${product_categorie}&product_brand=${product_brand}&sub_categories_id=${product_sub_categorie}&metadata=${metadata}`, form, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
@@ -108,7 +112,19 @@ const AddProduct = () => {
         }
     };
 
+    const handleFeild = () => {
+        if (keyState.length > 0 && valueState.length > 0) {
+            setMetadata(prevMetadata => ({
+                ...prevMetadata,
+                [keyState]: valueState
+            }));
+            setValueState("")
+            setKeyState("")
 
+        }
+    }
+
+    console.log("metadata", metadata);
 
     return (
         <>
@@ -199,6 +215,25 @@ const AddProduct = () => {
                         </select>
                     </div>
                 )}
+                <div>
+                    <div>
+                        <div>
+                            {metadata && Object.entries(metadata).map(([key, value]: [string, string]) => (
+                                <table className="metadata-table">
+                                    <tr>
+                                        <td>{key}</td>
+                                        <td>{value}</td>
+                                    </tr>
+                                </table>
+                            ))
+                            }
+                        </div>
+                        <label>feild-value </label>
+                        <input type="text" value={keyState} onChange={(e) => setKeyState(e.target.value)} />
+                        <input type="text" value={valueState} onChange={(e) => setValueState(e.target.value)} />
+                        <button onClick={handleFeild}>insert</button>
+                    </div>
+                </div>
                 <div>
                     <button type="submit">Insert</button>
                 </div>

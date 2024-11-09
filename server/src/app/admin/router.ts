@@ -137,8 +137,6 @@ class AdminRouter {
         this.router.get('/subcategories', this.GetSubCategoreis)
         this.router.post('/subcategories', this.AddSubCategories)
 
-
-
         this.router.post('/banner', this.BannersAdd)
 
         this.router.post('/products', this.ProductAdd)
