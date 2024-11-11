@@ -28,6 +28,7 @@ const CONSTANTS = Object.freeze({
             FETCH_COMMENT: (data: string | null) => `/product/comment?product_id=${data}`
         },
         USER: {
+            USER_DETAILS: `/user`,
             FETCH_ADDRESS: `/user/address`,
             CREATE_ADDRESS: `/user/address/add`,
         },

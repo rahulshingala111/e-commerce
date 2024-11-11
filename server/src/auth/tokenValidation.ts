@@ -11,6 +11,7 @@ const chackIfTokenExist = (req: Request, res: Response, next: NextFunction) => {
         if (verifyingToken.status) {
             console.log("token valid")
             req.body.user_id = verifyingToken.data?.user_id
+            console.log(req.body.user_id, verifyingToken.data?.user_id);
             next();
         } else {
             console.log("token expired")
