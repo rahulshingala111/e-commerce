@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import './Profile.css'
-import ApiCall from '../../constants/ApiCall'
-import { AddressInterface } from '../../constants/Interfaces'
-import CONSTANTS from '../../constants/constants'
+import { useEffect, useState } from 'react'
+import './Address.css'
+import { AddressInterface } from '../../../../constants/Interfaces'
+import ApiCall from '../../../../constants/ApiCall'
+import CONSTANTS from '../../../../constants/constants'
+const Address: React.FC = () => {
 
-const Profile: React.FC = () => {
+
+    const [addAddressToggle, setAddAddressToggle] = useState<boolean>(false)
+
+    const [address, setAddress] = useState<Array<AddressInterface>>([])
 
     const [address_1, setAddress_1] = useState<string>('')
     const [address_2, setAddress_2] = useState<string>('')
@@ -13,10 +17,6 @@ const Profile: React.FC = () => {
     const [city, setCity] = useState<string>('')
     const [state, setState] = useState<string>('')
     const [country, setCountry] = useState<string>('')
-
-    const [addAddressToggle, setAddAddressToggle] = useState<boolean>(false)
-
-    const [address, setAddress] = useState<Array<AddressInterface>>([])
 
     useEffect(() => {
         const callme = async () => {
@@ -28,7 +28,6 @@ const Profile: React.FC = () => {
         }
         callme();
     }, [])
-
 
     const handleNewAddress = async (e: React.FormEvent<EventTarget>) => {
         e.preventDefault();
@@ -44,17 +43,15 @@ const Profile: React.FC = () => {
 
     return (
         <div>
+            <h3>Address</h3>
             <div>
-                your address
-                <div>
-                    {address.length > 0 && (
-                        address.map((element: AddressInterface) => (
-                            <div className='address-border' key={element.id}>
-                                <p>{element.address_1 + " " + element.address_2 + ", " + element.landmark + ", " + element.city + ", " + element.state + ", " + element.country + ", " + element.postal_code}</p>
-                            </div>
-                        ))
-                    )}
-                </div>
+                {address.length > 0 && (
+                    address.map((element: AddressInterface) => (
+                        <div className='address-border' key={element.id}>
+                            <p>{element.address_1 + " " + element.address_2 + ", " + element.landmark + ", " + element.city + ", " + element.state + ", " + element.country + ", " + element.postal_code}</p>
+                        </div>
+                    ))
+                )}
             </div>
             <div>
                 <button onClick={() => setAddAddressToggle(!addAddressToggle)}>Add Address</button>
@@ -97,7 +94,6 @@ const Profile: React.FC = () => {
                 )}
             </div>
         </div>
-
     )
 }
-export default Profile 
+export default Address

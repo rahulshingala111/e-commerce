@@ -1,0 +1,53 @@
+.address-border {
+  border: 1px black;
+  border-style: solid;
+  margin: 10px;
+  padding: 5px;
+}
+.profile-page-container {
+  display: flex;
+  height: 100%;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.left-menu {
+  width: 25%;
+  background-color: #fff;
+  padding: 2rem;
+}
+
+.menu-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+.menu-item {
+  display: block;
+  padding: 0.75rem 0;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.menu-item.active,
+.menu-item:hover {
+  color: #000;
+}
+
+.right-settings {
+  width: 75%;
+  background-color: #fff;
+  padding: 2rem;
+}
+
+.settings-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+.settings-content {
+  /* Add any necessary styles for the settings content */
+}
