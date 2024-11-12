@@ -18,6 +18,7 @@ import Profile from "./pages/Profile/Settings/myProfile/Profile";
 import { AuthProvider } from "./constants/AuthContext";
 import Address from "./pages/Profile/Settings/address/Address";
 import ProfileLayout from "./pages/Profile/ProfileLayout";
+import Verify from "./pages/Verify/Verify.tsx";
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
             <Route path="/item" element={<ItemView />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/order" element={<Order />} />
-
+            <Route path="/verify" element={<Verify />} />
             <Route path="/user" element={<ProfileLayout />}>
               <Route index element={<Profile />} />
               <Route path="address" element={<Address />} />

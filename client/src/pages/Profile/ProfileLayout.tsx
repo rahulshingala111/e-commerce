@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom"
 import './ProfileLayout.css'
@@ -64,4 +64,4 @@ const ProfileLayout: React.FC = () => {
         </div>
     )
 }
-export default ProfileLayout 
+export default ProfileLayout

@@ -32,6 +32,8 @@
 
   --button-color: #2563eb;
 
+  --hover-button-color: #f7fafc;
+
   background: var(--background);
 }
 

@@ -1,7 +1,9 @@
-import { Prisma, PrismaClient } from "@prisma/client";
-import { Request } from "express"
+import {Prisma, PrismaClient} from "@prisma/client";
+import {Request} from "express"
 import CONSTANT from "../../config/constant";
+
 const prisma = new PrismaClient();
+
 class ProductService {
 
 
@@ -66,7 +68,7 @@ class ProductService {
             if (req.params.product_id) {
                 const id: number = Number(req.params.product_id);
                 const fetchItem = await prisma.product.findUnique({
-                    where: { id: id }
+                    where: {id: id}
                 })
                 console.log(fetchItem);
 
@@ -199,6 +201,11 @@ class ProductService {
             })
             console.log(findCartItems);
             if (findCartItems) {
+                let sum = 0
+                findCartItems.cart_item.map((element) => {
+                    sum = sum + (element.price * element.qty)
+                })
+                Object.assign(findCartItems, {total_sum: sum})
                 if (findCartItems.cart_item.length > 0) {
                     return {
                         status: true,
@@ -235,7 +242,7 @@ class ProductService {
             if (Object.keys(req.query).length !== 0) {
                 const object = req.query;
 
-                let query: Prisma.productFindManyArgs = { where: {}, take: 10, skip: 0 }
+                let query: Prisma.productFindManyArgs = {where: {}, take: 10, skip: 0}
 
                 console.log("object", req.query);
                 if (object.hasOwnProperty('category_id') && object.category_id !== '0') {
@@ -255,7 +262,7 @@ class ProductService {
                     if (brand_id.length > 0) {
                         query.where = {
                             ...query.where,
-                            brand_id: { in: brand_id },
+                            brand_id: {in: brand_id},
                         };
                     }
                 }
@@ -461,4 +468,5 @@ class ProductService {
         }
     }
 }
+
 export default new ProductService();

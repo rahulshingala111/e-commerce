@@ -6,6 +6,7 @@ export const SERVER_CONST = {
 
 export const SERVER_MODE: string = SERVER_CONST.DEV
 
+
 const CONSTANTS = Object.freeze({
     path: Object.freeze({
         server_url: SERVER_MODE === "UAT" ? 'https://holy-wombat-definite.ngrok-free.app' : 'http://localhost:3002'
@@ -49,6 +50,10 @@ const CONSTANTS = Object.freeze({
             LOGIN: `/auth/login`,
             REGISTER: `/auth/register`
         },
+        PAYMENT: {
+            CREATE_ORDER: `/payment/order/create`,
+            CALL_BACK_URL: `/payment/order/callback`,
+        }
 
     },
     ROUTES: {
