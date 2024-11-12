@@ -46,19 +46,13 @@ const Address: React.FC = () => {
             <h3>Address</h3>
             Your Adresses
             <div>
-                {address.length > 0 && (
-                    address.map((element: AddressInterface) => (
-                        <div className='address-border' key={element.id}>
-                            <p>{element.address_1 + " " + element.address_2 + ", " + element.landmark + ", " + element.city + ", " + element.state + ", " + element.country + ", " + element.postal_code}</p>
-                        </div>
-                    ))
-                )}
-            </div>
-            <div>
-                <button onClick={() => setAddAddressToggle(!addAddressToggle)}>Add Address</button>
+                <div className='address-border'>
+                    <button className='add-address' onClick={() => setAddAddressToggle(!addAddressToggle)}>Add Address</button>
+
+                </div>
+
                 {addAddressToggle && (
                     <div>
-                        Add Addresss
                         <form onSubmit={handleNewAddress}>
                             <div>
                                 <label htmlFor='address_1'>Address 1</label>
@@ -94,6 +88,16 @@ const Address: React.FC = () => {
                     </div>
                 )}
             </div>
+            <div>
+                {address.length > 0 && (
+                    address.map((element: AddressInterface, index: number) => (
+                        <div className='address-border' key={element.id}>
+                        {element.address_1 + " " + element.address_2 + ", " + element.landmark + ", " + element.city + ", " + element.state + ", " + element.country + ", " + element.postal_code}
+                        </div>
+                    ))
+                )}
+            </div>
+
         </div>
     )
 }

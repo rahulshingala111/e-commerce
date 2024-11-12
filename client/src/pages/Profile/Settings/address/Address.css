@@ -3,4 +3,14 @@
     border-style: solid;
     margin: 10px;
     padding: 5px;
+    align-items: center;
   }
+
+.add-address {
+    border: none;
+    background-color: white;
+}
+.add-address:hover {
+    background-color: black;
+    color: white;
+}

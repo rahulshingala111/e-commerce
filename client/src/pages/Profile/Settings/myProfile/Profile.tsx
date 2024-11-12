@@ -42,20 +42,16 @@ const Profile: React.FC = () => {
     return (
         <div>
             <div className="profile-personal-info__header">
-            <h3>Personal Information</h3>
+                <h3>Personal Information</h3>
                 {!isEditing && (
                     <div
-                        className="profile-personal-info__edit-button"
-                        onClick={() => setIsEditing(true)}
-                    >
+                        className="profile-personal-info__edit-button" onClick={() => setIsEditing(true)}>
                         Edit
                     </div>
                 )}
                 {isEditing && (
                     <div
-                        className="profile-personal-info__save-button"
-                        onClick={() => setIsEditing(false)}
-                    >
+                        className="profile-personal-info__save-button" onClick={() => setIsEditing(false)}>
                         Save
                     </div>
                 )}
