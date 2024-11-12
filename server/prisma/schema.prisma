@@ -16,6 +16,7 @@ model user {
   mobile_no  String?
   addresses  addresses[]
   cart       cart[]
+  order      order[]
 }
 
 model addresses {
@@ -115,4 +116,20 @@ model cart_item {
   updated_at DateTime @updatedAt
 
   @@index([cart_id, product_id])
+}
+
+model order {
+  id         Int      @id @default(autoincrement())
+  user       user     @relation(fields: [user_id], references: [id])
+  user_id    Int
+  amount     Int
+  currency   String
+  order_id   String   @unique
+  receipt    String
+  payment_id String?
+  signature  String?
+  verified   Boolean  @default(false)
+  notes      String?
+  created_at String
+  updated_at DateTime @updatedAt
 }

@@ -4,10 +4,26 @@ import ApiCall from '../../constants/ApiCall';
 import CONSTANTS from '../../constants/constants';
 import {useAuth} from '../../constants/AuthContext';
 import {CartInterface, CartItemInterface} from '../../constants/Interfaces';
-import login from "../LoginSignUp/Login.tsx";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 import {useNavigate} from "react-router-dom";
+import {AxiosResponse} from "axios";
+
+interface User {
+    first_name: string;
+    last_name: string;
+    email: string;
+    mobile_no: string;
+}
+
+interface PaymentOrder {
+    key_id: string;
+    order_id: string;
+    order_create_id: number;
+    currency: string;
+    amount: number;
+    image: string;
+    user: User;
+    notes: Array<Record<string, string>>;
+}
 
 const Cart: React.FC = () => {
 
@@ -19,35 +35,16 @@ const Cart: React.FC = () => {
 
     useEffect(() => {
         const callme = async () => {
+            console.log("isLoggedin", isLoggedin)
+            const getCartItem = await ApiCall.get('/product/cart/get')
+            console.log(getCartItem.data);
+            setCartItems(getCartItem.data)
+            setTotal(getCartItem.data.total_sum)
 
-            if (isLoggedin) {
-                const getCartItem = await ApiCall.get('/product/cart/get')
-                console.log(getCartItem.data);
-                setCartItems(getCartItem.data)
-                setTotal(getCartItem.data.total_sum)
-            } else {
-                // const itemsfromstorage = localStorage.getItem(CONSTANTS.LOCAL_STORAGE.CART_ITEMS)
-                // if (itemsfromstorage) {
-                //     const itemArray: Array<any> = JSON.parse(itemsfromstorage)
-                //     if (itemArray.length > 0) {
-                //         console.log(itemArray);
-                //         const tempArray: Array<any> = []
-                //         Promise.all(itemArray.map(async (element: number) => {
-                //             const fetchitems = await ApiCall.get(CONSTANTS.API_ENDPOINTS.CART.FETCH(element))
-                //             if (fetchitems.status) {
-                //                 tempArray.push(fetchitems.data)
-                //             }
-                //         })).then(() => {
-                //             setCartItems(tempArray)
-                //         })
-                //     } else {
-                //         console.log("local storage exist but no item found");
-                //         setCartItems([])
-                //     }
-                // }
-            }
+
         }
         callme()
+
     }, [])
 
     const handleRemoveCartItem = async (e: any) => {
@@ -88,8 +85,6 @@ const Cart: React.FC = () => {
 
     const handleBuyNow = async () => {
         try {
-
-
             const loadScript = (src: string) => {
                 return new Promise((resolve): void => {
                     const script = document.createElement('script')
@@ -104,64 +99,64 @@ const Cart: React.FC = () => {
                 })
             }
 
-
             const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
             if (!res) {
-                throw new Error('Razropay failed to load!!')
+                throw new Error('Razorpay failed to load!!')
+            }
+            if (!cartItems) {
+                throw new Error('cart empty')
             }
             const createOrder = await ApiCall.post(CONSTANTS.API_ENDPOINTS.PAYMENT.CREATE_ORDER, {
-                data: 'somedata'
+                cart_id: cartItems.id
             })
-            if (createOrder.data.order_id) {
-                console.log(createOrder.data)
-                const order_id: string = createOrder.data.order_id as string
-                console.log("order_id", order_id)
 
-                const options = {
-                    "key": "rzp_test_iY2oPXME3iuY6r", // Enter the Key ID generated from the Dashboard
-                    "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-                    "currency": "INR",
-                    "name": "rahul shingala",
-                    "description": "Test Transaction",
-                    "image": "http://localhost:3002/product/image/1.jpg",
-                    "order_id": order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-                    "prefill": {
-                        "name": "Gaurav Kumar",
-                        "email": "gaurav.kumar@example.com",
-                        "contact": "9000090000"
-                    },
-                    // "callback_url": CONSTANTS.API_ENDPOINTS.PAYMENT.CALL_BACK_URL,
-                    "handler": async (res: any) => {
-                        const verify = await ApiCall.post(CONSTANTS.API_ENDPOINTS.PAYMENT.CALL_BACK_URL, {
-                            payment_id: res.razorpay_payment_id,
-                            order_id: res.razorpay_order_id,
-                            signature: res.razorpay_signature
-                        })
-                        if (verify.status) {
-                            navigate('/verify')
-                        } else {
-                            console.log("someting went wrong")
-                        }
-                    },
-                    "notes": {
-                        "address": "Razorpay Corporate Office"
-                    },
-                    "theme": {
-                        "color": "#3399cc"
-                    }
-                };
-                console.log(options)
-
-                const paymentObject = new (window as any).Razorpay(options);
-                paymentObject.on("payment.failed", (res: any) => {
-                    console.log(res)
-                })
-                const abc = await paymentObject.open();
-                console.log("avb", abc)
-
-            } else {
-                console.log("something went wrong")
+            if (!createOrder.status) {
+                throw new Error('Error creating order from api')
             }
+            const response: PaymentOrder = createOrder.data
+            const options = {
+                "key": response.key_id,
+                "amount": response.amount,
+                "currency": response.currency,
+                "name": `${response.user.first_name} ${response.user.last_name}`,
+                "description": "Test Transaction",
+                "image": response.image,
+                "order_id": response.order_id,
+                "prefill": {
+                    "name": `${response.user.first_name} ${response.user.last_name}`,
+                    "email": response.user.email,
+                    "contact": response.user.mobile_no
+                },
+                "handler": async (res: any): Promise<void> => {
+                    const verify: AxiosResponse = await ApiCall.post(CONSTANTS.API_ENDPOINTS.PAYMENT.CALL_BACK_URL, {
+                        cart_id: cartItems.id,
+                        order_create_id: response.order_create_id,
+                        payment_id: res.razorpay_payment_id,
+                        order_id: res.razorpay_order_id,
+                        signature: res.razorpay_signature
+                    })
+                    if (verify.status) {
+                        navigate('/verify')
+                    } else {
+                        console.log("someting went wrong")
+                    }
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            console.log(options)
+
+            const paymentObject = new (window as any).Razorpay(options);
+            paymentObject.on("payment.failed", (res: any) => {
+                console.log(res)
+            })
+            await paymentObject.open();
+
+
         } catch (error) {
             console.log(error)
         }
@@ -209,10 +204,7 @@ const Cart: React.FC = () => {
                     <button className="buy-now-btn" onClick={handleBuyNow}>Buy Now</button>
                     :
                     <button className="buy-now-btn">Login and Buy</button>
-
                 }
-                {/* <Link to={'/order'}><button className="buy-now-btn" onClick={handleBuyNow}>Buy Now</button></Link> */}
-
             </div>
         </div>
     );

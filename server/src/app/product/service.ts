@@ -189,7 +189,8 @@ class ProductService {
             const user_id = Number(req.body.user_id);
             const findCartItems = await prisma.cart.findFirst({
                 where: {
-                    user_id: user_id
+                    user_id: user_id,
+                    status :CONSTANT.CART_STATUS.ACTIVE
                 },
                 include: {
                     cart_item: {

@@ -1,7 +1,9 @@
-import { Request } from "express"
-import { PrismaClient } from "@prisma/client"
+import {Request} from "express"
+import {PrismaClient} from "@prisma/client"
+
 const prisma = new PrismaClient();
-import CommonFunction from './../../config/helper'
+import {signJWT} from './../../config/helper'
+
 class AuthRouteService {
     public UserLoginSerive = async (req: Request) => {
         try {
@@ -31,7 +33,7 @@ class AuthRouteService {
             } else {
                 delete (findUser as any).password
 
-                const token = CommonFunction.signJWT({
+                const token = signJWT({
                     id: findUser.id
                 })
 
@@ -66,6 +68,7 @@ class AuthRouteService {
                 city: string,
                 pin: number,
             }
+
             console.log("body", req.body.data);
 
             const payload: Payload = {
@@ -121,4 +124,5 @@ class AuthRouteService {
         }
     }
 }
+
 export default new AuthRouteService()

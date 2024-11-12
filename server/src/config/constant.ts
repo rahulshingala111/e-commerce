@@ -9,6 +9,9 @@ const CONSTANT = Object.freeze({
     CART_STATUS: {
         ACTIVE: "active",
         COMPLETED: "completed"
+    },
+    CURRENCY : {
+        Indian : 'INR'
     }
 })
 export default CONSTANT

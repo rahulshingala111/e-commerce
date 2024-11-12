@@ -56,6 +56,16 @@ const ProfileLayout: React.FC = () => {
                     >
                         Notifications
                     </Link>
+                    <Link
+                        to="/"
+                        className={`menu-item ${selectedMenu === 'notifications' ? 'active' : ''}`}
+                        onClick={() => {
+                            sessionStorage.removeItem('user')
+                            sessionStorage.removeItem('token')
+                        }}
+                    >
+                        Log Out
+                    </Link>
                 </nav>
             </div>
             <div className="right-settings">
