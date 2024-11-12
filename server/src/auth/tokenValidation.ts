@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from "express"
-import helper from "../config/helper";
+import {Request, Response, NextFunction} from "express"
+import {verifyJWT} from "../config/helper";
 
 const chackIfTokenExist = (req: Request, res: Response, next: NextFunction) => {
     console.log('middleware');
@@ -7,10 +7,11 @@ const chackIfTokenExist = (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization
     if (token) {
         console.log(token);
-        const verifyingToken = helper.verifyJWT(token);
+        const verifyingToken = verifyJWT(token);
         if (verifyingToken.status) {
             console.log("token valid")
             req.body.user_id = verifyingToken.data?.user_id
+            console.log(req.body.user_id, verifyingToken.data?.user_id);
             next();
         } else {
             console.log("token expired")

@@ -102,7 +102,7 @@ const Navbar: React.FC = () => {
 
           <button className="user-button" onClick={() => {
             if (isLoggedin) {
-              navigate('/profile')
+              navigate('/user')
             } else {
               navigate('/login')
             }

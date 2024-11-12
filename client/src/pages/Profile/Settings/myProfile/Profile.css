@@ -1,0 +1,64 @@
+.profile-personal-info {
+    margin-bottom: 1.5rem;
+  }
+  
+  .profile-personal-info__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .profile-personal-info__title {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+  
+  .profile-personal-info__edit-button {
+    color: #3b82f6;
+    font-weight: normal;
+    cursor: pointer;
+  }
+  
+  .profile-personal-info__edit-button--active {
+    display: none;
+  }
+  
+  .profile-personal-info__save-button {
+    color: #3b82f6;
+    font-weight: normal;
+    cursor: pointer;
+  }
+  
+  .profile-personal-info__save-button--active {
+    display: none;
+  }
+  
+  .profile-personal-info__field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .profile-personal-info__field-label {
+    font-weight: 500;
+  }
+  
+  .profile-personal-info__field-input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+  }
+  
+  .profile-personal-info__field-input--editable {
+    background-color: #fff;
+    cursor: text;
+  }
+  
+  .profile-personal-info__email-verification {
+    margin-left: 0.5rem;
+    color: #6b7280;
+  }
