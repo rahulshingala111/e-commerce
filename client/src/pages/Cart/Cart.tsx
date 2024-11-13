@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import './Cart.css'
 import ApiCall from '../../constants/ApiCall';
 import CONSTANTS from '../../constants/constants';
-import {useAuth} from '../../constants/AuthContext';
-import {CartInterface, CartItemInterface} from '../../constants/Interfaces';
+import {AddressInterface, CartInterface, CartItemInterface} from '../../constants/Interfaces';
 import {useNavigate} from "react-router-dom";
 import {AxiosResponse} from "axios";
 
@@ -29,23 +28,39 @@ const Cart: React.FC = () => {
 
     const navigate = useNavigate();
 
+    const [step, setStep] = useState<number>(1)
+
     const [cartItems, setCartItems] = useState<CartInterface>()
+    const [address, setAddress] = useState<Array<AddressInterface>>([])
+    const [selectedAddress, setSelectedAddress] = useState<string>()
+
     const [total, setTotal] = useState<number>(0)
-    const {isLoggedin} = useAuth();
+
 
     useEffect(() => {
-        const callme = async () => {
-            console.log("isLoggedin", isLoggedin)
+        const getCartItems = async () => {
             const getCartItem = await ApiCall.get('/product/cart/get')
-            console.log(getCartItem.data);
             setCartItems(getCartItem.data)
             setTotal(getCartItem.data.total_sum)
-
-
         }
-        callme()
+        const getAddresses = async () => {
+            const fetchAddress = await ApiCall.get(CONSTANTS.API_ENDPOINTS.USER.FETCH_ADDRESS)
+            setAddress(fetchAddress.data)
+        }
+        const getReview = () => {
+            //
+        }
 
-    }, [])
+        if (step === 1) {
+            getCartItems()
+        }
+        if (step === 2) {
+            getAddresses()
+        }
+        if (step === 3) {
+            getReview()
+        }
+    }, [step]);
 
     const handleRemoveCartItem = async (e: any) => {
         console.log(e);
@@ -81,6 +96,17 @@ const Cart: React.FC = () => {
         //         console.log(error);
         //     }
         // }
+    }
+
+    const handleNextPage = () => {
+        if (step < 3 && step >= 1) {
+            setStep(step + 1)
+        }
+    }
+    const handlePreviousPage = (): void => {
+        if (step <= 3 && step >= 1) {
+            setStep(step - 1)
+        }
     }
 
     const handleBuyNow = async () => {
@@ -163,49 +189,109 @@ const Cart: React.FC = () => {
     }
 
     return (
-        <div className="cart-page">
-            <h1>Your Cart</h1>
-            <div className="cart-items">
-                {cartItems ?
-                    cartItems.cart_item.map((cart_item: CartItemInterface) => (
-                        <div key={cart_item.id} className="cart-item-card">
-                            <div className="cart-item-image">
-                                <img src={CONSTANTS.path.server_url + '/' + cart_item.product.img_path}
-                                     alt={cart_item.product.title}/>
-                            </div>
-                            <div className="cart-item-details">
-                                <h2>{cart_item.product.title}</h2>
-                                <p>Price: ${cart_item.price}</p>
-                                <div className='qty-div'>
-                                    <button className='qty-buttons' onClick={() => {
-                                        handleChangeInventory(0, cart_item.id)
-                                    }}>+
-                                    </button>
-                                    <span className='qty-show'>{cart_item.qty ?? 1}</span>
-                                    <button className='qty-buttons' onClick={() => {
-                                        handleChangeInventory(1, cart_item.id)
-                                    }}>-
-                                    </button>
-                                </div>
-                                <button className="remove-btn" value={cart_item.id} onClick={handleRemoveCartItem}>
-                                    Remove
-                                </button>
+        <div>
+            <div>
+                <h2>step - {step}</h2>
+            </div>
+            {
+                step === 1 && (
+                    <div className="cart-page">
+                        <h1>Your Cart</h1>
+                        <div className="cart-items">
+                            {cartItems ?
+                                cartItems.cart_item.map((cart_item: CartItemInterface) => (
+                                    <div key={cart_item.id} className="cart-item-card">
+                                        <div className="cart-item-image">
+                                            <img src={CONSTANTS.path.server_url + '/' + cart_item.product.img_path}
+                                                 alt={cart_item.product.title}/>
+                                        </div>
+                                        <div className="cart-item-details">
+                                            <h2>{cart_item.product.title}</h2>
+                                            <p>Price: ${cart_item.price}</p>
+                                            <div className='qty-div'>
+                                                <button className='qty-buttons' onClick={() => {
+                                                    handleChangeInventory(0, cart_item.id)
+                                                }}>+
+                                                </button>
+                                                <span className='qty-show'>{cart_item.qty ?? 1}</span>
+                                                <button className='qty-buttons' onClick={() => {
+                                                    handleChangeInventory(1, cart_item.id)
+                                                }}>-
+                                                </button>
+                                            </div>
+                                            <button className="remove-btn" value={cart_item.id}
+                                                    onClick={handleRemoveCartItem}>
+                                                Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                )) :
+                                <h1>No item added</h1>}
+                        </div>
+                        <div>
+                            total : {total}
+                        </div>
+
+                        <div className="buy-now-section">
+                            <div>
+                                <button className="buy-now-btn" onClick={handleNextPage}>next</button>
                             </div>
                         </div>
-                    )) :
-                    <h1>No item added</h1>}
-            </div>
-            <div>
-                total : {total}
-            </div>
+                    </div>
+                )
+            }
+            {
+                step === 2 && (
+                    <div>
+                        select address
+                        <div>
+                            {
+                                address.map((element) => (
+                                    <div>
+                                        <input type='radio' id={element.id.toString()} name={element.id.toString()}
+                                               value={element.id.toString()}
+                                               checked={selectedAddress === element.id.toString()}
+                                               onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+                                                   setSelectedAddress(e.target.value)
+                                               }}
+                                        />
+                                        <label>{element.address_1 + " " + element.address_2 + ", " + element.landmark + ", " + element.city + ", " + element.state + ", " + element.country + ", " + element.postal_code}</label>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                        <div>
+                            <button className="buy-now-btn" onClick={handlePreviousPage}>back</button>
+                            <button className="buy-now-btn" onClick={handleNextPage} disabled={!selectedAddress}>next
+                            </button>
+                        </div>
+                    </div>
+                )
+            }
+            {
+                step === 3 && (
+                    <div>
+                        review
+                        <div>
+                            {cartItems && cartItems.cart_item.map((element: CartItemInterface) => (
+                                <>
+                                    product id - {element.id}
+                                    <br/>
+                                    product name - {element.product.title}
+                                    <br/>
+                                    total - {element.price}
+                                </>
+                            ))}
+                        </div>
+                        <div>selected address : {selectedAddress}</div>
 
-            <div className="buy-now-section">
-                {isLoggedin ?
-                    <button className="buy-now-btn" onClick={handleBuyNow}>Buy Now</button>
-                    :
-                    <button className="buy-now-btn">Login and Buy</button>
-                }
-            </div>
+                        <div>
+                            <button className="buy-now-btn" onClick={handlePreviousPage}>back</button>
+                            <button className="buy-now-btn" onClick={handleBuyNow}>Buy Now</button>
+                        </div>
+                    </div>
+                )
+            }
         </div>
     );
 
