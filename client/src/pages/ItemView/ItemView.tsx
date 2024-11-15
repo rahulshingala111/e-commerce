@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useLocation } from 'react-router-dom';
 import './ItemView.css'
-import { ProductInterface } from "../../constants/Interfaces"
+import type { ProductInterface } from "../../constants/Interfaces"
 import ApiCall from "../../constants/ApiCall"
 import CONSTANTS from "../../constants/constants"
 import { useAuth } from "../../constants/AuthContext";

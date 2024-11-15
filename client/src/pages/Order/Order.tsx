@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './Order.css'
 import ApiCall from '../../constants/ApiCall';
-import { AddressInterface } from '../../constants/Interfaces'
+import type { AddressInterface } from '../../constants/Interfaces'
 import CONSTANTS from '../../constants/constants';
 // import Payment from './Payment/Payment';
 // import Reivew from './Review/Review';

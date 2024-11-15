@@ -2,7 +2,7 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import './Cart.css'
 import ApiCall from '../../constants/ApiCall';
 import CONSTANTS from '../../constants/constants';
-import {AddressInterface, CartInterface, CartItemInterface} from '../../constants/Interfaces';
+import type {AddressInterface, CartInterface, CartItemInterface} from '../../constants/Interfaces';
 import {useNavigate} from "react-router-dom";
 import {AxiosResponse} from "axios";
 

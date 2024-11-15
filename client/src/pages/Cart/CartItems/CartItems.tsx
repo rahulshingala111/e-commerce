@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import ApiCall from "../../../constants/ApiCall.ts";
-import {CartInterface, CartItemInterface} from "../../../constants/Interfaces.ts";
+import type {CartInterface, CartItemInterface} from "../../../constants/Interfaces.ts";
 import {useAuth} from "../../../constants/AuthContext.tsx";
 import CONSTANTS from "../../../constants/constants.ts";
 

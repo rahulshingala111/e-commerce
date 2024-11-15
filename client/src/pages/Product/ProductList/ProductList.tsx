@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { AxiosResponse } from "axios"
 import ApiCall from "../../../constants/ApiCall"
-import { ParamsProps, ProductInterface } from "../../../constants/Interfaces"
+import type { ParamsProps, ProductInterface } from "../../../constants/Interfaces"
 import './ProductList.css'
 import CONSTANTS from "../../../constants/constants"
 import { generateQuery } from "../../../constants/Helper"
