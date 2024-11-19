@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react"
-import { AxiosResponse } from "axios"
+import React, {useEffect, useState} from "react"
+import {AxiosResponse} from "axios"
 import ApiCall from "../../../constants/ApiCall"
-import type { ParamsProps, ProductInterface } from "../../../constants/Interfaces"
+import type {ParamsProps, ProductInterface} from "../../../constants/Interfaces"
 import './ProductList.css'
 import CONSTANTS from "../../../constants/constants"
-import { generateQuery } from "../../../constants/Helper"
-import { useNavigate } from "react-router-dom"
+import {generateQuery} from "../../../constants/Helper"
+import {useNavigate} from "react-router-dom"
 import CartButton from "../../Component/CartButton/CartButton"
 
-const Produclist: React.FC<ParamsProps> = ({ params }) => {
+const Produclist: React.FC<ParamsProps> = ({params}) => {
 
     const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ const Produclist: React.FC<ParamsProps> = ({ params }) => {
     useEffect(() => {
         const callme = async () => {
             try {
-                const urlString = generateQuery(params)
+                const urlString = generateQuery(params as Record<string, string>)
                 const apicall: AxiosResponse = await ApiCall.get(CONSTANTS.API_ENDPOINTS.PRODUCT.FETCH(urlString))
                 if (apicall.status) {
                     setProducts(apicall.data);
@@ -55,7 +55,7 @@ const Produclist: React.FC<ParamsProps> = ({ params }) => {
                     >
                         <div className="product-layout">
                             <div className="product-image">
-                                <img src={CONSTANTS.path.server_url + "/" + product.img_path} alt={product.title} />
+                                <img src={CONSTANTS.path.server_url + "/" + product.img_path} alt={product.title}/>
                             </div>
 
                             <div className="product-details">
@@ -89,8 +89,8 @@ const Produclist: React.FC<ParamsProps> = ({ params }) => {
                                         <div className="info-item">
                                             <svg className="info-icon success" viewBox="0 0 24 24">
                                                 <path fill="none" stroke="currentColor" strokeLinecap="round"
-                                                    strokeLinejoin="round" strokeWidth="2"
-                                                    d="M5 13l4 4L19 7" />
+                                                      strokeLinejoin="round" strokeWidth="2"
+                                                      d="M5 13l4 4L19 7"/>
                                             </svg>
                                             <span>Delivery in 3 business days</span>
                                         </div>
@@ -120,8 +120,9 @@ const Produclist: React.FC<ParamsProps> = ({ params }) => {
                                     </div>
                                 </div>
                                 <div>
-                                    <CartButton onClick={() => onClickProduct(null)} product_id={product.id} />
-                                    <button className="view-button" onClick={() => onClickProduct(product.id)} >View</button>
+                                    <CartButton onClick={() => onClickProduct(null)} product_id={product.id}/>
+                                    <button className="view-button" onClick={() => onClickProduct(product.id)}>View
+                                    </button>
                                 </div>
                             </div>
                         </div>
