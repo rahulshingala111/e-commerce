@@ -1,6 +1,6 @@
 import { Request } from "express";
 import { PrismaClient } from "@prisma/client"
-import { ResponseInterface } from "../../config/interface";
+import { ServiceReturnInterface } from "../../config/interface";
 const prisma = new PrismaClient();
 
 class MediaService {
@@ -9,7 +9,7 @@ class MediaService {
      * GetBannerService
      * service to fetch all banners path
      */
-    public async GetBannerService(req: Request): Promise<ResponseInterface> {
+    public async GetBannerService(req: Request): Promise<ServiceReturnInterface> {
         try {
             const getBanner = await prisma.banners.findMany({
                 where: {

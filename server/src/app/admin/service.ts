@@ -1,9 +1,11 @@
-import { Prisma, PrismaClient } from "@prisma/client";
-import { Request, Response } from "express"
+import {Prisma, PrismaClient} from "@prisma/client";
+import {Request, Response} from "express"
 import CONSTANTS from "../../config/constant";
 import multer from "multer";
 import path from "path";
+
 const prisma = new PrismaClient();
+
 class AdminService {
     public CategorieAddService = async (req: Request) => {
         try {
@@ -59,17 +61,17 @@ class AdminService {
                 description: req.query.product_description as string,
                 price: Number(req.query.product_price),
                 categories: {
-                    connect: { id: Number(req.query.product_categorie) }
+                    connect: {id: Number(req.query.product_categorie)}
                 },
                 brand: {
-                    connect: { id: Number(req.query.product_brand) }
+                    connect: {id: Number(req.query.product_brand)}
                 },
                 sub_categories: {
-                    connect: { id: Number(req.query.sub_categories_id) }
+                    connect: {id: Number(req.query.sub_categories_id)}
                 }
             }
 
-            const insertedData = await prisma.product.create({ data: product })
+            const insertedData = await prisma.product.create({data: product})
 
             console.log(insertedData);
             const filename = insertedData.id;
@@ -87,7 +89,7 @@ class AdminService {
                 }
             })
 
-            const upload = multer({ storage: storage }).array('file', 10)
+            const upload = multer({storage: storage}).array('file', 10)
 
             upload(req, res, async (err) => {
                 if (err) {
@@ -106,20 +108,21 @@ class AdminService {
                         }
                     })
                     console.log(updateFilePath);
-                    return {
+                    console.log('e')
+                    res.status(200).send({
                         status: true,
                         data: null,
                         error: null
-                    }
+                    })
                 }
             })
         } catch (error) {
             console.log(error);
-            return {
+            res.status(200).send({
                 status: false,
                 data: null,
                 error: error
-            }
+            })
         }
     }
 
@@ -204,7 +207,7 @@ class AdminService {
             }
         })
 
-        const upload = multer({ storage: storage }).array('file', 10)
+        const upload = multer({storage: storage}).array('file', 10)
 
         upload(req, res, async (err) => {
             if (err) {

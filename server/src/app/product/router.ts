@@ -1,6 +1,7 @@
-import express, { Request, Response } from 'express'
+import express, {Request, Response} from 'express'
 import ProductService from './service'
 import chackIfTokenExist from '../../auth/tokenValidation';
+import {ServiceReturnInterface} from "../../config/interface";
 
 class ProductRoute {
     public router = express.Router();
@@ -11,7 +12,7 @@ class ProductRoute {
 
     private ProductTen = async (req: Request, res: Response) => {
         try {
-            const response = await ProductService.ProductTenService(req)
+            const response: ServiceReturnInterface = await ProductService.ProductTenService(req)
             res.status(200).send(response)
         } catch (error) {
             res.status(500).json({
@@ -25,7 +26,7 @@ class ProductRoute {
 
     private GetCategories = async (req: Request, res: Response) => {
         try {
-            const response = await ProductService.GetCategoriesService(req)
+            const response: ServiceReturnInterface = await ProductService.GetCategoriesService(req)
             res.status(200).send(response)
         } catch (error) {
             res.status(500).json({
@@ -39,7 +40,7 @@ class ProductRoute {
 
     private GetSubCategories = async (req: Request, res: Response) => {
         try {
-            const response = await ProductService.GetSubCategoriesService(req)
+            const response: ServiceReturnInterface = await ProductService.GetSubCategoriesService(req)
             res.status(200).send(response)
         } catch (error) {
             res.status(500).json({
@@ -53,7 +54,7 @@ class ProductRoute {
 
     private GetItem = async (req: Request, res: Response) => {
         try {
-            const response = await ProductService.GetItemService(req)
+            const response: ServiceReturnInterface = await ProductService.GetItemService(req)
             res.status(200).send(response)
         } catch (error) {
             res.status(500).json({
@@ -67,7 +68,7 @@ class ProductRoute {
 
     private GetProduct = async (req: Request, res: Response) => {
         try {
-            const response = await ProductService.GetProductService(req)
+            const response: ServiceReturnInterface = await ProductService.GetProductService(req)
             res.status(200).send(response)
         } catch (error) {
             res.status(500).json({
@@ -81,7 +82,7 @@ class ProductRoute {
 
     private GetBrands = async (req: Request, res: Response) => {
         try {
-            const response = await ProductService.GetBrandsService(req)
+            const response: ServiceReturnInterface = await ProductService.GetBrandsService(req)
             res.status(200).send(response)
         } catch (error) {
             res.status(500).json({
@@ -95,7 +96,7 @@ class ProductRoute {
 
     private WriteComment = async (req: Request, res: Response) => {
         try {
-            const response = await ProductService.WriteCommentService(req)
+            const response: ServiceReturnInterface = await ProductService.WriteCommentService(req)
             res.status(200).send(response)
         } catch (error) {
             res.status(500).json({
@@ -109,7 +110,7 @@ class ProductRoute {
 
     private ReadComment = async (req: Request, res: Response) => {
         try {
-            const response = await ProductService.ReadCommentService(req)
+            const response: ServiceReturnInterface = await ProductService.ReadCommentService(req)
             res.status(200).send(response)
         } catch (error) {
             res.status(500).json({
@@ -123,7 +124,7 @@ class ProductRoute {
 
     private AddToCart = async (req: Request, res: Response) => {
         try {
-            const response = await ProductService.AddToCartService(req)
+            const response: ServiceReturnInterface = await ProductService.AddToCartService(req)
             res.status(200).send(response)
         } catch (error) {
             res.status(500).json({
@@ -137,7 +138,7 @@ class ProductRoute {
 
     private GetCart = async (req: Request, res: Response) => {
         try {
-            const response = await ProductService.GetCartService(req)
+            const response: ServiceReturnInterface = await ProductService.GetCartService(req)
             res.status(200).send(response)
         } catch (error) {
             res.status(500).json({
@@ -150,7 +151,7 @@ class ProductRoute {
     }
     private NewArrivalProduct = async (req: Request, res: Response) => {
         try {
-            const response = await ProductService.NewArrivalProductSerivce(req)
+            const response: ServiceReturnInterface = await ProductService.NewArrivalProductSerivce(req)
             res.status(200).send(response)
         } catch (error) {
             res.status(500).json({
@@ -188,9 +189,6 @@ class ProductRoute {
 
         this.router.post('/cart/add', chackIfTokenExist, this.AddToCart)
         this.router.get('/cart/get', chackIfTokenExist, this.GetCart)
-
-
-
 
 
     }

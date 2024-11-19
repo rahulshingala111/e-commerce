@@ -1,13 +1,14 @@
 import {Prisma, PrismaClient} from "@prisma/client";
 import {Request} from "express"
 import CONSTANT from "../../config/constant";
+import {ServiceReturnInterface} from "../../config/interface";
 
 const prisma = new PrismaClient();
 
 class ProductService {
 
 
-    public ProductTenService = async (req: Request) => {
+    public ProductTenService = async (req: Request): Promise<ServiceReturnInterface> => {
         try {
             const fetchtenproduct = await prisma.product.findMany({
                 take: 10,
@@ -28,19 +29,22 @@ class ProductService {
             })
             return {
                 status: true,
-                data: fetchtenproduct
+                data: fetchtenproduct,
+                message: 'product'
             }
         } catch (error) {
             console.log(error);
             return {
                 status: false,
                 data: null,
-                error: error
+                error: error,
+                message: 'error'
+
             }
         }
     }
 
-    public GetCategoriesService = async (req: Request) => {
+    public GetCategoriesService = async (req: Request): Promise<ServiceReturnInterface> => {
         try {
             console.log(req.params);
             const category = await prisma.categories.findMany({
@@ -50,19 +54,21 @@ class ProductService {
             })
             return {
                 status: true,
-                data: category
+                data: category,
+                message: 'fetched successfully'
             }
         } catch (error) {
             console.log(error);
             return {
                 status: false,
                 data: null,
-                error: error
+                error: error,
+                message: 'something went wrong'
             }
         }
     }
 
-    public GetItemService = async (req: Request) => {
+    public GetItemService = async (req: Request): Promise<ServiceReturnInterface> => {
         try {
             console.log(req.params.product_id);
             if (req.params.product_id) {
@@ -74,25 +80,28 @@ class ProductService {
 
                 return {
                     status: true,
-                    data: fetchItem
+                    data: fetchItem,
+                    message: 'fetched successfully'
                 }
             } else {
                 return {
-                    staus: false,
-                    data: null
+                    status: false,
+                    data: null,
+                    message: 'params missing'
                 }
             }
         } catch (error) {
             console.log(error);
             return {
-                staus: false,
+                status: false,
                 data: null,
-                error: error
+                error: error,
+                message: 'something went wrong'
             }
         }
     }
 
-    public AddToCartService = async (req: Request) => {
+    public AddToCartService = async (req: Request): Promise<ServiceReturnInterface> => {
         try {
             const params = {
                 user_id: Number(req.body.user_id),
@@ -172,14 +181,15 @@ class ProductService {
         } catch (error) {
             console.log(error);
             return {
-                staus: false,
+                status: false,
                 data: null,
-                error: error
+                error: error,
+                message: 'something went wrong'
             }
         }
     }
 
-    public GetCartService = async (req: Request) => {
+    public GetCartService = async (req: Request): Promise<ServiceReturnInterface> => {
         try {
 
             if (!req.body.user_id) {
@@ -190,7 +200,7 @@ class ProductService {
             const findCartItems = await prisma.cart.findFirst({
                 where: {
                     user_id: user_id,
-                    status :CONSTANT.CART_STATUS.ACTIVE
+                    status: CONSTANT.CART_STATUS.ACTIVE
                 },
                 include: {
                     cart_item: {
@@ -232,20 +242,26 @@ class ProductService {
         } catch (error) {
             console.log(error);
             return {
-                staus: false,
+                status: false,
                 data: null,
-                error: error
+                error: error,
+                message: 'something went wrong'
             }
         }
     }
-    public GetProductService = async (req: Request) => {
+    public GetProductService = async (req: Request): Promise<ServiceReturnInterface> => {
         try {
             if (Object.keys(req.query).length !== 0) {
                 const object = req.query;
 
+                try {
+                    object['filter'] = JSON.parse(object.filter as string)
+                } catch (error) {
+                    console.log(error)
+                }
+
                 let query: Prisma.productFindManyArgs = {where: {}, take: 10, skip: 0}
 
-                console.log("object", req.query);
                 if (object.hasOwnProperty('category_id') && object.category_id !== '0') {
                     query.where = {
                         ...query.where,
@@ -270,6 +286,22 @@ class ProductService {
                 if (object.hasOwnProperty('pg')) {
                     const pg: number = Number(object.pg)
                     query.skip = pg <= 0 ? 0 : ((pg - 1) * 10)
+                }
+
+                if (object.hasOwnProperty('filter')) {
+                    console.log('inside filter', object.filter)
+
+                    query.where = {
+                        ...query.where,
+                        // OR: [
+                        //     {
+                        //         metadata: {
+                        //             path: [],
+                        //             equals: ''
+                        //         }
+                        //     }
+                        // ]
+                    }
                 }
                 console.log("query", query);
 
@@ -322,7 +354,7 @@ class ProductService {
         } catch (error) {
             console.log(error);
             return {
-                staus: false,
+                status: false,
                 data: null,
                 message: 'server error!! something went wrong',
                 error: error
@@ -330,23 +362,25 @@ class ProductService {
         }
     }
 
-    public GetBrandsService = async (req: Request) => {
+    public GetBrandsService = async (req: Request): Promise<ServiceReturnInterface> => {
         try {
             const getbrands = await prisma.brand.findMany()
             return {
                 status: true,
-                data: getbrands
+                data: getbrands,
+                message: 'fetched successfully'
             }
         } catch (error) {
             console.log(error);
             return {
-                staus: false,
+                status: false,
                 data: null,
-                error: error
+                error: error,
+                message: 'something went wrong'
             }
         }
     }
-    public WriteCommentService = async (req: Request) => {
+    public WriteCommentService = async (req: Request): Promise<ServiceReturnInterface> => {
         try {
             if (req.body.comment && req.body.product_id && req.body.rating) {
                 const comment: string = req.body.comment
@@ -370,7 +404,7 @@ class ProductService {
 
             } else {
                 return {
-                    staus: false,
+                    status: false,
                     data: null,
                     message: "send params correctly "
                 }
@@ -378,13 +412,14 @@ class ProductService {
         } catch (error) {
             console.log(error);
             return {
-                staus: false,
+                status: false,
                 data: null,
-                error: error
+                error: error,
+                message: 'something went wrong'
             }
         }
     }
-    public ReadCommentService = async (req: Request) => {
+    public ReadCommentService = async (req: Request): Promise<ServiceReturnInterface> => {
         try {
             if (req.query.product_id) {
                 const product_id: number = Number(req.query.product_id)
@@ -397,11 +432,11 @@ class ProductService {
                 return {
                     status: true,
                     data: getProduct,
-                    messages: "fetched success"
+                    message: "fetched success"
                 }
             } else {
                 return {
-                    staus: false,
+                    status: false,
                     data: null,
                     message: 'send params correclty'
                 }
@@ -409,13 +444,14 @@ class ProductService {
         } catch (error) {
             console.log(error);
             return {
-                staus: false,
+                status: false,
                 data: null,
-                error: error
+                error: error,
+                message: 'something went wrong'
             }
         }
     }
-    public NewArrivalProductSerivce = async (req: Request) => {
+    public NewArrivalProductSerivce = async (req: Request): Promise<ServiceReturnInterface> => {
         try {
 
             const findProduct = await prisma.product.findMany({
@@ -433,38 +469,47 @@ class ProductService {
         } catch (error) {
             console.log(error);
             return {
-                staus: false,
+                status: false,
                 data: null,
-                error: error
+                error: error,
+                message: 'something went wrong'
             }
         }
     }
 
-    public GetSubCategoriesService = async (req: Request) => {
+    public GetSubCategoriesService = async (req: Request): Promise<ServiceReturnInterface> => {
         try {
-            if (req.query.category_id) {
-                const category_id = Number(req.query.category_id)
-                const fetchSubCategory = await prisma.sub_categories.findMany({
-                    where: {
-                        categories_id: category_id
-                    },
-                    select: {
-                        id: true,
-                        name: true
-                    }
-                })
+            if (!req.query.category_id) {
                 return {
-                    status: true,
-                    data: fetchSubCategory
+                    status: false,
+                    message: 'missing params',
+                    data: null
                 }
             }
+            const category_id = Number(req.query.category_id)
+            const fetchSubCategory = await prisma.sub_categories.findMany({
+                where: {
+                    categories_id: category_id
+                },
+                select: {
+                    id: true,
+                    name: true
+                }
+            })
+            return {
+                status: true,
+                data: fetchSubCategory,
+                message: 'fetched successfully'
+            }
+
 
         } catch (error) {
             console.log(error);
             return {
-                staus: false,
+                status: false,
                 data: null,
-                error: error
+                error: error,
+                message: 'something went wrong'
             }
         }
     }

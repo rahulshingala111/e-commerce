@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
 import MediaService from './service';
-import { ResponseInterface } from '../../config/interface';
+import { ServiceReturnInterface } from '../../config/interface';
 
 
 class MediaRouter {
@@ -11,7 +11,7 @@ class MediaRouter {
 
     private async GetBanners(req: Request, res: Response) {
         try {
-            const response: ResponseInterface = await MediaService.GetBannerService(req)
+            const response: ServiceReturnInterface = await MediaService.GetBannerService(req)
             res.status(200).send(response)
         } catch (error) {
             res.status(500).json({

@@ -1,5 +1,6 @@
-import express, { Request, Response } from 'express'
+import express, {Request, Response} from 'express'
 import AdminService from './service';
+
 class AdminRouter {
     router = express.Router();
 
@@ -42,7 +43,6 @@ class AdminRouter {
     private ProductAdd = async (req: Request, res: Response) => {
         try {
             const response = await AdminService.ProductAddService(req, res)
-            res.status(200).send(response)
         } catch (error) {
             res.status(500).json({
                 status: false,
@@ -143,4 +143,5 @@ class AdminRouter {
     }
 
 }
+
 export default new AdminRouter().router

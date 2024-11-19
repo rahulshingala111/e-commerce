@@ -40,7 +40,7 @@ model product {
   description       String
   price             Int
   img_path          String?
-  metadata          Json           @default("{}")
+  metadata          Json?          @db.JsonB
   categories        categories     @relation(fields: [categories_id], references: [id])
   categories_id     Int
   sub_categories    sub_categories @relation(fields: [sub_categories_id], references: [id])

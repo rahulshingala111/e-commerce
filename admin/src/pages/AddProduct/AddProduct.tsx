@@ -97,7 +97,7 @@ const AddProduct = () => {
 
     const handleInsert = async (e: React.FormEvent<EventTarget>) => {
         e.preventDefault();
-
+        console.log(metadata)
         const form = new FormData();
         form.append("file", product_image_url)
 
