@@ -42,9 +42,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 })
 
 
-
-
 app.get('/api/v1/sample', (req, res) => {
+    console.log(req.query)
     res.send({
         status: true,
         data: {

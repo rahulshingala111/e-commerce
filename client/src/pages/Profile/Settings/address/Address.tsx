@@ -1,6 +1,6 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import './Address.css'
-import {AddressInterface} from '../../../../constants/Interfaces'
+import type { AddressInterface } from '../../../../constants/Interfaces'
 import ApiCall from '../../../../constants/ApiCall'
 import CONSTANTS from '../../../../constants/constants'
 
@@ -57,37 +57,37 @@ const Address: React.FC = () => {
                             <div className='add-form-group'>
                                 <label htmlFor='address_1'>Address 1</label>
                                 <input id='address_1' type='text' value={address_1}
-                                       onChange={(e) => setAddress_1(e.target.value)} required/>
+                                    onChange={(e) => setAddress_1(e.target.value)} required />
                             </div>
                             <div className='add-form-group'>
                                 <label htmlFor='address_2'>Address 2</label>
                                 <input id='address_2' type='text' value={address_2}
-                                       onChange={(e) => setAddress_2(e.target.value)} required/>
+                                    onChange={(e) => setAddress_2(e.target.value)} required />
                             </div>
                             <div className='add-form-group'>
                                 <label htmlFor='landmark'>landmark</label>
                                 <input id='landmark' type='text' value={landmark}
-                                       onChange={(e) => setLandmark(e.target.value)}/>
+                                    onChange={(e) => setLandmark(e.target.value)} />
                             </div>
                             <div className='add-form-group'>
                                 <label htmlFor='postal_code'>PIN</label>
                                 <input id='postal_code' type='text' value={postal_code}
-                                       onChange={(e) => setPostal_code(e.target.value)} required/>
+                                    onChange={(e) => setPostal_code(e.target.value)} required />
                             </div>
                             <div className='add-form-group'>
                                 <label htmlFor='city'>city</label>
                                 <input id='city' type='text' value={city} onChange={(e) => setCity(e.target.value)}
-                                       required/>
+                                    required />
                             </div>
                             <div className='add-form-group'>
                                 <label htmlFor='state'>State</label>
                                 <input id='state' type='text' value={state} onChange={(e) => setState(e.target.value)}
-                                       required/>
+                                    required />
                             </div>
                             <div className='add-form-group'>
                                 <label htmlFor='country'>Country</label>
                                 <input id='country' type='text' value={country}
-                                       onChange={(e) => setCountry(e.target.value)} required/>
+                                    onChange={(e) => setCountry(e.target.value)} required />
                             </div>
                             <button type='submit' className='add-submit-button'>Submit</button>
 

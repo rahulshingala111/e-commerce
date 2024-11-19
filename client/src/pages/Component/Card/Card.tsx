@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Card.css'
 import CONSTANTS from '../../../constants/constants';
-import { ProductCardProps } from '../../../constants/Interfaces';
+import type { ProductCardProps } from '../../../constants/Interfaces';
 import CartButton from '../CartButton/CartButton';
 import ApiCall from '../../../constants/ApiCall';
 
