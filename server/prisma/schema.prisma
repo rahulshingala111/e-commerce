@@ -17,6 +17,7 @@ model user {
   addresses  addresses[]
   cart       cart[]
   order      order[]
+  review     review[]
 }
 
 model addresses {
@@ -78,6 +79,8 @@ model review {
   id            Int     @id @default(autoincrement())
   product       product @relation(fields: [product_id], references: [id])
   product_id    Int
+  user          user    @relation(fields: [user_id], references: [id])
+  user_id       Int
   review_string String
   rating        Int
 

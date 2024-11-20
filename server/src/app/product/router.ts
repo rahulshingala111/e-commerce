@@ -183,7 +183,7 @@ class ProductRoute {
         this.router.post('/addtocart', this.AddToCart)
 
 
-        this.router.post('/comment', this.WriteComment)
+        this.router.post('/comment', chackIfTokenExist, this.WriteComment)
         this.router.get('/comment', this.ReadComment)
 
 

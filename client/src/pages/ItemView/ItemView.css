@@ -1,61 +1,212 @@
-/* ProductPage.css */
-.product-view {
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
+.product-page {
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
-  }
-  
-  .product-image {
+}
+
+.product-section {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.product-images {
     flex: 1;
-  }
-  
-  .product-image img {
+}
+
+.main-image {
+    margin-bottom: 10px;
+}
+
+.main-image img {
     width: 100%;
     height: auto;
-    border-radius: 10px;
-    max-width: 400px;
-  }
-  
-  .product-details {
-    flex: 2;
-    padding-left: 20px;
-  }
-  
-  .product-details h1 {
-    margin-bottom: 20px;
-  }
-  
-  .product-details .price {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 15px;
-  }
-  
-  .product-details .description {
-    margin-bottom: 20px;
-  }
-  
-  .add-to-cart-btn {
-    background-color: #ff9900;
-    color: white;
-    padding: 10px 20px;
-    border: none;
+    border-radius: 8px;
+}
+
+.thumbnail-container {
+    display: flex;
+    gap: 10px;
+}
+
+.thumbnail-container img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
     cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .add-to-cart-btn:hover {
-    background-color: #e68a00;
-  }
-  
-  @media (max-width: 768px) {
-    .product-view {
-      flex-direction: column;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+
+.thumbnail-container img:hover,
+.thumbnail-container img.selected {
+    opacity: 1;
+}
+
+/* Right Side - Product Info */
+.product-info {
+    flex: 1;
+}
+
+.product-info h1 {
+    font-size: 24px;
+    margin: 0 0 10px 0;
+}
+
+.price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin: 15px 0;
+}
+
+.average-rating {
+    margin: 15px 0;
+}
+
+.stars {
+    color: #ffd700;
+    margin-right: 10px;
+}
+
+.rating-number {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.description {
+    line-height: 1.6;
+    color: #666;
+    margin: 20px 0;
+}
+
+.specifications {
+    margin: 20px 0;
+}
+
+.specifications h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.specifications ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.specifications li {
+    margin: 5px 0;
+    color: #666;
+}
+
+.add-to-cart {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart:hover {
+    background-color: #45a049;
+}
+
+.reviews-section {
+    margin-top: 40px;
+    border-top: 1px solid #eee;
+    padding-top: 40px;
+}
+
+.reviews-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.review-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.review-form h3 {
+    margin: 0 0 15px 0;
+}
+
+.rating-select {
+    margin-bottom: 15px;
+}
+
+.rating-select select {
+    margin-left: 10px;
+    padding: 5px;
+}
+
+.review-form textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.review-form button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.review-form button:hover {
+    background-color: #444;
+}
+
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.review-item {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.review-user {
+    font-weight: bold;
+}
+
+.review-rating {
+    color: #ffd700;
+}
+
+.review-comment {
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .product-section {
+        flex-direction: column;
     }
-  
-    .product-details {
-      padding-left: 0;
+
+    .product-images,
+    .product-info {
+        width: 100%;
     }
-  }
-  
+}

@@ -386,9 +386,11 @@ class ProductService {
                 const comment: string = req.body.comment
                 const product_id: number = Number(req.body.product_id)
                 const rating: number = Number(req.body.rating)
+                const user_id: number = Number(req.body.user_id)
 
                 const insertComment = await prisma.review.create({
                     data: {
+                        user_id: user_id,
                         review_string: comment,
                         product_id: product_id,
                         rating: rating
@@ -427,18 +429,46 @@ class ProductService {
                 const getProduct = await prisma.review.findMany({
                     where: {
                         product_id: product_id
+                    },
+                    include: {
+                        user: {
+                            select: {
+                                first_name: true,
+                                last_name: true
+                            }
+                        }
                     }
                 })
+                let avg_rating = 0;
+                let count_reviews = 0
+                if (getProduct) {
+                    const countAverage = await prisma.review.aggregate({
+                        _avg: {
+                            rating: true
+                        },
+                        _count: {
+                            id: true
+                        }
+                    })
+                    console.log(countAverage)
+                    avg_rating = (Number(countAverage._avg.rating!.toFixed(1)))
+                    count_reviews = countAverage._count.id
+                }
+
                 return {
                     status: true,
-                    data: getProduct,
+                    data: {
+                        reviews: getProduct,
+                        avg_rating: avg_rating,
+                        count: count_reviews
+                    },
                     message: "fetched success"
                 }
             } else {
                 return {
                     status: false,
                     data: null,
-                    message: 'send params correclty'
+                    message: 'send params correctly'
                 }
             }
         } catch (error) {
