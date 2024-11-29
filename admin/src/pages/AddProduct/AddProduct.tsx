@@ -106,7 +106,8 @@ const AddProduct = () => {
                 "Content-Type": "multipart/form-data"
             }
         });
-        navigate('/product/add')
+        // navigate('/product/add')
+        navigate('/')
         if (apicall.status) {
             alert("success");
         }

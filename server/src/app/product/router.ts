@@ -1,8 +1,14 @@
 import express, {Request, Response} from 'express'
 import ProductService from './service'
-import chackIfTokenExist from '../../auth/tokenValidation';
+import checkIfTokenExist from '../../auth/tokenValidation';
 import {ServiceReturnInterface} from "../../config/interface";
 
+/**
+ * @swagger
+ * tags:
+ *   name: Product
+ *   description: /product/
+ */
 class ProductRoute {
     public router = express.Router();
 
@@ -10,6 +16,42 @@ class ProductRoute {
         this.initRoutes();
     }
 
+    /**
+     * @swagger
+     * /product/add:
+     *   get:
+     *     tags:
+     *       - Product
+     *     summary: Add a new address
+     *     description: Add a new address for the user.
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               street:
+     *                 type: string
+     *                 description: Street name of the address
+     *               city:
+     *                 type: string
+     *                 description: City name
+     *               postalCode:
+     *                 type: string
+     *                 description: Postal code
+     *             required:
+     *               - street
+     *               - city
+     *               - postalCode
+     *     responses:
+     *       200:
+     *         description: Address added successfully
+     *       400:
+     *         description: Bad request
+     *       500:
+     *         description: Internal server error
+     */
     private ProductTen = async (req: Request, res: Response) => {
         try {
             const response: ServiceReturnInterface = await ProductService.ProductTenService(req)
@@ -121,7 +163,44 @@ class ProductRoute {
             })
         }
     }
-
+    /**
+     * @swagger
+     * /product/addtocart:
+     *   post:
+     *     tags:
+     *       - Product
+     *     summary: add item to cart
+     *     security :
+     *      - bearerAuth : []
+     *     description: add item to cart
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               user_id:
+     *                 type: string
+     *                 description: user id of logged-in user
+     *               product_id:
+     *                 type: string
+     *                 description: product id of selected cart
+     *               qty:
+     *                 type: string
+     *                 description: quantity of product
+     *             required:
+     *               - user_id
+     *               - product_id
+     *               - qty
+     *     responses:
+     *       200:
+     *         $ref: "#/components/responses/Success"
+     *       400:
+     *         description: Bad request
+     *       500:
+     *         description: Internal server error
+     */
     private AddToCart = async (req: Request, res: Response) => {
         try {
             const response: ServiceReturnInterface = await ProductService.AddToCartService(req)
@@ -183,12 +262,12 @@ class ProductRoute {
         this.router.post('/addtocart', this.AddToCart)
 
 
-        this.router.post('/comment', chackIfTokenExist, this.WriteComment)
+        this.router.post('/comment', checkIfTokenExist, this.WriteComment)
         this.router.get('/comment', this.ReadComment)
 
 
-        this.router.post('/cart/add', chackIfTokenExist, this.AddToCart)
-        this.router.get('/cart/get', chackIfTokenExist, this.GetCart)
+        this.router.post('/cart/add', checkIfTokenExist, this.AddToCart)
+        this.router.get('/cart/get', checkIfTokenExist, this.GetCart)
 
 
     }

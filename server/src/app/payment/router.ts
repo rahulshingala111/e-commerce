@@ -1,6 +1,6 @@
 import express, {Request, Response} from "express";
 import PaymentService from './service'
-import chackIfTokenExist from "../../auth/tokenValidation";
+import checkIfTokenExist from "../../auth/tokenValidation";
 
 class PaymentClass {
     public router = express.Router()
@@ -37,7 +37,7 @@ class PaymentClass {
     }
 
     initRoutes() {
-        this.router.post('/order/create', chackIfTokenExist, this.InitiatePaymentOrder)
+        this.router.post('/order/create', checkIfTokenExist, this.InitiatePaymentOrder)
         this.router.post('/order/callback', this.CallBackURL)
 
     }

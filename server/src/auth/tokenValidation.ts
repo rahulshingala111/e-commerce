@@ -1,7 +1,7 @@
 import {Request, Response, NextFunction} from "express"
 import {verifyJWT} from "../config/helper";
 
-const chackIfTokenExist = (req: Request, res: Response, next: NextFunction) => {
+const checkIfTokenExist = (req: Request, res: Response, next: NextFunction) => {
     console.log('middleware');
     console.log(req.headers.authorization);
     const token = req.headers.authorization
@@ -29,4 +29,4 @@ const chackIfTokenExist = (req: Request, res: Response, next: NextFunction) => {
         })
     }
 }
-export default chackIfTokenExist;
+export default checkIfTokenExist;

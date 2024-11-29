@@ -11,9 +11,12 @@ import AdminRouter from './src/app/admin/router'
 import MediaRouter from './src/app/media/router'
 import PaymentRouter from './src/app/payment/router'
 
-import chackIfTokenExist from './src/auth/tokenValidation';
+import checkIfTokenExist from './src/auth/tokenValidation';
 import path from 'path';
-import Razorpay from 'razorpay'
+
+import swaggerUI from 'swagger-ui-express'
+import {swaggerSpec} from "./src/config/swagger";
+
 
 app.use(cors({
     origin: '*',
@@ -25,7 +28,7 @@ app.use(cors({
 
 app.use(express.json())
 
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
     res.header('Access-Control-Allow-Origin', '*');
     next();
 });
@@ -37,12 +40,29 @@ console.log('Serving static files from:', path.join(__dirname, 'banner_store'));
 
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-    console.log(req.header('Origin') + req.url, "middleware");
-    next();
+    if (req.url.includes('/api-docs/')) {
+        next();
+    } else {
+        console.log(req.header('Origin') + req.url, "middleware");
+        next();
+    }
 })
 
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
-app.get('/api/v1/sample', (req, res) => {
+/**
+ * @swagger
+ * /test:
+ *   get:
+ *     summary: test
+ *     description: test
+ *     responses:
+ *       200:
+ *         description: test
+ *       500:
+ *         description: Internal server error
+ */
+app.get('/api/v1/test', (req: Request, res: Response) => {
     console.log(req.query)
     res.send({
         status: true,
@@ -55,7 +75,7 @@ app.get('/api/v1/sample', (req, res) => {
 //ROUTES
 app.use('/api/v1/auth', AuthRouter)
 app.use('/api/v1/product', ProductRouter)
-app.use('/api/v1/user', chackIfTokenExist, UserRouter)
+app.use('/api/v1/user', checkIfTokenExist, UserRouter)
 app.use('/api/v1/media', MediaRouter)
 app.use('/api/v1/payment', PaymentRouter)
 
@@ -65,5 +85,5 @@ app.use('/api/v1/admin', AdminRouter)
 
 const PORT = Number(process.env.PORT) | 3002;
 app.listen(PORT, () => {
-    console.log(`server initialzed at ${PORT}`);
+    console.log(`server initialized at ${PORT}`);
 })
