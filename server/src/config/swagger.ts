@@ -32,12 +32,7 @@ const swaggerOptions = {
                                 properties: {
                                     status: {type: "boolean", example: true},
                                     message: {type: "string", example: "Operation successful"},
-                                    data: {
-                                        oneOf: [
-                                            {type: "array"},    // When data is an array
-                                            {type: "object"},   // When data is an object (optional or conditional)
-                                        ],
-                                    },
+                                    data: {type: "object"},
                                 },
                             },
                         },

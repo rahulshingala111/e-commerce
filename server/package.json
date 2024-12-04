@@ -9,7 +9,8 @@
     "prisma:migrate": "prisma migrate dev",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "swagger-autogen": "node ./src/docs/swagger.js"
+    "swagger-autogen": "node ./src/docs/swagger.js",
+    "mokedata" : "ts-node scripts/mokedata.ts"
   },
   "author": "rahul",
   "license": "Apache-2.0",

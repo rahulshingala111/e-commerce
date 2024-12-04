@@ -18,35 +18,28 @@ class ProductRoute {
 
     /**
      * @swagger
-     * /product/add:
+     * /product/ten:
      *   get:
      *     tags:
      *       - Product
-     *     summary: Add a new address
-     *     description: Add a new address for the user.
-     *     requestBody:
-     *       required: true
-     *       content:
-     *         application/json:
-     *           schema:
-     *             type: object
-     *             properties:
-     *               street:
-     *                 type: string
-     *                 description: Street name of the address
-     *               city:
-     *                 type: string
-     *                 description: City name
-     *               postalCode:
-     *                 type: string
-     *                 description: Postal code
-     *             required:
-     *               - street
-     *               - city
-     *               - postalCode
+     *     summary: return first 10 user data
+     *     description: just for testing purpose
      *     responses:
      *       200:
      *         description: Address added successfully
+     *         content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      properties:
+     *                          status:
+     *                              type: boolean
+     *                          message:
+     *                              type: string
+     *                              example : "data fetched successfully"
+     *                          data:
+     *                              type: object
+     *
      *       400:
      *         description: Bad request
      *       500:
@@ -66,6 +59,35 @@ class ProductRoute {
         }
     }
 
+    /**
+     * @swagger
+     * /product/categories:
+     *   get:
+     *     tags:
+     *       - Product
+     *     summary: fetch categories
+     *     description: fetch all the categories of product
+     *     responses:
+     *       200:
+     *         description:
+     *         content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      properties:
+     *                          status:
+     *                              type: boolean
+     *                          message:
+     *                              type: string
+     *                              example : "fetched successfully"
+     *                          data:
+     *                              type: object
+     *
+     *       400:
+     *         description: Bad request
+     *       500:
+     *         description: Internal server error
+     */
     private GetCategories = async (req: Request, res: Response) => {
         try {
             const response: ServiceReturnInterface = await ProductService.GetCategoriesService(req)
@@ -80,6 +102,41 @@ class ProductRoute {
         }
     }
 
+    /**
+     * @swagger
+     * /product/subcategories:
+     *   get:
+     *     tags:
+     *       - Product
+     *     summary: fetch sub-categories
+     *     description: fetch all the categories of product
+     *     parameters:
+     *       - in: query
+     *         name: category_id
+     *         schema:
+     *           type: string
+     *           required: true
+     *     responses:
+     *       200:
+     *         description:
+     *         content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      properties:
+     *                          status:
+     *                              type: boolean
+     *                          message:
+     *                              type: string
+     *                              example : "fetched successfully"
+     *                          data:
+     *                              type: object
+     *
+     *       400:
+     *         description: Bad request
+     *       500:
+     *         description: Internal server error
+     */
     private GetSubCategories = async (req: Request, res: Response) => {
         try {
             const response: ServiceReturnInterface = await ProductService.GetSubCategoriesService(req)
@@ -94,6 +151,41 @@ class ProductRoute {
         }
     }
 
+    /**
+     * @swagger
+     * /product/item/{product_id}:
+     *   get:
+     *     tags:
+     *       - Product
+     *     summary: fetch specific item
+     *     description: fetch specific item
+     *     parameters:
+     *       - in: path
+     *         name: product_id
+     *         schema:
+     *           type: string
+     *           required: true
+     *     responses:
+     *       200:
+     *         description:
+     *         content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      properties:
+     *                          status:
+     *                              type: boolean
+     *                          message:
+     *                              type: string
+     *                              example : "fetched successfully"
+     *                          data:
+     *                              type: object
+     *
+     *       400:
+     *         description: Bad request
+     *       500:
+     *         description: Internal server error
+     */
     private GetItem = async (req: Request, res: Response) => {
         try {
             const response: ServiceReturnInterface = await ProductService.GetItemService(req)
@@ -107,7 +199,60 @@ class ProductRoute {
             })
         }
     }
-
+    /**
+     * @swagger
+     * /product/get:
+     *   get:
+     *     tags:
+     *       - Product
+     *     summary: fetch product MAIN API
+     *     parameters:
+     *       - in: query
+     *         name: filter
+     *         schema:
+     *           type: string
+     *           required: false
+     *       - in: query
+     *         name: category_id
+     *         schema:
+     *           type: string
+     *           required: false
+     *       - in: query
+     *         name: sub_category_id
+     *         schema:
+     *           type: string
+     *           required: false
+     *       - in: query
+     *         name: brand_id
+     *         schema:
+     *           type: string
+     *           required: false
+     *       - in: query
+     *         name: pg
+     *         schema:
+     *           type: string
+     *           required: false
+     *     responses:
+     *       200:
+     *         description:
+     *         content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      properties:
+     *                          status:
+     *                              type: boolean
+     *                          message:
+     *                              type: string
+     *                              example : "fetched successfully"
+     *                          data:
+     *                              type: object
+     *
+     *       400:
+     *         description: Bad request
+     *       500:
+     *         description: Internal server error
+     */
     private GetProduct = async (req: Request, res: Response) => {
         try {
             const response: ServiceReturnInterface = await ProductService.GetProductService(req)
@@ -121,7 +266,34 @@ class ProductRoute {
             })
         }
     }
-
+    /**
+     * @swagger
+     * /product/brands:
+     *   get:
+     *     tags:
+     *       - Product
+     *     summary: fetch all brands
+     *     responses:
+     *       200:
+     *         description:
+     *         content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      properties:
+     *                          status:
+     *                              type: boolean
+     *                          message:
+     *                              type: string
+     *                              example : "fetched successfully"
+     *                          data:
+     *                              type: object
+     *
+     *       400:
+     *         description: Bad request
+     *       500:
+     *         description: Internal server error
+     */
     private GetBrands = async (req: Request, res: Response) => {
         try {
             const response: ServiceReturnInterface = await ProductService.GetBrandsService(req)
